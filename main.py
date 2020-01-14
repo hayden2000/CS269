@@ -73,6 +73,9 @@ def startScreen():
     while running:
     
         screen.fill(black) 
+        
+        bg = pygame.image.load("Cave.png")
+        screen.blit(bg, (0, 0))
   
         # label control 
         label('Shadow Puppets', 400, 300, white, fontBig)
