@@ -77,12 +77,16 @@ class Enemy:  #Class for Spider character
         self.image = spider
         self.xPos = x
         self.yPos = y
-        #self.trect = self.image.get_rect().move( x, y )
-
+        self.rect = pygame.Rect(self.xPos, self.yPos, 40, 92)
+        self.alive = 1
     def random_move(self):
-        to_do = 1
+        self.xPos += 1/5
     def run_away(self,player_x, player_y):
         to_do = 1
+    def update(self):
+        self.prevRect = self.rect
+        self.rect = pygame.Rect(self.xPos, self.yPos, 40, 92)
+    
 # get the current mouse information, and make the cursor invisible if
 # it is focused on the game window
 pygame.event.pump()
@@ -92,11 +96,11 @@ if pygame.mouse.get_focused():
 
 refresh = []
 drawBkg(screen, text, refresh)
-enemy_spider = Enemy(random.randint( 10, 770 ),random.randint( 40, 580 ))   
+enemy_spider = Enemy(100,350)   
 # respond to mouse motion events until someone clicks a mouse or hits a key
 print("Entering main loop")
 while 1:
-     # handle events and erase things
+     #handle events and erase things
     for event in pygame.event.get():
         # if event.type == pygame.MOUSEMOTION:
         #     # erase the existing broom
@@ -110,10 +114,14 @@ while 1:
 
         if event.type == pygame.QUIT:
             sys.exit()
+    if enemy_spider.alive == 1:
+        enemy_spider.random_move()
+        enemy_spider.update()
         
+    screen.blit(spider, enemy_spider)
     # update the parts of the screen that need it
     pygame.display.update( refresh )
-
+    
     # clear out the refresh rects
     refresh = []
 
