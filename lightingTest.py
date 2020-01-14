@@ -11,7 +11,6 @@
 # useful imports
 import sys
 import random
-import copy
 
 # import pygame
 import pygame
@@ -88,7 +87,7 @@ def drawBkg(screen, text, refresh, rect=None):
 		
 ########## Classes for the lamp posts and lighting system ###########
 
-class lighting:
+class Lighting:
 
 	def __init__( self ):
 		pass
@@ -117,35 +116,65 @@ class lighting:
 
 
 	# Render the light rectangle surrounding the player
-	def renderPlayer(self, screen, text, refresh, PC, lampList, spiderList):
+	def renderPlayer(self, screen, text, refresh, player, lampList, spiderList):
 	
-		screen.fill( (0,0,0), PC )
-		drawBkg( screen, text, refresh, PC )
+		screen.fill( (0,0,0), player.lightRect )
+		drawBkg( screen, text, refresh, player.lightRect )
 		
 		for item in spiderList:
-			if item.colliderect( PC ):
-				trect = item.clip( PC )
-				drawBkg( screen, text, refresh, trect )
+			if item.colliderect( player.lightRect ):
+				trect = item.clip( player.lightRect )
 				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
 		
-		screen.blit( broom, broomRect )
+		screen.blit( player.image, player.imageRect )
 		
 		# Create light map "night"
 		night.fill( (0,0,0) )
 		for lamp in lampList:
-			#if PC.colliderect( lamp.lightRect ):
+			#if player.imageRect.colliderect( lamp.lightRect ):
 			night.blit( lightAlpha, lamp.lightRect )
-		night.blit( lightAlpha, PC )
+		night.blit( lightAlpha, player.lightRect )
 		
-		screen.blit( night, PC, PC, special_flags = pygame.BLEND_MULT )
-		refresh.append( PC )
+		screen.blit( night, player.lightRect, player.lightRect, special_flags = pygame.BLEND_MULT )
+		refresh.append( player.lightRect )
 		
+# Class to represent the stationary lamps
+class Lamp:
 
-class lamp:
-
-	def __init__( self, upperLeft, lightRect ):
-		self.lightRect = lightRect
+	def __init__( self, upperLeft, lightImage, isLit = False ):
 		self.coors = upperLeft
+		self.lightImage = lightImage
+		self.lightRect = lightImage.get_rect().move( self.coors[0], self.coors[1] )
+		self.isLit = isLit
+		
+	def turnOn( self ):
+		self.isLit = True
+	
+	def turnOff( self ):
+		self.isLit = False
+		
+	def checkStatus( self, collisionRect ):
+		if collisionRect.colliderect( self.imageRect ):
+			self.isList = not self.isLit
+		
+# Class to represent the playable character
+class Player:
+	
+	def __init__( self, image, imageRect, collisionRect, lightRect ):
+		self.image = image
+		self.imageRect = imageRect
+		self.collisionRect = collisionRect
+		self.lightRect = lightRect
+	
+	# Update the positions of all the rectangles, based on the center coordinates (x,y)
+	def updateCoors( self, x, y ):
+		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
+								  (self.imageRect.width, self.imageRect.height) )
+		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
+								  (self.lightRect.width, self.lightRect.height) )
+		self.collisionRect.left = self.imageRect.left
+		self.collisionRect.top = self.imageRect.top
+		
 
 
 ############## Setting up the Broom as a sprite ################
@@ -167,20 +196,19 @@ broomActiveRect = pygame.Rect((4, 41),(106, 82))
 trect = lightAlpha.get_rect()
 lightActiveRect = lightAlpha.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
 
-# blit the broom to the screen and update the display
-screen.blit( broom, broomRect )
+# Create mouse object
+player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
 
 # instantiate lighting class
-lighting = lighting()
+lighting = Lighting()
 
-# get the corner lamp
-lampList = [ lamp( (0,0), lightAlpha.get_rect() ) ]
+# Create a list of lamp object
+lampList = [ Lamp( (0,0), lightAlpha, True ), Lamp( (400,400), lightAlpha, True ) ]
 
 ####################### Set up the spiders #####################
 
 MaxSpiders = 5
 MinSpawnTime = 30
-
 
 # store a list of rectangles of the active spiders
 activeSpiders = []
@@ -240,34 +268,30 @@ while 1:
 		screen.fill( (0, 0, 0), item )
 		refresh.append( item )
 
-
-	# figure out if the broom is intersecting any of the spiders
-	tmpactive = []
-	for item in activeSpiders:
-		spiderCollisionBox = spiderActiveRect.move( item.left, item.top )
-		broomCollisionBox = broomActiveRect.move( broomRect.left, broomRect.top )
-		if broomCollisionBox.colliderect( spiderCollisionBox ):
-			continue
-		else:
-			tmpactive.append( item )
-	activeSpiders = tmpactive
-
 	# If the game is in focus, update mouse position
 	if pygame.mouse.get_focused():
 		pygame.mouse.set_visible(False)
 		tpos = pygame.mouse.get_pos()
 
 		# update the position of the cursor
-		broomRect = pygame.Rect( (tpos[0] - broomRect.width/2, tpos[1] - broomRect.height/2),
-								  (broomRect.width, broomRect.height) )
-	
-		lightActiveRect = pygame.Rect( (tpos[0] - lightActiveRect.width/2, tpos[1] - lightActiveRect.height/2), (lightActiveRect.width, lightActiveRect.height) )
+		player.updateCoors( tpos[0], tpos[1] )
+		
 	else:
 		pygame.mouse.set_visible(True)
 
+	# figure out if the broom is intersecting any of the spiders
+	tmpactive = []
+	for item in activeSpiders:
+		spiderCollisionBox = spiderActiveRect.move( item.left, item.top )
+		if player.collisionRect.colliderect( spiderCollisionBox ):
+			continue
+		else:
+			tmpactive.append( item )
+	activeSpiders = tmpactive
+
 	# Render everything to the screen
 	lighting.renderLamps( screen, text, refresh, lampList, activeSpiders )
-	lighting.renderPlayer( screen, text, refresh, lightActiveRect, lampList, activeSpiders )
+	lighting.renderPlayer( screen, text, refresh, player, lampList, activeSpiders )
 
 	# update the parts of the screen that need it
 	pygame.display.update( refresh )
