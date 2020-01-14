@@ -11,6 +11,7 @@
 # useful imports
 import sys
 import random
+import copy
 
 # import pygame
 import pygame
@@ -30,7 +31,9 @@ gameClock = pygame.time.Clock()
 
 
 # create a screen (width, height)
-screen = pygame.display.set_mode( (800, 600) )
+width = 800
+height = 600
+screen = pygame.display.set_mode( (width, height) )
 
 ####################### Making Content #########################
 
@@ -40,7 +43,7 @@ spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
 broom = pygame.image.load( "Broom.png" ).convert_alpha()
 lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
-night = pygame.Surface( (640, 480) )
+night = pygame.Surface( (width, height) )
 #pygame.image.load( "night.png" ).convert_alpha()
 
 # create a font
@@ -83,27 +86,66 @@ def drawBkg(screen, text, refresh, rect=None):
 		refresh.append( rect )
 		
 		
-############## Setting up the Broom as a sprite ################
+########## Classes for the lamp posts and lighting system ###########
 
 class lighting:
+
+	def __init__( self ):
+		pass
 	
-	def _init_(self):
+	# Render the area illuminated by stationary lamps
+	def renderLamps(self, screen, text, refresh, lampList, spiderList):
 		
+		# Create light map "night"
+		night.fill( (0,0,0) )
+		for lamp in lampList:
+			night.blit( lightAlpha, lamp.lightRect )
 	
-	def drawBkg(self, screen, text, refresh, PC, lampList):
-	
-		for lamp in lampList
+		# For each light rectangle, erase what is there, draw the background
+		# then blit the light on top
+		for lamp in lampList:
+			screen.fill( (0,0,0), lamp.lightRect )
 			drawBkg( screen, text, refresh, lamp.lightRect )
+			
+			for item in spiderList:
+				if item.colliderect( lamp.lightRect ):
+					trect = item.clip( lamp.lightRect )
+					screen.blit( spider, trect, trect.move(-item.left,-item.top) )
+			
+			screen.blit( night, lamp.lightRect, special_flags = pygame.BLEND_MULT )
+			refresh.append( lamp.lightRect )
+
+
+	# Render the light rectangle surrounding the player
+	def renderPlayer(self, screen, text, refresh, PC, lampList, spiderList):
 	
-	def render(self, PC, lampList):
+		screen.fill( (0,0,0), PC )
+		drawBkg( screen, text, refresh, PC )
+		
+		for item in spiderList:
+			if item.colliderect( PC ):
+				trect = item.clip( PC )
+				drawBkg( screen, text, refresh, trect )
+				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
+		
+		screen.blit( broom, broomRect )
+		
+		# Create light map "night"
+		night.fill( (0,0,0) )
+		for lamp in lampList:
+			#if PC.colliderect( lamp.lightRect ):
+			night.blit( lightAlpha, lamp.lightRect )
+		night.blit( lightAlpha, PC )
+		
+		screen.blit( night, PC, PC, special_flags = pygame.BLEND_MULT )
+		refresh.append( PC )
 		
 
+class lamp:
 
-class lampPost:
-
-	def _init_( self, (x,y), lightRect ):
+	def __init__( self, upperLeft, lightRect ):
 		self.lightRect = lightRect
-		self.coors = (x,y)
+		self.coors = upperLeft
 
 
 ############## Setting up the Broom as a sprite ################
@@ -125,11 +167,14 @@ broomActiveRect = pygame.Rect((4, 41),(106, 82))
 trect = lightAlpha.get_rect()
 lightActiveRect = lightAlpha.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
 
-# get the corner light rectangle
-cornerLight = lightAlpha.get_rect()
-
 # blit the broom to the screen and update the display
 screen.blit( broom, broomRect )
+
+# instantiate lighting class
+lighting = lighting()
+
+# get the corner lamp
+lampList = [ lamp( (0,0), lightAlpha.get_rect() ) ]
 
 ####################### Set up the spiders #####################
 
@@ -145,7 +190,10 @@ ticksSinceLastSpawn = 0
 # set up the refresh rectangle container
 refresh = []
 screen.fill( (0, 0, 0) )
-#drawBkg( screen, text, refresh )
+
+# Draw background illuminated by lights, then render light/darkness on top
+#lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
+lighting.renderLamps( screen, text, refresh, lampList, activeSpiders )
 
 # update the display before we start the main loop
 pygame.display.update()
@@ -158,7 +206,6 @@ while 1:
 	for event in pygame.event.get():
 		if event.type == pygame.MOUSEMOTION:
 			# erase the existing broom
-			#drawBkg( screen, text, refresh, broomRect )
 			screen.fill( (0,0,0), lightActiveRect )
 			refresh.append( lightActiveRect )
 		
@@ -192,7 +239,6 @@ while 1:
 	for item in activeSpiders:
 		screen.fill( (0, 0, 0), item )
 		refresh.append( item )
-		#drawBkg( screen, text, refresh, item )
 
 
 	# figure out if the broom is intersecting any of the spiders
@@ -219,56 +265,9 @@ while 1:
 	else:
 		pygame.mouse.set_visible(True)
 
-	# Draw background illuminated by lights
-	drawBkg( screen, text, refresh, lightActiveRect )
-	drawBkg( screen, text, refresh, cornerLight )
-
-	# draw all of the spiders, the rectangle is already on the refresh
-	# list from the background draw
-	for item in activeSpiders:
-		if lightActiveRect.colliderect( item ):
-			trect = lightActiveRect.clip( item )
-			drawBkg( screen, text, refresh, trect )
-			screen.blit( spider, trect, trect.move(-item.left,-item.top) )
-		if cornerLight.colliderect( item ):
-			trect = cornerLight.clip( item )
-			drawBkg( screen, text, refresh, trect )
-			screen.blit( spider, trect, trect.move(-item.left,-item.top) )
-
-
-	night.fill( (0,0,0) )
-
-	if cornerLight.colliderect( lightActiveRect ):
-		trect = cornerLight.union( lightActiveRect )
-		night.blit(lightAlpha, cornerLight)
-		night.blit(lightAlpha, lightActiveRect)
-		
-		# If the game is in focus, draw broom
-		if pygame.mouse.get_focused():      
-			# draw the broom in the location of the mouse
-			screen.blit( broom, broomRect )
-		
-		screen.blit(night, trect, special_flags = pygame.BLEND_MULT)
-		refresh.append(trect)
-	else: 
-		# Draw corner light
-		night.blit( lightAlpha, cornerLight )
-		refresh.append( cornerLight )
-
-		# If the game is in focus, draw broom
-		if pygame.mouse.get_focused():      
-			# draw the broom in the location of the mouse
-			screen.blit( broom, broomRect )
-			
-		night.blit( lightAlpha, lightActiveRect )
-
-
-		screen.blit( night, cornerLight, special_flags = pygame.BLEND_MULT )
-		screen.blit( night, lightActiveRect, special_flags = pygame.BLEND_MULT )
-		
-		# add to the refresh list
-		refresh.append( lightActiveRect )
-
+	# Render everything to the screen
+	lighting.renderLamps( screen, text, refresh, lampList, activeSpiders )
+	lighting.renderPlayer( screen, text, refresh, lightActiveRect, lampList, activeSpiders )
 
 	# update the parts of the screen that need it
 	pygame.display.update( refresh )
