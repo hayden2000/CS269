@@ -75,10 +75,10 @@ def startScreen():
         label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button(' Start ', 100, 400, white, grey, light_grey, fontBig, level1)
-        button(' Instructions ', 300, 400, white, grey, light_grey, fontBig, instructions)
-        button(' Credits ', 550, 400, white, grey, light_grey, fontBig, credits)
-        button(' Quit ', 700, 400, white, grey, light_grey, fontBig, quit)
+        button(' Start ', 150, 400, white, grey, light_grey, fontBig, level1)
+        button(' Instructions ', 325, 400, white, grey, light_grey, fontBig, instructions)
+        button(' Credits ', 522, 400, white, grey, light_grey, fontBig, credits)
+        button(' Quit ', 654, 400, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
