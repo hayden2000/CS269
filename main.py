@@ -39,7 +39,7 @@ def label(message, x, y, textColor, font):
     screen.blit(text, textRect)
 
 # Define a button for the view
-def button(message, x, y, textColor, initColor, highColor, font, action):
+def button(message, x, y, textColor, initColor, highColor, font, action, level=None):
     text = font.render(message, True, textColor, initColor)
     textRect = text.get_rect()
     textRect.center = (x, y)
@@ -52,7 +52,10 @@ def button(message, x, y, textColor, initColor, highColor, font, action):
         text = font.render(message, True, textColor, highColor)
 
         if click[0] == 1:
-            action()
+            if level != None:
+                action(level)
+            else:
+                action()
     else:
         text = font.render(message, True, textColor, initColor)
 
@@ -60,7 +63,7 @@ def button(message, x, y, textColor, initColor, highColor, font, action):
     
 ##################################################
 ##################################################
-# START SCREEEN
+# START SCREEN
 ##################################################
 
 def startScreen():
@@ -75,7 +78,7 @@ def startScreen():
         label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button(' Start ', 150, 400, white, grey, light_grey, fontBig, level1)
+        button(' Start ', 150, 400, white, grey, light_grey, fontBig, levelManager)
         button(' Instructions ', 325, 400, white, grey, light_grey, fontBig, instructions)
         button(' Credits ', 522, 400, white, grey, light_grey, fontBig, credits)
         button(' Quit ', 654, 400, white, grey, light_grey, fontBig, quit)
@@ -91,7 +94,7 @@ def startScreen():
     
 ##################################################  
 ##################################################
-# INSTRUCTION SCREEEN
+# INSTRUCTION SCREEN
 ##################################################
     
 def instructions():
@@ -120,7 +123,7 @@ def instructions():
     
 ##################################################  
 ##################################################
-# CRTEDITS SCREEEN
+# CRTEDITS SCREEN
 ##################################################
     
 def credits():
@@ -158,12 +161,15 @@ def credits():
     
 ##################################################    
 ##################################################
-# TEMP LEVEL 1 SCREEEN
+# LEVEL MANAGER
 ##################################################
     
-def level1():
-    newLevelNotifier(1)
-    endScreen()
+def levelManager(willContinue=None, score=None, level=None):
+    
+    if willContinue != None:
+        newLevelNotifier(level + 1)
+    else:
+        newLevelNotifier(1)
     
 ##################################################    
 ##################################################
@@ -171,22 +177,86 @@ def level1():
 ##################################################
     
 def newLevelNotifier(number):
-    pass
+    
+    running = True
+     
+    while running:
+    
+        screen.fill(black) 
+  
+        # label control 
+        label('Level #{}'.format(number), 400, 300, white, fontBig)
+        
+        # button control
+        button(' Start ', 400, 400, white, grey, light_grey, fontBig, level, number)
+    
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+            pygame.display.update()
+                
+    pygame.quit()
+    quit()
     
 ##################################################    
 ##################################################
-# GENERIC LEVEL SCREEEN
+# GENERIC LEVEL SCREEN
 ##################################################
 
-#to be implemented in later revisions of the game
+def level(number):
+
+    win = False
+    score = 0
+    max_levels = 10
+    
+    ####
+    #GAME GOES HERE :)
+    ####
+    
+    if win == True and number < max_levels:
+        endScreen(win, score, number)
+        #levelManager(True, score, number) #for more than 1 level
+    else:
+        endScreen(win, score, number)
 
 ##################################################
 ##################################################
-# END SCREEEN
+# END SCREEN
 ##################################################
 
-def endScreen():
-    pass
+def endScreen(win, score, level):
+    
+    running = True
+    
+    while running:
+    
+        screen.fill(black)
+  
+        # label control 
+        label('Game Over', 400, 300, white, fontBig)
+        
+        if win == True:
+            label('You won! Your score was {} through level {}'.format(score, level), 400, 375, white, fontSmall)
+        else:
+            label('You failed, try again! Your score was {} through level {}'.format(score, level), 400, 375, white, fontSmall)
+        
+        # button control
+        if win == True:
+            button(' Play again ', 135, 550, white, grey, light_grey, fontBig, startScreen)
+        else:
+            button(' Try again ', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            
+        button(' Quit ', 710, 550, white, grey, light_grey, fontBig, quit)
+    
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+            pygame.display.update()
+                
+    pygame.quit()
+    quit()
     
 ##################################################    
 ##################################################
