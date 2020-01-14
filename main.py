@@ -18,7 +18,7 @@ pygame.display.set_caption("Shadow Puppets")
 screen = pygame.display.set_mode((800,600))
 
 # color schemes - changes everywhere :)
-textColor = (255, 255, 255)
+white = (255, 255, 255)
 black = (0, 0, 0)
 grey = (127, 127, 127)
 light_grey = (200, 200, 200)
@@ -72,13 +72,13 @@ def startScreen():
         screen.fill(black) 
   
         # label control 
-        label('Shadow Puppets', 400, 300, textColor, fontBig)
+        label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button(' Start ', 100, 400, textColor, grey, light_grey, fontBig, level1)
-        button(' Instructions ', 300, 400, textColor, grey, light_grey, fontBig, instructions)
-        button(' Credits ', 550, 400, textColor, grey, light_grey, fontBig, credits)
-        button(' Quit ', 700, 400, textColor, grey, light_grey, fontBig, quit)
+        button(' Start ', 100, 400, white, grey, light_grey, fontBig, level1)
+        button(' Instructions ', 300, 400, white, grey, light_grey, fontBig, instructions)
+        button(' Credits ', 550, 400, white, grey, light_grey, fontBig, credits)
+        button(' Quit ', 700, 400, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -103,11 +103,11 @@ def instructions():
         screen.fill(black) 
   
         # label control 
-        label('Instructions - Shadow Puppets', 400, 50, textColor, fontBig)
+        label('Instructions - Shadow Puppets', 400, 50, white, fontBig)
         
         # button control
-        button(' Back ', 100, 550, textColor, grey, light_grey, fontBig, startScreen)
-        button(' Quit ', 700, 550, textColor, grey, light_grey, fontBig, quit)
+        button(' Back ', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button(' Quit ', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -132,20 +132,20 @@ def credits():
         screen.fill(black)
   
         # label control 
-        label('Credits - Shadow Puppets', 400, 50, textColor, fontBig)
+        label('Credits - Shadow Puppets', 400, 50, white, fontBig)
         
-        label('Producer - Sawyer Strong', 400, 100, textColor, fontSmall)
-        label('Designer - Brendan Martin', 400, 150, textColor, fontSmall)
-        label('Lead Programmers - Natalie Lunbeck and Matthew Maring', 400, 200, textColor, fontSmall)
-        label('Lead Visual Artists - Changling Li and Alaleh Naderi', 400, 250, textColor, fontSmall)
-        label('Lead Audio Artists - Chris Shaffrey', 400, 300, textColor, fontSmall)
-        label('Lead QA - Changling Li', 400, 350, textColor, fontSmall)
+        label('Producer - Sawyer Strong', 400, 100, white, fontSmall)
+        label('Designer - Brendan Martin', 400, 150, white, fontSmall)
+        label('Lead Programmers - Natalie Lunbeck and Matthew Maring', 400, 200, white, fontSmall)
+        label('Lead Visual Artists - Changling Li and Alaleh Naderi', 400, 250, white, fontSmall)
+        label('Lead Audio Artists - Chris Shaffrey', 400, 300, white, fontSmall)
+        label('Lead QA - Changling Li', 400, 350, white, fontSmall)
         
-        label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 425, textColor, fontSmall)
+        label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 425, white, fontSmall)
         
         # button control
-        button(' Back ', 100, 550, textColor, grey, light_grey, fontBig, startScreen)
-        button(' Quit ', 700, 550, textColor, grey, light_grey, fontBig, quit)
+        button(' Back ', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button(' Quit ', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
