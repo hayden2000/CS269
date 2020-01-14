@@ -2,22 +2,22 @@
 # 1/13/2020
 # Shadow Puppets Project
 
-
-# import the pygame module, so you can use it
 import pygame
 
-# initialize the pygame module
+##################################################
+##################################################
+# SETUP
+##################################################
+
 pygame.init()
 
-# load and set the logo
+# Setup the window
 logo = pygame.image.load("logo32x32.png")
 pygame.display.set_icon(logo)
 pygame.display.set_caption("Shadow Puppets")
-
-# create a surface on screen that has the size of 800 x 600
 screen = pygame.display.set_mode((800,600))
 
-# color schemes
+# color schemes - changes everywhere :)
 textColor = (255, 255, 255)
 black = (0, 0, 0)
 grey = (127, 127, 127)
@@ -25,7 +25,12 @@ light_grey = (200, 200, 200)
 fontBig = pygame.font.Font('freesansbold.ttf', 32)
 fontSmall = pygame.font.Font('freesansbold.ttf', 20)
 
-# Define the label parameters
+##################################################
+##################################################
+# UI COMPONENT FUNCTIONS
+##################################################
+
+# Define a label for the view
 def label(message, x, y, textColor, font):
     text = font.render(message, True, textColor)
     textRect = text.get_rect()
@@ -33,7 +38,7 @@ def label(message, x, y, textColor, font):
     
     screen.blit(text, textRect)
 
-# Define the button parameters
+# Define a button for the view
 def button(message, x, y, textColor, initColor, highColor, font, action):
     text = font.render(message, True, textColor, initColor)
     textRect = text.get_rect()
@@ -42,6 +47,7 @@ def button(message, x, y, textColor, initColor, highColor, font, action):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     
+    # Action if clicked
     if textRect.right > mouse[0] > textRect.left and textRect.bottom > mouse[1] > textRect.top:
         text = font.render(message, True, textColor, highColor)
 
@@ -51,18 +57,18 @@ def button(message, x, y, textColor, initColor, highColor, font, action):
         text = font.render(message, True, textColor, initColor)
 
     screen.blit(text, textRect) 
- 
-# start screen
+    
+##################################################
+##################################################
+# START SCREEEN
+##################################################
+
 def startScreen():
 
-    # define a variable to control the main loop
     running = True
      
-    # main loop
     while running:
     
-        # completely fill the surface object 
-        # with white color 
         screen.fill(black) 
   
         # label control 
@@ -74,11 +80,8 @@ def startScreen():
         button(' Credits ', 550, 400, textColor, grey, light_grey, fontBig, credits)
         button(' Quit ', 700, 400, textColor, grey, light_grey, fontBig, quit)
     
-        # event handling, gets all event from the event queue
         for event in pygame.event.get():
-            # only do something if the event is of type QUIT
             if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
                 running = False
         
             pygame.display.update()
@@ -86,17 +89,17 @@ def startScreen():
     pygame.quit()
     quit()
     
+##################################################  
+##################################################
+# INSTRUCTION SCREEEN
+##################################################
     
 def instructions():
 
-    # define a variable to control the main loop
     running = True
-     
-    # main loop
-    while running:
     
-        # completely fill the surface object 
-        # with white color 
+    while running:
+
         screen.fill(black) 
   
         # label control 
@@ -106,11 +109,8 @@ def instructions():
         button(' Back ', 100, 550, textColor, grey, light_grey, fontBig, startScreen)
         button(' Quit ', 700, 550, textColor, grey, light_grey, fontBig, quit)
     
-        # event handling, gets all event from the event queue
         for event in pygame.event.get():
-            # only do something if the event is of type QUIT
             if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
                 running = False
         
             pygame.display.update()
@@ -118,17 +118,18 @@ def instructions():
     pygame.quit()
     quit()
     
+##################################################  
+##################################################
+# CRTEDITS SCREEEN
+##################################################
+    
 def credits():
 
-    # define a variable to control the main loop
     running = True
     
-    # main loop
     while running:
     
-        # completely fill the surface object 
-        # with white color 
-        screen.fill(black) 
+        screen.fill(black)
   
         # label control 
         label('Credits - Shadow Puppets', 400, 50, textColor, fontBig)
@@ -146,11 +147,8 @@ def credits():
         button(' Back ', 100, 550, textColor, grey, light_grey, fontBig, startScreen)
         button(' Quit ', 700, 550, textColor, grey, light_grey, fontBig, quit)
     
-        # event handling, gets all event from the event queue
         for event in pygame.event.get():
-            # only do something if the event is of type QUIT
             if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
                 running = False
         
             pygame.display.update()
@@ -158,24 +156,43 @@ def credits():
     pygame.quit()
     quit()
     
+##################################################    
+##################################################
+# TEMP LEVEL 1 SCREEEN
+##################################################
+    
 def level1():
     newLevelNotifier(1)
     endScreen()
     
+##################################################    
+##################################################
+# NEW LEVEL SCREEEN
+##################################################
+    
 def newLevelNotifier(number):
     pass
     
-#After first iteration, making multiple levels
-#def level(): 
+##################################################    
+##################################################
+# GENERIC LEVEL SCREEEN
+##################################################
+
+#to be implemented in later revisions of the game
+
+##################################################
+##################################################
+# END SCREEEN
+##################################################
 
 def endScreen():
     pass
-     
-     
-# run the main function only if this module is executed as the main script
-# (if you import this as a module then nothing is executed)
-if __name__=="__main__":
-    # call the main function
-    startScreen()
     
+##################################################    
+##################################################
+# NOW LET'S RUN IT :)
+##################################################
+
+if __name__=="__main__":
+    startScreen()
     
