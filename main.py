@@ -3,6 +3,7 @@
 # Shadow Puppets Project
 
 import pygame
+from pygame import gfxdraw
 
 ##################################################
 ##################################################
@@ -50,6 +51,7 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
     # Action if clicked
     if textRect.right > mouse[0] > textRect.left and textRect.bottom > mouse[1] > textRect.top:
         text = font.render(message, True, textColor, highColor)
+        roundCorners(textRect, highColor)
 
         if click[0] == 1:
             if level != None:
@@ -58,8 +60,39 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
                 action()
     else:
         text = font.render(message, True, textColor, initColor)
+        roundCorners(textRect, initColor)
 
     screen.blit(text, textRect) 
+    
+def roundCorners(textRect, color):
+    # Get the corners of the buttons
+    x0, y0 = textRect.topleft
+    x1, y1 = textRect.topright
+    x2, y2 = textRect.bottomleft
+    x3, y3 = textRect.bottomright
+    
+    # Adjust sizes to center text
+    y2 = y2 - 3
+    y3 = y3 - 3
+    
+    # Draw the arcs for each button
+    gfxdraw.aacircle(screen, x0, y0, 5, color)
+    gfxdraw.filled_circle(screen, x0, y0, 5, color)
+    
+    gfxdraw.aacircle(screen, x1, y1, 5, color)
+    gfxdraw.filled_circle(screen, x1, y1, 5, color)
+    
+    gfxdraw.aacircle(screen, x2, y2, 5, color)
+    gfxdraw.filled_circle(screen, x2, y2, 5, color)
+    
+    gfxdraw.aacircle(screen, x3, y3, 5, color)
+    gfxdraw.filled_circle(screen, x3, y3, 5, color)
+    
+    # Extend the size of each button to smooth the corners
+    gfxdraw.box(screen, pygame.Rect(x0, y0 - 5, x1 - x0, 5), color)
+    gfxdraw.box(screen, pygame.Rect(x1, y1, 6, y3 - y1), color)
+    gfxdraw.box(screen, pygame.Rect(x2, y2, x3 - x2, 6), color)
+    gfxdraw.box(screen, pygame.Rect(x0 - 5, y0, 5, y2 - y0), color)
     
 ##################################################
 ##################################################
@@ -81,10 +114,10 @@ def startScreen():
         label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button(' Start ', 150, 400, white, grey, light_grey, fontBig, levelManager)
-        button(' Instructions ', 325, 400, white, grey, light_grey, fontBig, instructions)
-        button(' Credits ', 522, 400, white, grey, light_grey, fontBig, credits)
-        button(' Quit ', 654, 400, white, grey, light_grey, fontBig, quit)
+        button('Start', 150, 400, white, grey, light_grey, fontBig, levelManager)
+        button('Instructions', 325, 400, white, grey, light_grey, fontBig, instructions)
+        button('Credits', 522, 400, white, grey, light_grey, fontBig, credits)
+        button('Quit', 654, 400, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -115,8 +148,8 @@ def instructions():
         label('Instructions - Shadow Puppets', 400, 50, white, fontBig)
         
         # button control
-        button(' Back ', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button(' Quit ', 700, 550, white, grey, light_grey, fontBig, quit)
+        button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -156,8 +189,8 @@ def credits():
         label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 475, white, fontSmall)
         
         # button control
-        button(' Back ', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button(' Quit ', 700, 550, white, grey, light_grey, fontBig, quit)
+        button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -200,7 +233,7 @@ def newLevelNotifier(number):
         label('Level #{}'.format(number), 400, 300, white, fontBig)
         
         # button control
-        button(' Begin ', 400, 400, white, grey, light_grey, fontBig, level, number)
+        button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -258,11 +291,11 @@ def endScreen(win, score, level):
         
         # button control
         if win == True:
-            button(' Play again ', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Play again', 135, 550, white, grey, light_grey, fontBig, startScreen)
         else:
-            button(' Try again ', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Try again', 135, 550, white, grey, light_grey, fontBig, startScreen)
             
-        button(' Quit ', 710, 550, white, grey, light_grey, fontBig, quit)
+        button('Quit', 710, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
