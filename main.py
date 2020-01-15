@@ -200,7 +200,7 @@ def newLevelNotifier(number):
         label('Level #{}'.format(number), 400, 300, white, fontBig)
         
         # button control
-        button(' Start ', 400, 400, white, grey, light_grey, fontBig, level, number)
+        button(' Begin ', 400, 400, white, grey, light_grey, fontBig, level, number)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
