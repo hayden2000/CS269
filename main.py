@@ -106,7 +106,10 @@ def instructions():
     
     while running:
 
-        screen.fill(black) 
+        screen.fill(black)
+        
+        bg = pygame.image.load("Cave.png")
+        screen.blit(bg, (0, 0)) 
   
         # label control 
         label('Instructions - Shadow Puppets', 400, 50, white, fontBig)
@@ -136,18 +139,21 @@ def credits():
     while running:
     
         screen.fill(black)
+        
+        bg = pygame.image.load("Cave.png")
+        screen.blit(bg, (0, 0))
   
         # label control 
         label('Credits - Shadow Puppets', 400, 50, white, fontBig)
         
-        label('Producer - Sawyer Strong', 400, 100, white, fontSmall)
-        label('Designer - Brendan Martin', 400, 150, white, fontSmall)
-        label('Lead Programmers - Natalie Lunbeck and Matthew Maring', 400, 200, white, fontSmall)
-        label('Lead Visual Artists - Changling Li and Alaleh Naderi', 400, 250, white, fontSmall)
-        label('Lead Audio Artists - Chris Shaffrey', 400, 300, white, fontSmall)
-        label('Lead QA - Changling Li', 400, 350, white, fontSmall)
+        label('Producer - Sawyer Strong', 400, 125, white, fontSmall)
+        label('Designer - Brendan Martin', 400, 175, white, fontSmall)
+        label('Lead Programmers - Natalie Lunbeck and Matthew Maring', 400, 225, white, fontSmall)
+        label('Lead Visual Artists - Changling Li and Alaleh Naderi', 400, 275, white, fontSmall)
+        label('Lead Audio Artist - Chris Shaffrey', 400, 325, white, fontSmall)
+        label('Lead QA - Changling Li', 400, 375, white, fontSmall)
         
-        label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 425, white, fontSmall)
+        label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 475, white, fontSmall)
         
         # button control
         button(' Back ', 100, 550, white, grey, light_grey, fontBig, startScreen)
@@ -186,6 +192,9 @@ def newLevelNotifier(number):
     while running:
     
         screen.fill(black) 
+        
+        bg = pygame.image.load("Cave.png")
+        screen.blit(bg, (0, 0))
   
         # label control 
         label('Level #{}'.format(number), 400, 300, white, fontBig)
@@ -235,6 +244,9 @@ def endScreen(win, score, level):
     while running:
     
         screen.fill(black)
+        
+        bg = pygame.image.load("Cave.png")
+        screen.blit(bg, (0, 0))
   
         # label control 
         label('Game Over', 400, 300, white, fontBig)
