@@ -209,7 +209,7 @@ def credits():
 def levelManager(willContinue=None, score=None, level=None):
     
     if willContinue != None:
-        newLevelNotifier(level + 1)
+        newLevelNotifier(level + 1, score)
     else:
         newLevelNotifier(1)
     
@@ -218,7 +218,7 @@ def levelManager(willContinue=None, score=None, level=None):
 # NEW LEVEL SCREEEN
 ##################################################
     
-def newLevelNotifier(number):
+def newLevelNotifier(number, score=None):
     
     running = True
      
@@ -231,6 +231,9 @@ def newLevelNotifier(number):
   
         # label control 
         label('Level #{}'.format(number), 400, 300, white, fontBig)
+        
+        if score != None:
+            label('Current Score: {}'.format(score), 400, 345, white, fontSmall)
         
         # button control
         button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number)
@@ -253,15 +256,14 @@ def level(number):
 
     win = False
     score = 0
-    max_levels = 10
+    max_levels = 1 # change when we add more levels
     
     ####
     #GAME GOES HERE :)
     ####
     
     if win == True and number < max_levels:
-        endScreen(win, score, number)
-        #levelManager(True, score, number) #for more than 1 level
+        levelManager(win, score, number) #for more than 1 level
     else:
         endScreen(win, score, number)
 
