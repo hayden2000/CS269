@@ -49,7 +49,7 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
     click = pygame.mouse.get_pressed()
     
     # Action if clicked
-    if textRect.right > mouse[0] > textRect.left and textRect.bottom > mouse[1] > textRect.top:
+    if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
         text = font.render(message, True, textColor, highColor)
         roundCorners(textRect, highColor)
 
