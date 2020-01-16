@@ -96,7 +96,7 @@ broomRect = broom.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.heig
 broomActiveRect = pygame.Rect((4, 41),(106, 82))
 
 # blit the broom to the screen and update the display
-screen.blit( broom, broomRect )
+screen.blit(broom, broomRect)
 
 ####################### Set up the spiders #####################
 
