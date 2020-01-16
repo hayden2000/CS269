@@ -73,20 +73,29 @@ def drawBkg(screen, text, refresh, rect=None):
         
 #class for enemy ai
 class Enemy:  #Class for Spider character
-    def __init__(self, x, y):
+    def __init__(self, x, y, Screen):
+        pygame.sprite.Sprite.__init__(self)
         self.image = spider
         self.xPos = x
         self.yPos = y
         self.rect = pygame.Rect(self.xPos, self.yPos, 40, 92)
         self.alive = 1
-    def random_move(self):
-        self.xPos += 1/5
+        self.position = self.image.get_rect()
+        self.position = self.position.move(self.xPos, self.yPos)
+        self.move_x = 0
+        self.move_y = 0
+        
+    def random_move(self,direction_x,direction_y):
+        self.move_x = 1
+        self.xPos += self.move_x
     def run_away(self,player_x, player_y):
         to_do = 1
-    def update(self):
-        self.prevRect = self.rect
-        self.rect = pygame.Rect(self.xPos, self.yPos, 40, 92)
-    
+    def update(self, Screen):
+        self.prev_rect = self.position
+        self.rect.x = self.rect.x+ self.move_x
+        self.rect = pygame.Rect(int(self.rect.x), int(self.yPos), 40, 92)
+        Screen.blit(self.image, self.rect)
+
 # get the current mouse information, and make the cursor invisible if
 # it is focused on the game window
 pygame.event.pump()
@@ -96,7 +105,7 @@ if pygame.mouse.get_focused():
 
 refresh = []
 drawBkg(screen, text, refresh)
-enemy_spider = Enemy(100,350)   
+enemy_spider = Enemy(100,350,screen)   
 # respond to mouse motion events until someone clicks a mouse or hits a key
 print("Entering main loop")
 while 1:
@@ -115,13 +124,24 @@ while 1:
         if event.type == pygame.QUIT:
             sys.exit()
     if enemy_spider.alive == 1:
-        enemy_spider.random_move()
-        enemy_spider.update()
-        
+        # radius = sqrt((playerx-spidery)^2+(playery-spidery)^2)
+        #if player is within 100 pixel radius of the player run away
+            #run away
+        #else
+            #randomly move
+            #every 30 frames reassess direction
+            #if bumping 
+                #reverse x
+            #else
+                #x direction = random -1, 0, 1
+                #y direction = random 0, 1 higher chance of 0
+            
+            
+        enemy_spider.random_move(1,0)
+        enemy_spider.update(screen)
     screen.blit(spider, enemy_spider)
     # update the parts of the screen that need it
-    pygame.display.update( refresh )
-    
+    pygame.display.update(refresh)
     # clear out the refresh rects
     refresh = []
 
