@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 # create a game clock
 gameClock = pygame.time.Clock()
 
@@ -85,7 +86,7 @@ class Enemy:
         self.currentDirection = 0
         self.moveDirection = 0
         self.downForce = 5
-        self.jumping = false
+        self.jumping = False
 #list of image for walking right
 #list of image for walking left
         self.gravity = 10
@@ -131,9 +132,9 @@ class Enemy:
             else:
                 self.isJump = False
                 self.jumpCount = 9
-    def moveSetup(self):
-        if(self.jumping)
-            
+    # def moveSetup(self):
+    #     if(self.jumping)
+
     def random_move(self,frame):
         #if collide move other way
         if(self.moveDirection == 0):
@@ -158,8 +159,13 @@ class Enemy:
                 self.moveDirection = 0
                 self.currentDirection = 0
             if(jumpChance < .15):
-                self.jumping = true
+                self.jumping = True
 
+    def run_away(self, player_x, player_y):
+        if(player_x < self.y):
+            self.moveLeft()
+        else:
+            self.moveRight()
     def stand(self):
         self.left = False
         self.right = False
@@ -179,10 +185,13 @@ def main():
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-        radius = 120
+        r = math.sqrt((float(player.getX())-float(spider.getX()))**2 +(float(player.getY())- float(spider.getY()))**2)
+        print (r)
+        radius =120
         if radius >= 100:
             spider.random_move(frame)
-
+        else:
+            spider.run_away(player.getX(),player.getY())
         win.fill((0,0,0))
         player.draw()
         spider.draw()
