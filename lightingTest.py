@@ -237,7 +237,7 @@ player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
 lighting = Lighting()
 
 # Create a list of lamp object
-lampList = [ Lamp( (400,400), lampImage, lightAlpha, False ), Lamp( (150,150), lampImage, lightAlpha, True ) ]
+lampList = [ Lamp( (150,300), lampImage, lightAlpha, False ), Lamp( (150,150), lampImage, lightAlpha, True ) ]
 
 ####################### Set up the spiders #####################
 
