@@ -162,7 +162,7 @@ class Lighting:
 # Class to represent the stationary lamps
 class Lamp:
 
-	def __init__( self, center, image, lightImage, isLit = False ):
+	def __init__( self, center, image, lightImage, timer = -1, isLit = False ):
 		self.coors = center
 		self.lightImage = lightImage
 		self.image = image
@@ -175,6 +175,8 @@ class Lamp:
 		
 		self.isLit = isLit
 		self.recentFlip = False
+		self.timeLimit = timer * 30    #Convert from seconds to frames
+		self.counter = 0
 		
 	def turnOn( self ):
 		self.isLit = True
@@ -183,13 +185,17 @@ class Lamp:
 		self.isLit = False
 	
 	def checkStatus( self, collisionRect ):
-		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
-			self.isLit = not self.isLit
-			self.recentFlip = True
-			if self.isLit == False:
+		# If the rectangles collide and the lamp has not recently been lit
+		if collisionRect.colliderect( self.imageRect ):
+			self.isLit = True
+			self.counter = 0
+		elif self.isLit and self.timeLimit >= 0:
+			if self.counter >= self.timeLimit:
+				self.counter = 0
+				self.isLit = False
 				screen.fill( (0,0,0), self.lightRect  )
-		if collisionRect.colliderect( self.imageRect ) == False and self.recentFlip:
-			self.recentFlip = False
+			else:
+				self.counter += 1
 		
 # Class to represent the playable character
 class Player:
@@ -237,7 +243,7 @@ player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
 lighting = Lighting()
 
 # Create a list of lamp object
-lampList = [ Lamp( (150,300), lampImage, lightAlpha, False ), Lamp( (150,150), lampImage, lightAlpha, True ) ]
+lampList = [ Lamp( (150,300), lampImage, lightAlpha ), Lamp( (150,150), lampImage, lightAlpha, -5, False ) ]
 
 ####################### Set up the spiders #####################
 
