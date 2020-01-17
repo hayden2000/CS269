@@ -28,7 +28,7 @@
       <stop
          id="stop4756"
          offset="0"
-         style="stop-color:#ffffff;stop-opacity:1" />
+         style="stop-color:#00c5ff;stop-opacity:1" />
       <stop
          id="stop4754"
          offset="1"
@@ -77,13 +77,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-216.42857"
+     inkscape:cx="-677.85714"
      inkscape:cy="405.71429"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1440"
-     inkscape:window-height="803"
+     inkscape:window-height="805"
      inkscape:window-x="0"
      inkscape:window-y="1"
      inkscape:window-maximized="1" />
@@ -121,14 +121,5 @@
        ry="224.23877"
        inkscape:export-xdpi="60.057201"
        inkscape:export-ydpi="60.057201" />
-    <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect3343"
-       width="545.71436"
-       height="408.57147"
-       x="131.42857"
-       y="855.21936"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
   </g>
 </svg>
