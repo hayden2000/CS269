@@ -31,6 +31,11 @@ light_grey = (200, 200, 200)
 fontBig = pygame.font.Font('freesansbold.ttf', 32)
 fontSmall = pygame.font.Font('freesansbold.ttf', 20)
 
+# music setup
+pygame.mixer.init()
+pygame.mixer.music.load('Window_Demons.ogg')
+pygame.mixer.music.play()
+
 ##################################################
 ##################################################
 # UI COMPONENT FUNCTIONS
@@ -226,6 +231,11 @@ def levelManager(willContinue=None, score=None, level=None):
 def newLevelNotifier(number, score=None):
     
     running = True
+    
+    if score != None:
+        # Sound init
+        pygame.mixer.music.load('Window_Demons.ogg')
+        pygame.mixer.music.play()
      
     while running:
     
@@ -276,6 +286,9 @@ def level(number):
     # Collision init
     
     # Sound init
+    pygame.mixer.music.stop() #stop background audio
+#     pygame.mixer.music.load('Window_Demons.ogg')
+#     pygame.mixer.music.play()
     
     
     ####
@@ -372,6 +385,10 @@ def level(number):
 def endScreen(win, score, level):
     
     running = True
+    
+    # Sound init
+    pygame.mixer.music.load('Window_Demons.ogg')
+    pygame.mixer.music.play()
     
     while running:
     
