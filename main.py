@@ -5,6 +5,9 @@
 import pygame
 from pygame import gfxdraw
 
+# Import all the other classes here
+#from player import Player
+
 ##################################################
 ##################################################
 # SETUP
@@ -263,6 +266,22 @@ def level(number):
     level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
     
+    # Player init
+#     player = Player(screen, 300, 200)
+    
+    # Lighting init
+    
+    # Enemy AI init
+    
+    # Collision init
+    
+    # Sound init
+    
+    
+    ####
+    # Main Loop
+    ####
+    
     while running:
     
         ####
@@ -296,6 +315,32 @@ def level(number):
         ####
         #GAME GOES HERE :)
         ####
+        
+        # Player Control
+#         key = pygame.key.get_pressed()
+#         if key[pygame.K_LEFT] and player.getX() > player.getVel():
+#             player.moveLeft()
+#         if key[pygame.K_RIGHT] and player.getX() < 800 - player.getWidth() - player.getVel():
+#             player.moveRight()
+#         else:
+#             player.stand()
+#         if key[pygame.K_SPACE]:
+#             player.jumpCheck()
+#         
+#         player.jump()
+#         player.draw()
+        
+        # Lighting Control
+        
+        
+        # Enemy AI Control
+        
+        
+        # Collision Control
+        
+        
+        # Sound Control
+        
         
         ####
         # Handle next round
