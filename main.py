@@ -20,6 +20,8 @@ screen = pygame.display.set_mode((800,600))
 
 # color schemes - changes everywhere :)
 white = (255, 255, 255)
+yellow = (255, 255, 0)
+red = (255, 0, 0)
 black = (0, 0, 0)
 grey = (127, 127, 127)
 light_grey = (200, 200, 200)
@@ -123,7 +125,7 @@ def startScreen():
             if event.type == pygame.QUIT:
                 running = False
         
-            pygame.display.update()
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -155,7 +157,7 @@ def instructions():
             if event.type == pygame.QUIT:
                 running = False
         
-            pygame.display.update()
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -196,7 +198,7 @@ def credits():
             if event.type == pygame.QUIT:
                 running = False
         
-            pygame.display.update()
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -242,7 +244,7 @@ def newLevelNotifier(number, score=None):
             if event.type == pygame.QUIT:
                 running = False
         
-            pygame.display.update()
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -254,18 +256,50 @@ def newLevelNotifier(number, score=None):
 
 def level(number):
 
-    win = False
+    running = True
+    win = None
     score = 0
     max_levels = 1 # change when we add more levels
+    level_time = 30.0 #seconds
+    start_time = pygame.time.get_ticks()
     
-    ####
-    #GAME GOES HERE :)
-    ####
+    while running:
     
-    if win == True and number < max_levels:
-        levelManager(win, score, number) #for more than 1 level
-    else:
-        endScreen(win, score, number)
+        screen.fill(black)
+        
+        current_time = (pygame.time.get_ticks() - start_time) / 1000.0
+        countdown_time = level_time - current_time
+        
+        time_min = int(countdown_time / 60.0)
+        time_sec_int = int(countdown_time) % 60
+        time_mili = round(countdown_time % 60.0, 1)
+        
+        if countdown_time > 10.0:
+            label('{}:{}'.format(time_min, time_sec_int), 750, 575, white, fontSmall)
+        elif countdown_time > 5:
+            label('{}:0{}'.format(time_min, time_mili), 750, 575, yellow, fontSmall)
+        elif countdown_time > 0:
+            label('{}:0{}'.format(time_min, time_mili), 750, 575, red, fontSmall)
+        else:
+            win = False
+        
+        ####
+        #GAME GOES HERE :)
+        ####
+        
+        if win == True and number < max_levels:
+            levelManager(win, score, number) #for more than 1 level
+        elif win == False:
+            endScreen(win, score, number)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        pygame.display.update()
+                
+    pygame.quit()
+    quit()
 
 ##################################################
 ##################################################
@@ -303,7 +337,7 @@ def endScreen(win, score, level):
             if event.type == pygame.QUIT:
                 running = False
         
-            pygame.display.update()
+        pygame.display.update()
                 
     pygame.quit()
     quit()
