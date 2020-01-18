@@ -43,12 +43,17 @@ class Player:
 		self.x+=self.vel
 		self.left = False
 		self.right = True
-	def jump(self):
+	
+	# If the space bar is pressed, initiate the jump
+	def jumpCheck(self):
 		if not(self.isJump):
 			self.isJump = True
 			self.left = False
 			self.right = False
-		else:
+	
+	# If a jump is in progress, this function will carry it out
+	def jump(self):
+		if self.isJump:
 			if self.jumpCount>= -9:
 				neg = 1
 				if self.jumpCount < 0:
@@ -86,8 +91,11 @@ def main():
 		else:
 			player.stand()
 		if key[pygame.K_SPACE]:
-			player.jump()
+			# Check for jump
+			player.jumpCheck()
 
+		# Execute jump
+		player.jump()
 		win.fill((0,0,0))
 		player.draw()
 		pygame.display.update()
