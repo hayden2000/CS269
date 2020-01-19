@@ -1,6 +1,16 @@
 # Matthew Maring
 # 1/13/2020
-# Shadow Puppets Project
+# Shadow Puppets Project, CS267
+
+# lighting by Brendan Martin
+# enemy-ai by
+# collision by 
+# player by
+# sounds by
+# art by
+# infrastructure see above
+
+##################################################
 
 import pygame
 import sys
@@ -11,7 +21,7 @@ from pygame import gfxdraw
 #from player import *
 #from collision import
 #from enemy-ai import
-from lightingTest import *
+from lighting import *
 
 ##################################################
 ##################################################
@@ -284,11 +294,15 @@ def level(number):
     level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
     
+    ##################################################
     # Player init
-#     player = Player(screen, 300, 200)
+    ##################################################
     
+    
+    ##################################################
     # Lighting init
-
+    ##################################################
+    
     # get the current mouse information, and make the cursor invisible if
     # it is focused on the game window
     pygame.event.pump()
@@ -315,20 +329,27 @@ def level(number):
     # Create a list of lamp object
     lampList = [ Lamp( (150,300), lampImage, lightAlpha ), Lamp( (150,150), lampImage, lightAlpha, -5, False ) ]
 
-    ####################### Main Event Loop #########################
     # set up the refresh rectangle container
     refresh = []
-    screen.fill( (0, 0, 0) )
+    screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
     #lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
     lighting.renderLamps( screen, refresh, lampList )
     
+    ##################################################
     # Enemy AI init
+    ##################################################
     
+    
+    ##################################################
     # Collision init
+    ##################################################
     
+    
+    ##################################################
     # Sound init
+    ##################################################
     pygame.mixer.music.stop() #stop background audio
 #     pygame.mixer.music.load('Window_Demons.ogg')
 #     pygame.mixer.music.play()
@@ -375,37 +396,30 @@ def level(number):
         #GAME GOES HERE :)
         ####
         
+        ##################################################
         # Player Control
-        # key = pygame.key.get_pressed()
-#         if key[pygame.K_LEFT] and player.getX() > player.getVel():
-#             player.moveLeft()
-#         if key[pygame.K_RIGHT] and player.getX() < 800 - player.getWidth() - player.getVel():
-#             player.moveRight()
-#         else:
-#             player.stand()
-#         if key[pygame.K_SPACE]:
-#             player.jumpCheck()
-#         
-#         player.jump()
-#         player.draw()
+        ##################################################
         
+        
+        ##################################################
         # Lighting Control
+        ##################################################
         
         # handle events and erase things
         for event in pygame.event.get():
             if event.type == pygame.MOUSEMOTION:
                 # erase the existing broom
-                screen.fill( (0,0,0), player.lightRect )
+                screen.fill( black, player.lightRect )
                 refresh.append( player.lightRect )
         
             #if event.type == pygame.MOUSEBUTTONDOWN:
                 #sys.exit()
 
-            if event.type == pygame.KEYDOWN:
-                sys.exit()
+            #if event.type == pygame.KEYDOWN:
+                #sys.exit()
 
-            if event.type == pygame.QUIT:
-                sys.exit()
+            #if event.type == pygame.QUIT:
+                #sys.exit()
 
 
         # If the game is in focus, update mouse position
@@ -437,14 +451,19 @@ def level(number):
         # throttle the game speed to 30fps
         gameClock.tick(30)
         
-        
+        ##################################################
         # Enemy AI Control
+        ##################################################
         
         
+        ##################################################
         # Collision Control
+        ##################################################
         
         
+        ##################################################
         # Sound Control
+        ##################################################
         
         
         ####

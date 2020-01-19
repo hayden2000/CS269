@@ -1,19 +1,16 @@
+# Brendan Martin
+# 1/13/2020
+# Shadow Puppets Project
 
 ####################### Setup #########################
 # useful imports
 import sys
-
-# import pygame
 import pygame
 
-# initialize pygame
 pygame.init()
 
-# create a game clock
 gameClock = pygame.time.Clock()
 
-
-# create a screen (width, height)
 width = 800
 height = 600
 screen = pygame.display.set_mode( (width, height) )
@@ -21,8 +18,8 @@ screen = pygame.display.set_mode( (width, height) )
 ####################### Making Content #########################
 
 # load some images
-spider = pygame.image.load( "Spider.png" ).convert_alpha()
-spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
+#spider = pygame.image.load( "Spider.png" ).convert_alpha()
+#spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
 broom = pygame.image.load( "Broom.png" ).convert_alpha()
 lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
