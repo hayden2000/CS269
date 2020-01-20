@@ -143,8 +143,10 @@ class Enemy:
         #self.rotate()
         
     def rotate(self):
+    	self.rotSurf = pygame.Surface( (800,600) )
         self.rotSurf.blit(self.image, self.image.get_rect())
         self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
+        #self.image = self.rotSurf
        
             
 def main():
