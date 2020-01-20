@@ -327,7 +327,7 @@ def level(number):
     lighting = Lighting()
 
     # Create a list of lamp object
-    lampList = [ Lamp( (150,300), lampImage, lightAlpha ), Lamp( (150,150), lampImage, lightAlpha, -5, False ) ]
+    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []
@@ -440,10 +440,18 @@ def level(number):
 
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, lampList )
-        lighting.renderPlayer( screen, refresh, player, lampList )
+        lighting.renderPlayer( screen, refresh, player, lampList )  
 
         # update the parts of the screen that need it
         pygame.display.update( refresh )
+
+		# Check if the player has won
+        counter = 0
+        for lamp in lampList:
+            if lamp.isLit:
+                counter += 1
+        if counter == len(lampList):
+            win = True
 
         # clear out the refresh rects
         refresh = []
