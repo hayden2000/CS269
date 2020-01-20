@@ -287,6 +287,8 @@ def newLevelNotifier(number, score=None):
 
 def level(number):
 
+    ### VARIABLE NUMBER IS THE CURRENT LEVEL
+
     running = True
     win = None
     score = 0
@@ -345,6 +347,7 @@ def level(number):
     ##################################################
     # Collision init
     ##################################################
+    
     
     
     ##################################################
