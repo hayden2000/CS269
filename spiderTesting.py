@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+import numpy
 # create a game clock
 gameClock = pygame.time.Clock()
 
@@ -71,13 +72,13 @@ class Player:
     
 
 class Enemy:
-    def __init__(self, win, x, y, width=90, height=40, mass=1):
+    def __init__(self, win, x, y, width=90, height=50, mass=1):
         self.x = x
         self.y = y
         self.win = win
         self.width = width
         self.height = height
-        self.vel = 3
+        self.maxVel = 4
         self.isJump = False
         self.jumpCount = 9
         self.left = False
@@ -86,7 +87,8 @@ class Enemy:
         self.currentDirection = 0
         self.moveDirection = 0
         self.downForce = 5
-        self.jumping = False
+        self.currentSpeed = 1
+        self.angle = 30
 #list of image for walking right
 #list of image for walking left
         self.gravity = 10
@@ -103,72 +105,50 @@ class Enemy:
         return self.width
     def getHeight(self):
         return self.height
-    def getVel(self):
-        return self.vel
 
     def draw(self):
         pygame.draw.rect(self.win,(255,0,0), (self.x, self.y, self.width, self.height))
 
-    def moveLeft(self):
-        self.x-=self.vel
-        self.left = True
-        self.right = False
-    def moveRight(self):
-        self.x+=self.vel
-        self.left = False
-        self.right = True
-    def jump(self):
-        if not(self.isJump):
-            self.isJump = True
-            self.left = False
-            self.right = False
-        else:
-            if self.jumpCount>= -9:
-                neg = 1
-                if self.jumpCount < 0:
-                    neg = -1
-                self.y -= (self.jumpCount**2)*0.5*neg
-                self.jumpCount -=1
-            else:
-                self.isJump = False
-                self.jumpCount = 9
-    # def moveSetup(self):
-    #     if(self.jumping)
-
+    def move_x(self,speed):
+        self.x += speed
+        #print("speed = " + str(speed))
+        
+    def move_y(self,speed):
+        self.y -= speed
     def random_move(self,frame):
+        if(self.angle >= 360 or self.angle <=-360):
+            self.angle = self.angle%360
+        ratio_x = numpy.cos(numpy.radians(self.angle))
+        ratio_y = numpy.sin(numpy.radians(self.angle))
         #if collide move other way
-        if(self.moveDirection == 0):
-            self.moveRight()
-        else:
-            self.moveLeft()
-        if(frame%50 == 1):
+        self.move_x(self.maxVel*ratio_x)
+        self.move_y(self.maxVel*ratio_y)
+        if(frame%25 == 1):
             chance = random.random()
-            jumpChance = random.random()
-            print(jumpChance)
-            print(chance)
-            if(chance > .8):
-                if(self.currentDirection == 0):
-                    self.moveDirection = 0
-                else:
-                    self.moveDirection = 1
-                    self.currentDirection = 1
-            elif(self.currentDirection == 0):
-                self.moveDirection = 1
-                self.currentDirection = 1
+            if(chance < .25):
+                self.angle +=25
+            elif(chance <.5):
+                self.angle -= 25
             else:
-                self.moveDirection = 0
-                self.currentDirection = 0
-            if(jumpChance < .15):
-                self.jumping = True
+                self.angle +=0
+        if(self.x + self.width >= self.win.get_width() or self.x < 0):
+            self.angle = -(90 -self.angle)
+        if(self.y + self.height >= self.win.get_height() or self.y < 0):
+            self.angle = -(90 -self.angle)
+        #print(self.angle)    
 
     def run_away(self, player_x, player_y):
-        if(player_x < self.y):
-            self.moveLeft()
-        else:
-            self.moveRight()
-    def stand(self):
-        self.left = False
-        self.right = False
+        print("Run Away")
+        diff_x = player_x -self.x
+        diff_y = player_y -self.y
+        playerAngle = numpy.degrees(numpy.arctan(diff_y/diff_x))
+        self.angle = playerAngle+180
+        ratio_x = numpy.cos(numpy.radians(self.angle))
+        ratio_y = numpy.sin(numpy.radians(self.angle))
+        #if collide move other way
+        self.move_x(self.maxVel*ratio_x)
+        self.move_y(self.maxVel*ratio_y)
+       
             
 def main():
     pygame.init()
@@ -185,14 +165,13 @@ def main():
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-        r = math.sqrt((float(player.getX())-float(spider.getX()))**2 +(float(player.getY())- float(spider.getY()))**2)
-        print (r)
-        radius =120
-        if radius >= 100:
+        radius = math.sqrt((float(player.getX())-float(spider.getX()))**2 +(float(player.getY())- float(spider.getY()))**2)
+        #print (radius)
+        if radius >= 150:
             spider.random_move(frame)
         else:
-            spider.run_away(player.getX(),player.getY())
-        win.fill((0,0,0))
+            spider.run_away(player.getX(), player.getY())
+        win.fill((0, 0, 0))
         player.draw()
         spider.draw()
         pygame.display.update()
