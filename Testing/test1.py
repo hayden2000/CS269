@@ -39,9 +39,10 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         for platform in self.platforms:
             if self.rect.colliderect(platform.rect):
-                self.rect.bottom = platform.rect.top
-                self.vel.y = 0
-                self.acc.y = 0
+                if !self.isJump:
+                    self.rect.bottom = platform.rect.top
+                    self.vel.y = 0
+                    self.acc.y = 0
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
