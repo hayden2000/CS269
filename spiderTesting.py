@@ -78,7 +78,7 @@ class Enemy:
         self.win = win
         self.width = width
         self.height = height
-        self.maxVel = 4
+        self.maxVel = 2
         self.isJump = False
         self.jumpCount = 9
         self.left = False
@@ -107,7 +107,7 @@ class Enemy:
         return self.height
 
     def draw(self):
-        pygame.draw.rect(self.win,(255,0,0), (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.win,(255,0,0), (int(self.x), int(self.y), int(self.width), int(self.height)))
 
     def move_x(self,speed):
         self.x += speed
@@ -138,7 +138,6 @@ class Enemy:
         #print(self.angle)    
 
     def run_away(self, player_x, player_y):
-        print("Run Away")
         diff_x = player_x -self.x
         diff_y = player_y -self.y
         playerAngle = numpy.degrees(numpy.arctan(diff_y/diff_x))
@@ -170,7 +169,7 @@ def main():
         if radius >= 150:
             spider.random_move(frame)
         else:
-            spider.run_away(player.getX(), player.getY())
+            spider.run_away(player.getX()+ (player.getWidth()/2), (player.getY()+player.getHeight()/2))
         win.fill((0, 0, 0))
         player.draw()
         spider.draw()
