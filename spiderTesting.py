@@ -142,7 +142,7 @@ class Enemy:
         #self.rotate()
         
     def rotate(self):
-        self.rotSurf = pygame.Surface( (800,600) )
+        self.rotSurf = pygame.Surface((800, 600))
         self.rotSurf.blit(self.image, self.image.get_rect())
         self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
         #self.image = self.rotSurf
@@ -153,14 +153,14 @@ def main():
     screenWidth = 800
     screenHeight = 600
     win = pygame.display.set_mode((screenWidth,screenHeight)) 
-    spider_img = pygame.image.load( "Spider.png" ).convert_alpha()
+    spider_img = pygame.image.load("Spider.png").convert_alpha()
     pygame.display.set_caption("Test")
     player = Player(win, 300, 200)
     spider = Enemy(win, 300, 500, spider_img)
     frame = 0
     run = True
     while run:
-        frame+=1
+        frame += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
