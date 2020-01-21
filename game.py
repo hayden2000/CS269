@@ -2,6 +2,7 @@ import pygame
 import random
 #from test1 import *
 from Block import *
+from lighting import *
 
 
 
@@ -14,6 +15,7 @@ class Game:
 		pygame.display.set_caption("test")
 		self.clock = pygame.time.Clock()
 		self.running = True
+		self.renderer = Lighting()
 
 	def getRunning(self):
 		return self.running
@@ -50,11 +52,18 @@ class Game:
 
 	def draw(self):
 		self.screen.fill((0,0,0))
-		#self.platforms.draw(self.screen)
-		for plat in self.platforms:
-			self.screen.blit(plat.image, plat.rect)
-		self.all_sprites.draw(self.screen)
-		pygame.display.flip()
+		
+		lampList = []
+		refresh = []
+		
+		# for plat in self.platforms:
+# 			self.screen.blit(plat.image, plat.rect)
+# 		self.all_sprites.draw(self.screen)
+		
+		renderer.renderLamps(self, screen, refresh, lampList, self.platforms)
+		renderer.renderPlayer(self, screen, refresh, self.player, lampList, self.platforms)
+		
+		pygame.display.update()
 
 g = Game()
 while g.getRunning():

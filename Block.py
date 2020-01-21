@@ -7,6 +7,8 @@ import pygame
 import os
 import sys
 
+from lighting.py import *
+
 class Block(pygame.sprite.Sprite):
     #block code that tells the program what type of block this will be
     #0 = platform, 1 = wall
@@ -133,6 +135,9 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
+        self.lightRect = lightAlpha.get_rect()
+        self.lightRect.center = (x,y)
+        
         self.width = width
         self.height = height
         self.platforms = platforms
@@ -191,6 +196,7 @@ class Player(pygame.sprite.Sprite):
         self.vel += self.acc
         self.position += self.vel + 0.5*self.acc
         self.rect.center = self.position
+        self.lightRect.center = self.position
 
 
 
