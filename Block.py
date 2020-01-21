@@ -156,6 +156,7 @@ class Player(pygame.sprite.Sprite):
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.position = vec(x, y)
+        self.platforming = True
         self.isJump = False
         self.hasKey = False
         
@@ -165,12 +166,30 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         #jump only if velocity y = 0
-        if self.isJump:
+        self.rect.y += 5
+        p = self.onPlatform()
+        print(p)
+        print(self.isJump)
+        self.rect.y-=5
+        if not p == None and not self.isJump:
+        #if self.isJump and not p == None:
             if self.vel.y == 0:
                 self.vel.y = - 10
+                #self.acc.y = 0.98
+                print(self.vel.y)
+                self.isJump = True
             else:
-                self.isJump = False
-    
+                #self.isJump = False
+                print("no")
+
+    def onPlatform(self):
+        for platform in self.platforms:
+            if self.rect.colliderect(platform):
+                self.platforming = True
+                return platform
+        self.platforming = False
+        return None
+
     def update(self):
         self.acc = vec(0,0.98)
 #       self.vel.x = 0
@@ -179,19 +198,17 @@ class Player(pygame.sprite.Sprite):
             self.position.y = 0
             self.vel.y=0
             self.acc.y=0
-        if self.position.x < 3:
-            self.position.x = 3
+        if self.position.x < 5:
+            self.position.x = 5
         if self.position.x > 795:
             self.position.x = 795
-        for platform in self.platforms:
-            if self.rect.colliderect(platform):
-                if self.isJump == False:
-                    self.rect.bottom = platform.rect.top
-                    self.vel.y = 0
-                    self.acc.y = 0
-                else:
-                    #figure this out
-                    print("jumping")
+        p = self.onPlatform()
+        if self.platforming:
+            self.vel.y = 0
+            self.acc.y = 0
+        else:
+            #figure this out
+            print("jumping")
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
