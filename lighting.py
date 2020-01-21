@@ -29,7 +29,7 @@ lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
 #lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Cave.png" ).convert_alpha()
+Cave = pygame.image.load( "images/setting.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
