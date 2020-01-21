@@ -514,7 +514,7 @@ def level(number, score=None):
             if event.type == pygame.QUIT:
                 running = False
         
-        pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
