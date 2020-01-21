@@ -329,7 +329,7 @@ def level(number):
     lighting = Lighting()
 
     # Create a list of lamp object
-    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
+    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []
