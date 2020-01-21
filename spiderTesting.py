@@ -64,18 +64,16 @@ class Player:
                 self.isJump = False
                 self.jumpCount = 9
     def random_move(self):
-        self.moveRight()
-  
+        self.moveRight() 
     def stand(self):
         self.left = False
-        self.right = False
-    
+        self.right = False    
 
 class Enemy:
     def __init__(self, win, x, y, image, width=90, height=50):
         self.x = x
         self.y = y
-        self.center_x  = x + (width/2)
+        self.center_x = x + (width/2)
         self.center_y = y + (height/2)
         self.win = win
         self.width = width
@@ -85,7 +83,7 @@ class Enemy:
         self.currentSpeed = 1
         self.angle = 30
         self.image = image
-        self.rotSurf = pygame.Surface( (800,600) )
+        self.rotSurf = pygame.Surface((800, 600))
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -98,16 +96,15 @@ class Enemy:
         return self.height
 
     def draw(self):
-        pygame.draw.rect(self.win,(255,0,0), (int(self.x), int(self.y), int(self.width), int(self.height)))
+        pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
 
-    def move_x(self,speed):
+    def move_x(self, speed):
         self.x += speed
         #print("speed = " + str(speed))
-        
-    def move_y(self,speed):
+    def move_y(self, speed):
         self.y -= speed
-    def random_move(self,frame):
-        if(self.angle >= 360 or self.angle <=-360):
+    def random_move(self, frame):
+        if(self.angle >= 360 or self.angle <= -360):
             self.angle = self.angle%360
         ratio_x = numpy.cos(numpy.radians(self.angle))
         ratio_y = numpy.sin(numpy.radians(self.angle))
@@ -117,11 +114,11 @@ class Enemy:
         if(frame%25 == 1):
             chance = random.random()
             if(chance < .25):
-                self.angle +=25
-            elif(chance <.5):
+                self.angle += 25
+            elif(chance < .5):
                 self.angle -= 25
             else:
-                self.angle +=0
+                self.angle += 0
             self.rotate()
         if(self.x + self.width >= self.win.get_width() or self.x < 0):
             self.angle = -(90 -self.angle)
