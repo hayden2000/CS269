@@ -51,8 +51,8 @@ gameClock = pygame.time.Clock()
 
 # music setup
 pygame.mixer.init()
-pygame.mixer.music.load('Window_Demons.ogg')
-pygame.mixer.music.play()
+pygame.mixer.music.load('BACKGROUND.ogg')
+pygame.mixer.music.play(-1)
 
 ##################################################
 ##################################################
@@ -252,8 +252,8 @@ def newLevelNotifier(number, score=None):
     
     if score != None:
         # Sound init
-        pygame.mixer.music.load('Window_Demons.ogg')
-        pygame.mixer.music.play()
+        pygame.mixer.music.load('OPTION2.ogg')
+        pygame.mixer.music.play(-1)
      
     while running:
     
@@ -353,10 +353,10 @@ def level(number):
     ##################################################
     # Sound init
     ##################################################
-    pygame.mixer.music.stop() #stop background audio
-#     pygame.mixer.music.load('Window_Demons.ogg')
-#     pygame.mixer.music.play()
-    
+    #pygame.mixer.music.stop() #stop background audio
+    pygame.mixer.music.load('OPTION2.ogg')
+    pygame.mixer.music.set_volume(.07)
+    pygame.mixer.music.play(-1)
     
     ####
     # Main Loop
@@ -503,8 +503,8 @@ def endScreen(win, score, level):
     running = True
     
     # Sound init
-    pygame.mixer.music.load('Window_Demons.ogg')
-    pygame.mixer.music.play()
+    #pygame.mixer.music.load('Window_Demons.ogg')
+    #pygame.mixer.music.play()
     
     while running:
     

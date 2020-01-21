@@ -27,8 +27,6 @@ screen = pygame.display.set_mode( (width, height) )
 #spider = pygame.image.load( "Spider.png" ).convert_alpha()
 #spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
-pygame.mixer.init()
-pygame.mixer.music.load('COMPLETE.ogg')
 broom = pygame.image.load( "Broom.png" ).convert_alpha()
 lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
@@ -149,24 +147,16 @@ class Lamp:
 		
 	def turnOn( self ):
 		self.isLit = True
-            # music setup
-
-        
+	
 	def turnOff( self ):
 		self.isLit = False
 	
 	def checkStatus( self, collisionRect ):
-        # If the rectangles collide and the lamp has not recently been lit
-		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
-			self.recentFlip = True
-			pygame.mixer.init()
-			lit=pygame.mixer.Sound('COMPLETE1.wav')
-			pygame.mixer.Sound.play(lit)
+		# If the rectangles collide and the lamp has not recently been lit
+		if collisionRect.colliderect( self.imageRect ):
 			self.isLit = True
 			self.counter = 0
-			
-		elif collisionRect.colliderect( self.imageRect ) == False and self.isLit and self.timeLimit >= 0:
-			self.recentFLip = False
+		elif self.isLit and self.timeLimit >= 0:
 			if self.counter >= self.timeLimit:
 				self.counter = 0
 				self.isLit = False
