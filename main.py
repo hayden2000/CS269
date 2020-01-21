@@ -18,7 +18,7 @@ import random
 from pygame import gfxdraw
 
 # Import all the other classes here
-#from player import *
+from player import *
 #from collision import
 #from enemy-ai import
 from lighting import *
