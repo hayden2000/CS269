@@ -75,6 +75,8 @@ class Enemy:
     def __init__(self, win, x, y, image, width=90, height=50):
         self.x = x
         self.y = y
+        self.center_x  = x + (width/2)
+        self.center_y = y + (height/2)
         self.win = win
         self.width = width
         self.height = height
@@ -131,8 +133,8 @@ class Enemy:
         #print(self.angle)    
 
     def run_away(self, player_x, player_y):
-        diff_x = player_x -self.x
-        diff_y = player_y -self.y
+        diff_x = player_x -self.center_x
+        diff_y = player_y -self.center_y
         playerAngle = numpy.degrees(numpy.arctan(diff_y/diff_x))
         self.angle = playerAngle+180
         ratio_x = numpy.cos(numpy.radians(self.angle))
@@ -143,7 +145,7 @@ class Enemy:
         #self.rotate()
         
     def rotate(self):
-    	self.rotSurf = pygame.Surface( (800,600) )
+        self.rotSurf = pygame.Surface( (800,600) )
         self.rotSurf.blit(self.image, self.image.get_rect())
         self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
         #self.image = self.rotSurf
