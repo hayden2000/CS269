@@ -50,6 +50,8 @@ class Game:
 
 	def draw(self):
 		self.screen.fill((0,0,0))
+		bg = pygame.image.load('images/setting.png')
+		self.screen.blit(bg, (0,0))
 		#self.platforms.draw(self.screen)
 		for plat in self.platforms:
 			self.screen.blit(plat.image, plat.rect)
