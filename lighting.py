@@ -1,6 +1,3 @@
-# Brendan Martin
-# 1/13/2020
-# Shadow Puppets Project
 
 ####################### Setup #########################
 # useful imports
@@ -24,17 +21,15 @@ screen = pygame.display.set_mode( (width, height) )
 ####################### Making Content #########################
 
 # load some images
-#spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
-#spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
+spider = pygame.image.load( "Spider.png" ).convert_alpha()
+spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
-pygame.mixer.init()
-pygame.mixer.music.load('Audio/COMPLETE.ogg')
-broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
-lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
+broom = pygame.image.load( "Broom.png" ).convert_alpha()
+lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
-lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
+lampImage = pygame.image.load( "lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Assets/Cave.png" ).convert_alpha()
+Cave = pygame.image.load( "Cave.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
@@ -113,7 +108,7 @@ class Lighting:
 # 				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
 		
 		# Draw the player image
-		screen.blit( player.image, player.rect )
+		screen.blit( player.image, player.imageRect )
 		
 		# Create light map "night"
 		night.fill( (0,0,0) )
@@ -149,24 +144,16 @@ class Lamp:
 		
 	def turnOn( self ):
 		self.isLit = True
-            # music setup
-
-        
+	
 	def turnOff( self ):
 		self.isLit = False
 	
 	def checkStatus( self, collisionRect ):
-        # If the rectangles collide and the lamp has not recently been lit
-		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
-			self.recentFlip = True
-			pygame.mixer.init()
-			lit=pygame.mixer.Sound('Audio/COMPLETE1.wav')
-			pygame.mixer.Sound.play(lit)
+		# If the rectangles collide and the lamp has not recently been lit
+		if collisionRect.colliderect( self.imageRect ):
 			self.isLit = True
 			self.counter = 0
-			
-		elif collisionRect.colliderect( self.imageRect ) == False and self.isLit and self.timeLimit >= 0:
-			self.recentFLip = False
+		elif self.isLit and self.timeLimit >= 0:
 			if self.counter >= self.timeLimit:
 				self.counter = 0
 				self.isLit = False
@@ -197,91 +184,91 @@ class Player:
 
 # get the current mouse information, and make the cursor invisible if
 # it is focused on the game window
-# pygame.event.pump()
-# if pygame.mouse.get_focused():
-# 	pygame.mouse.set_visible(False)
-# 
-# # get the mouse position and put the broom so it is centered on the
-# # mouse location
-# tpos = pygame.mouse.get_pos()
-# trect = broom.get_rect()
-# broomRect = broom.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
-# broomActiveRect = pygame.Rect((4, 41),(106, 82))
-# 
-# # get the light rectangle centered on the mouse
-# trect = lightAlpha.get_rect()
-# lightActiveRect = lightAlpha.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
-# 
-# # Create mouse object
-# player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
-# 
-# # instantiate lighting class
-# lighting = Lighting()
-# 
-# # Create a list of lamp object
-# lampList = [ Lamp( (150,300), lampImage, lightAlpha ), Lamp( (150,150), lampImage, lightAlpha, -5, False ) ]
-# 
-# ####################### Main Event Loop #########################
-# # set up the refresh rectangle container
-# refresh = []
-# screen.fill( (0, 0, 0) )
-# 
-# # Draw background illuminated by lights, then render light/darkness on top
-# #lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
-# lighting.renderLamps( screen, refresh, lampList )
-# 
-# # update the display before we start the main loop
-# pygame.display.update()
-# 
-# # respond to mouse motion events until someone clicks a mouse or hits a key
-# print "Entering main loop"
-# while 1:
-# 
-# 	# handle events and erase things
-# 	for event in pygame.event.get():
-# 		if event.type == pygame.MOUSEMOTION:
-# 			# erase the existing broom
-# 			screen.fill( (0,0,0), player.lightRect )
-# 			refresh.append( player.lightRect )
-# 		
-# 		#if event.type == pygame.MOUSEBUTTONDOWN:
-# 			#sys.exit()
-# 
-# 		if event.type == pygame.KEYDOWN:
-# 			sys.exit()
-# 
-# 		if event.type == pygame.QUIT:
-# 			sys.exit()
-# 
-# 
-# 	# If the game is in focus, update mouse position
-# 	if pygame.mouse.get_focused():
-# 		pygame.mouse.set_visible(False)
-# 		tpos = pygame.mouse.get_pos()
-# 
-# 		# update the position of the cursor
-# 		player.updateCoors( tpos[0], tpos[1] )
-# 		
-# 	else:
-# 		pygame.mouse.set_visible(True)
-# 	
-# 	# Check if the player touches any of the lamps
-# 	for lamp in lampList:
-# 		lamp.checkStatus( player.collisionRect )
-# 			
-# 
-# 	# Render everything to the screen
-# 	lighting.renderLamps( screen, refresh, lampList )
-# 	lighting.renderPlayer( screen, refresh, player, lampList )
-# 
-# 	# update the parts of the screen that need it
-# 	pygame.display.update( refresh )
-# 
-# 	# clear out the refresh rects
-# 	refresh = []
-# 
-# 	# throttle the game speed to 30fps
-# 	gameClock.tick(30)
-#         
-# # done
-# print "Terminating"
+pygame.event.pump()
+if pygame.mouse.get_focused():
+	pygame.mouse.set_visible(False)
+
+# get the mouse position and put the broom so it is centered on the
+# mouse location
+tpos = pygame.mouse.get_pos()
+trect = broom.get_rect()
+broomRect = broom.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
+broomActiveRect = pygame.Rect((4, 41),(106, 82))
+
+# get the light rectangle centered on the mouse
+trect = lightAlpha.get_rect()
+lightActiveRect = lightAlpha.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
+
+# Create mouse object
+player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
+
+# instantiate lighting class
+lighting = Lighting()
+
+# Create a list of lamp object
+lampList = [ Lamp( (150,300), lampImage, lightAlpha ), Lamp( (150,150), lampImage, lightAlpha, -5, False ) ]
+
+####################### Main Event Loop #########################
+# set up the refresh rectangle container
+refresh = []
+screen.fill( (0, 0, 0) )
+
+# Draw background illuminated by lights, then render light/darkness on top
+#lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
+lighting.renderLamps( screen, refresh, lampList )
+
+# update the display before we start the main loop
+pygame.display.update()
+
+# respond to mouse motion events until someone clicks a mouse or hits a key
+print "Entering main loop"
+while 1:
+
+	# handle events and erase things
+	for event in pygame.event.get():
+		if event.type == pygame.MOUSEMOTION:
+			# erase the existing broom
+			screen.fill( (0,0,0), player.lightRect )
+			refresh.append( player.lightRect )
+		
+		#if event.type == pygame.MOUSEBUTTONDOWN:
+			#sys.exit()
+
+		if event.type == pygame.KEYDOWN:
+			sys.exit()
+
+		if event.type == pygame.QUIT:
+			sys.exit()
+
+
+	# If the game is in focus, update mouse position
+	if pygame.mouse.get_focused():
+		pygame.mouse.set_visible(False)
+		tpos = pygame.mouse.get_pos()
+
+		# update the position of the cursor
+		player.updateCoors( tpos[0], tpos[1] )
+		
+	else:
+		pygame.mouse.set_visible(True)
+	
+	# Check if the player touches any of the lamps
+	for lamp in lampList:
+		lamp.checkStatus( player.collisionRect )
+			
+
+	# Render everything to the screen
+	lighting.renderLamps( screen, refresh, lampList )
+	lighting.renderPlayer( screen, refresh, player, lampList )
+
+	# update the parts of the screen that need it
+	pygame.display.update( refresh )
+
+	# clear out the refresh rects
+	refresh = []
+
+	# throttle the game speed to 30fps
+	gameClock.tick(30)
+        
+# done
+print "Terminating"
