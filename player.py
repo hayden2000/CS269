@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
 #		self.walkLeft = []
 	
 	def get_images(self, a, b, wid, hei):
-		sprite = pygame.image.load('Attempt1.png').convert()
+		sprite = pygame.image.load('Assets/Attempt1.png').convert()
 		getimage = pygame.Surface((wid,hei))
 		getimage.blit(sprite,(0,0),(a,b,wid,hei))
 		getimage = pygame.transform.scale(getimage,(wid, hei))
