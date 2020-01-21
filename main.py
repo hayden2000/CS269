@@ -51,8 +51,8 @@ gameClock = pygame.time.Clock()
 
 # music setup
 pygame.mixer.init()
-pygame.mixer.music.load('Window_Demons.ogg')
-pygame.mixer.music.play()
+pygame.mixer.music.load('BACKGROUND.ogg')
+pygame.mixer.music.play(-1)
 
 ##################################################
 ##################################################
@@ -252,8 +252,8 @@ def newLevelNotifier(number, score=None):
     
     if score != None:
         # Sound init
-        pygame.mixer.music.load('Window_Demons.ogg')
-        pygame.mixer.music.play()
+        pygame.mixer.music.load('OPTION2.ogg')
+        pygame.mixer.music.play(-1)
      
     while running:
     
@@ -287,10 +287,12 @@ def newLevelNotifier(number, score=None):
 
 def level(number):
 
+    ### VARIABLE NUMBER IS THE CURRENT LEVEL
+
     running = True
     win = None
     score = 0
-    max_levels = 1 # change when we add more levels
+    max_levels = 2 # change when we add more levels
     level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
     
@@ -341,19 +343,24 @@ def level(number):
     # Enemy AI init
     ##################################################
     
+    #spider comes in during level 2
+    if number == 2:
+        pass
+    
     
     ##################################################
     # Collision init
     ##################################################
     
     
+    
     ##################################################
     # Sound init
     ##################################################
-    pygame.mixer.music.stop() #stop background audio
-#     pygame.mixer.music.load('Window_Demons.ogg')
-#     pygame.mixer.music.play()
-    
+    #pygame.mixer.music.stop() #stop background audio
+    pygame.mixer.music.load('OPTION2.ogg')
+    pygame.mixer.music.set_volume(.07)
+    pygame.mixer.music.play(-1)
     
     ####
     # Main Loop
@@ -508,8 +515,8 @@ def endScreen(win, score, level):
     running = True
     
     # Sound init
-    pygame.mixer.music.load('Window_Demons.ogg')
-    pygame.mixer.music.play()
+    #pygame.mixer.music.load('Window_Demons.ogg')
+    #pygame.mixer.music.play()
     
     while running:
     
