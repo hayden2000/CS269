@@ -60,8 +60,8 @@ class Game:
 # 			self.screen.blit(plat.image, plat.rect)
 # 		self.all_sprites.draw(self.screen)
 		
-		renderer.renderLamps(self, screen, refresh, lampList, self.platforms)
-		renderer.renderPlayer(self, screen, refresh, self.player, lampList, self.platforms)
+		self.renderer.renderLamps(screen, refresh, lampList, self.platforms)
+		self.renderer.renderPlayer(screen, refresh, self.player, lampList, self.platforms)
 		
 		pygame.display.update(refresh)
 

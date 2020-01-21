@@ -7,7 +7,7 @@ import pygame
 import os
 import sys
 
-from lighting.py import *
+from lighting import *
 
 class Block(pygame.sprite.Sprite):
     #block code that tells the program what type of block this will be
