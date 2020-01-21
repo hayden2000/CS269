@@ -135,17 +135,17 @@ def startScreen():
     
         screen.fill(black) 
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/StartScreen.png")
         screen.blit(bg, (0, 0))
   
         # label control 
-        label('Shadow Puppets', 400, 300, white, fontBig)
+        #label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button('Start', 150, 400, white, grey, light_grey, fontBig, levelManager)
-        button('Instructions', 325, 400, white, grey, light_grey, fontBig, instructions)
-        button('Credits', 522, 400, white, grey, light_grey, fontBig, credits)
-        button('Quit', 654, 400, white, grey, light_grey, fontBig, quit)
+        button('Start', 150, 550, white, grey, light_grey, fontBig, levelManager)
+        button('Instructions', 325, 550, white, grey, light_grey, fontBig, instructions)
+        button('Credits', 522, 550, white, grey, light_grey, fontBig, credits)
+        button('Quit', 654, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
