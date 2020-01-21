@@ -292,7 +292,7 @@ def level(number):
     running = True
     win = None
     score = 0
-    max_levels = 1 # change when we add more levels
+    max_levels = 2 # change when we add more levels
     level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
     
@@ -342,6 +342,10 @@ def level(number):
     ##################################################
     # Enemy AI init
     ##################################################
+    
+    #spider comes in during level 2
+    if number == 2:
+        pass
     
     
     ##################################################
