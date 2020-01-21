@@ -146,13 +146,11 @@ class Enemy:
         self.rotSurf.blit(self.image, self.image.get_rect())
         self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
         #self.image = self.rotSurf
-       
-            
 def main():
     pygame.init()
     screenWidth = 800
     screenHeight = 600
-    win = pygame.display.set_mode((screenWidth,screenHeight)) 
+    win = pygame.display.set_mode((screenWidth, screenHeight))
     spider_img = pygame.image.load("Spider.png").convert_alpha()
     pygame.display.set_caption("Test")
     player = Player(win, 300, 200)
