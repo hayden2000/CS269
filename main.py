@@ -18,7 +18,7 @@ import random
 from pygame import gfxdraw
 
 # Import all the other classes here
-from player import *
+#from player import *
 #from collision import
 #from enemy-ai import
 from lighting import *
@@ -121,47 +121,6 @@ def roundCorners(textRect, color):
     gfxdraw.box(screen, pygame.Rect(x1, y1, 6, y3 - y1), color)
     gfxdraw.box(screen, pygame.Rect(x2, y2, x3 - x2, 6), color)
     gfxdraw.box(screen, pygame.Rect(x0 - 5, y0, 5, y2 - y0), color)
-    
-##################################################
-##################################################
-# PLAYER FUNCTIONS
-##################################################
-    
-def getRunning():
-    return running
-
-def new():
-    all_sprites = pygame.sprite.Group()
-    player = Player(200,200)
-    all_sprites.add(player)
-    run()
-
-def run():
-    playing = True
-    while playing:
-        clock.tick(50)
-        events()
-        update()
-        draw()
-
-def update():
-    all_sprites.update()
-
-def events():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            if playing:
-                playing = False
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                player.jumpCheck()
-                player.jump()
-
-def draw():
-    #screen.fill((255,255,255))
-    all_sprites.draw(screen)
-    pygame.display.flip()
     
 ##################################################
 ##################################################
@@ -370,7 +329,7 @@ def level(number):
     lighting = Lighting()
 
     # Create a list of lamp object
-    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ) ]
+    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []
@@ -388,12 +347,9 @@ def level(number):
     if number == 2:
         pass
     
-    
     ##################################################
     # Collision init
     ##################################################
-    
-    
     
     ##################################################
     # Sound init
@@ -448,7 +404,6 @@ def level(number):
         # Player Control
         ##################################################
         
-        new()
         
         ##################################################
         # Lighting Control
@@ -472,19 +427,19 @@ def level(number):
 
 
         # If the game is in focus, update mouse position
-        # if pygame.mouse.get_focused():
-#             pygame.mouse.set_visible(False)
-#             tpos = pygame.mouse.get_pos()
-# 
-#             # update the position of the cursor
-#             player.updateCoors( tpos[0], tpos[1] )
-#         
-#         else:
-#             pygame.mouse.set_visible(True)
+        if pygame.mouse.get_focused():
+            pygame.mouse.set_visible(False)
+            tpos = pygame.mouse.get_pos()
+
+            # update the position of the cursor
+            player.updateCoors( tpos[0], tpos[1] )
+        
+        else:
+            pygame.mouse.set_visible(True)
     
         # Check if the player touches any of the lamps
         for lamp in lampList:
-            lamp.checkStatus( player.rect )
+            lamp.checkStatus( player.collisionRect )
             
 
         # Render everything to the screen

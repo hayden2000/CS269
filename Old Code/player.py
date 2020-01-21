@@ -1,4 +1,5 @@
 import pygame 
+from lighting import *
 vec = pygame.math.Vector2
 
 
@@ -12,15 +13,15 @@ class Player(pygame.sprite.Sprite):
 		self.load_images()
 		self.image = self.standing[0]
 		self.rect = self.image.get_rect()
-		self.rect.center = (x,y)
+		#self.rect.center = (x, y)
 		self.lightRect = lightAlpha.get_rect()
-		self.lightRect.center = (x,y)
+		#self.lightRect.center = (x,y)
 		self.width = width
 		self.height = height 
 		self.mass = mass
 		self.vel = vec(0,0)
 		self.acc = vec(0,0) 
-		self.position = vec(x, y)
+		self.position = vec(200, 200)
 #		self.walkRight = [pygame.image.load(pygame.path.join('',''))]
 #		self.walkLeft = []
 	

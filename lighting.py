@@ -175,22 +175,22 @@ class Lamp:
 				self.counter += 1
 		
 # Class to represent the playable character
-# class Player:
-# 	
-# 	def __init__( self, image, imageRect, collisionRect, lightRect ):
-# 		self.image = image
-# 		self.imageRect = imageRect
-# 		self.collisionRect = collisionRect
-# 		self.lightRect = lightRect
-# 	
-# 	Update the positions of all the rectangles, based on the center coordinates (x,y)
-# 	def updateCoors( self, x, y ):
-# 		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
-# 								  (self.imageRect.width, self.imageRect.height) )
-# 		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
-# 								  (self.lightRect.width, self.lightRect.height) )
-# 		self.collisionRect.left = self.imageRect.left
-# 		self.collisionRect.top = self.imageRect.top
+class Player:
+	
+	def __init__( self, image, imageRect, collisionRect, lightRect ):
+		self.image = image
+		self.imageRect = imageRect
+		self.collisionRect = collisionRect
+		self.lightRect = lightRect
+	
+	# Update the positions of all the rectangles, based on the center coordinates (x,y)
+	def updateCoors( self, x, y ):
+		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
+								  (self.imageRect.width, self.imageRect.height) )
+		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
+								  (self.lightRect.width, self.lightRect.height) )
+		self.collisionRect.left = self.imageRect.left
+		self.collisionRect.top = self.imageRect.top
 		
 
 ############## Setting up the Broom as a sprite ################
