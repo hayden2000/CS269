@@ -20,6 +20,7 @@ class Game:
 
 	def new(self):
 	    Layout(1, self.screen)
+        Pickup(1, 550, 27)
 	    self.all_sprites = pygame.sprite.Group()
 	    self.player = Player(200,200,self.platforms)
 	    self.all_sprites.add(self.player)

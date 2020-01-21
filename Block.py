@@ -101,7 +101,23 @@ class Layout():
 if __name__=="__main__":
     print(layout_level1())
     
-
+class Pickup():
+    pickup_type = 1
+    #this tells us what type of object we are creating
+    #1 = key
+    def __init__(self, obj_type = 1, x_pos, y_pos):
+        self.pickup_type = obj_type
+        self.image = pygame.Surface((20, 20))
+        self.image.fill((255,255,0))
+        self.rect = self.image.get_rect()
+        #setting coordinates
+        self.rect.x = x_pos
+        self.rect.y = y_pos
+        if obj_type == 1:
+            print("this is a key")
+            #set sprite to key
+        else:
+            print("object does not exist yet")
 
         
     

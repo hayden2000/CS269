@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0,0)
         self.position = vec(x, y)
         self.isJump = False
+        self.hasKey = False
         
     def jumpCheck(self):
         if not(self.isJump):
@@ -43,14 +44,14 @@ class Player(pygame.sprite.Sprite):
             self.position.x = 3
         if self.position.x > 595:
             self.position.x = 595
-        for i in range(len(self.platforms)):
-            if self.rect.colliderect(self.platforms[i]):
-                if !self.isJump:
+        for platform in platforms:
+            if self.rect.colliderect(platform):
+                if self.isJump == False:
                     self.rect.bottom = platform.rect.top
                     self.vel.y = 0
                     self.acc.y = 0
                 else:
-                    i-=1
+                    #figure this out
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
