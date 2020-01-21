@@ -31,7 +31,7 @@ from lighting import *
 pygame.init()
 
 # Setup the window
-logo = pygame.image.load("logo32x32.png")
+logo = pygame.image.load("Assets/logo32x32.png")
 pygame.display.set_icon(logo)
 pygame.display.set_caption("Shadow Puppets")
 screen = pygame.display.set_mode((800,600))
@@ -51,7 +51,7 @@ gameClock = pygame.time.Clock()
 
 # music setup
 pygame.mixer.init()
-pygame.mixer.music.load('BACKGROUND.ogg')
+pygame.mixer.music.load('Audio/BACKGROUND.ogg')
 pygame.mixer.music.play(-1)
 
 ##################################################
@@ -135,7 +135,7 @@ def startScreen():
     
         screen.fill(black) 
         
-        bg = pygame.image.load("Cave.png")
+        bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -169,7 +169,7 @@ def instructions():
 
         screen.fill(black)
         
-        bg = pygame.image.load("Cave.png")
+        bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0)) 
   
         # label control 
@@ -201,7 +201,7 @@ def credits():
     
         screen.fill(black)
         
-        bg = pygame.image.load("Cave.png")
+        bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -252,14 +252,14 @@ def newLevelNotifier(number, score=None):
     
     if score != None:
         # Sound init
-        pygame.mixer.music.load('OPTION2.ogg')
+        pygame.mixer.music.load('Audio/OPTION2.ogg')
         pygame.mixer.music.play(-1)
      
     while running:
     
         screen.fill(black) 
         
-        bg = pygame.image.load("Cave.png")
+        bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -358,7 +358,7 @@ def level(number):
     # Sound init
     ##################################################
     #pygame.mixer.music.stop() #stop background audio
-    pygame.mixer.music.load('OPTION2.ogg')
+    pygame.mixer.music.load('Audio/OPTION2.ogg')
     pygame.mixer.music.set_volume(.07)
     pygame.mixer.music.play(-1)
     
@@ -374,7 +374,7 @@ def level(number):
     
         screen.fill(black)
         
-        #bg = pygame.image.load("Cave.png")
+        #bg = pygame.image.load("Assets/Cave.png")
         #screen.blit(bg, (0, 0))
         
         ####
@@ -515,14 +515,14 @@ def endScreen(win, score, level):
     running = True
     
     # Sound init
-    #pygame.mixer.music.load('Window_Demons.ogg')
+    #pygame.mixer.music.load('Audio/Window_Demons.ogg')
     #pygame.mixer.music.play()
     
     while running:
     
         screen.fill(black)
         
-        bg = pygame.image.load("Cave.png")
+        bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0))
   
         # label control 
