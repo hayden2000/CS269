@@ -151,8 +151,11 @@ class Lamp:
 	def checkStatus( self, collisionRect ):
 		# If the rectangles collide and the lamp has not recently been lit
 		if collisionRect.colliderect( self.imageRect ):
-			self.isLit = True
-			self.counter = 0
+		    pygame.mixer.init()
+		    lit=pygame.mixer.Sound('Audio/COMPLETE1.wav')
+		    pygame.mixer.Sound.play(lit)
+		    self.isLit = True
+		    self.counter = 0
 		elif self.isLit and self.timeLimit >= 0:
 			if self.counter >= self.timeLimit:
 				self.counter = 0

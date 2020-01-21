@@ -68,7 +68,7 @@ def label(message, x, y, textColor, font):
     screen.blit(text, textRect)
 
 # Define a button for the view
-def button(message, x, y, textColor, initColor, highColor, font, action, level=None):
+def button(message, x, y, textColor, initColor, highColor, font, action, level=None, number=None):
     text = font.render(message, True, textColor, initColor)
     textRect = text.get_rect()
     textRect.center = (x, y)
@@ -83,7 +83,7 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
 
         if click[0] == 1:
             if level != None:
-                action(level)
+                action(level, number)
             else:
                 action()
     else:
@@ -269,7 +269,7 @@ def newLevelNotifier(number, score=None):
             label('Current Score: {}'.format(score), 400, 345, white, fontSmall)
         
         # button control
-        button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number)
+        button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -285,13 +285,17 @@ def newLevelNotifier(number, score=None):
 # GENERIC LEVEL SCREEN
 ##################################################
 
-def level(number):
+def level(number, score=None):
 
     ### VARIABLE NUMBER IS THE CURRENT LEVEL
 
     running = True
     win = None
-    score = 0
+    if score != None:
+        #score += score
+        score = score
+    else:
+        score = 0
     max_levels = 2 # change when we add more levels
     level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
@@ -455,6 +459,7 @@ def level(number):
             if lamp.isLit:
                 counter += 1
         if counter == len(lampList):
+            score += len(lampList) * 10
             win = True
 
         # clear out the refresh rects
