@@ -50,7 +50,9 @@ class Game:
 
 	def draw(self):
 		self.screen.fill((0,0,0))
-		self.platforms.draw(self.screen)
+		#self.platforms.draw(self.screen)
+		for plat in self.platforms:
+			self.screen.blit(plat.image, plat.rect)
 		self.all_sprites.draw(self.screen)
 		pygame.display.flip()
 
