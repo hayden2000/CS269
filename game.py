@@ -51,7 +51,7 @@ class Game:
 					self.player.jump()
 
 	def draw(self):
-		self.screen.fill((0,0,0))
+		#self.screen.fill((0,0,0))
 		
 		lampList = []
 		refresh = []
@@ -63,7 +63,7 @@ class Game:
 		renderer.renderLamps(self, screen, refresh, lampList, self.platforms)
 		renderer.renderPlayer(self, screen, refresh, self.player, lampList, self.platforms)
 		
-		pygame.display.update()
+		pygame.display.update(refresh)
 
 g = Game()
 while g.getRunning():

@@ -24,12 +24,12 @@ screen = pygame.display.set_mode( (width, height) )
 # spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
 # spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
-broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
-lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
+#broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
+lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
-lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
+#lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Assets/Cave.png" ).convert_alpha()
+Cave = pygame.image.load( "Cave.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
