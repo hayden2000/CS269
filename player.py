@@ -13,6 +13,8 @@ class Player(pygame.sprite.Sprite):
 		self.image = self.standing[0]
 		self.rect = self.image.get_rect()
 		self.rect.center = (x,y)
+		self.lightRect = lightAlpha.get_rect()
+		self.lightRect.center = (x,y)
 		self.width = width
 		self.height = height 
 		self.mass = mass
@@ -103,3 +105,4 @@ class Player(pygame.sprite.Sprite):
 				self.image = self.standing[self.currentSprite]
 				self.rect = self.image.get_rect()
 				self.rect.bottom = bottom
+		self.lightRect.center = self.rect.center

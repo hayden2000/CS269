@@ -113,7 +113,7 @@ class Lighting:
 # 				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
 		
 		# Draw the player image
-		screen.blit( player.image, player.imageRect )
+		screen.blit( player.image, player.rect )
 		
 		# Create light map "night"
 		night.fill( (0,0,0) )
