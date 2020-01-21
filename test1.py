@@ -52,6 +52,7 @@ class Player(pygame.sprite.Sprite):
                     self.acc.y = 0
                 else:
                     #figure this out
+                    print("jumping")
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
