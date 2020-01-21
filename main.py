@@ -124,6 +124,47 @@ def roundCorners(textRect, color):
     
 ##################################################
 ##################################################
+# PLAYER FUNCTIONS
+##################################################
+    
+def getRunning():
+    return running
+
+def new():
+    all_sprites = pygame.sprite.Group()
+    player = Player(200,200)
+    all_sprites.add(player)
+    run()
+
+def run():
+    playing = True
+    while playing:
+        clock.tick(50)
+        events()
+        update()
+        draw()
+
+def update():
+    all_sprites.update()
+
+def events():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            if playing:
+                playing = False
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player.jumpCheck()
+                player.jump()
+
+def draw():
+    #screen.fill((255,255,255))
+    all_sprites.draw(screen)
+    pygame.display.flip()
+    
+##################################################
+##################################################
 # START SCREEN
 ##################################################
 
@@ -407,6 +448,7 @@ def level(number):
         # Player Control
         ##################################################
         
+        new()
         
         ##################################################
         # Lighting Control
