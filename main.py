@@ -130,7 +130,7 @@ def roundCorners(textRect, color):
 ##################################################
 
 def getRunning():
-    return running
+    return running_state
 
 def new():
     all_sprites = pygame.sprite.Group()
@@ -154,7 +154,7 @@ def events():
         if event.type == pygame.QUIT:
             if playing:
                 playing = False
-            running = False
+            running_state = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 player.jumpCheck()
@@ -395,7 +395,7 @@ def level(number):
     # Collision init
     ##################################################
     
-    
+    running_state = True
     
     ##################################################
     # Sound init
