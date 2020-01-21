@@ -390,13 +390,21 @@ def level(number, score=None):
         time_mili = round(countdown_time % 60.0, 1)
         
         if countdown_time > 10.0 and time_sec_int > 9:
-            label('{}:{}'.format(time_min, time_sec_int), 750, 575, white, fontSmall)
+        	text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
+        	textRect = text.get_rect()
+        	textRect.center = (750, 575)
         elif countdown_time > 10.0 and time_sec_int < 10:
-            label('{}:0{}'.format(time_min, time_sec_int), 750, 575, white, fontSmall)
+        	text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
+        	textRect = text.get_rect()
+        	textRect.center = (750, 575)
         elif countdown_time > 5:
-            label('{}:0{}'.format(time_min, time_mili), 750, 575, yellow, fontSmall)
+        	text = fontSmall.render('{}:0{}'.format(time_min, time_mili), True, yellow)
+        	textRect = text.get_rect()
+        	textRect.center = (750, 575)
         elif countdown_time > 0:
-            label('{}:0{}'.format(time_min, time_mili), 750, 575, red, fontSmall)
+        	text = fontSmall.render('{}:0{}'.format(time_min, time_mili), True, red)
+        	textRect = text.get_rect()
+        	textRect.center = (750, 575)
         else:
             win = False
         
@@ -448,7 +456,11 @@ def level(number, score=None):
 
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, lampList )
-        lighting.renderPlayer( screen, refresh, player, lampList )  
+        lighting.renderPlayer( screen, refresh, player, lampList )
+        
+        # Draw the timer after everything else
+        screen.blit(text, textRect)
+        refresh.append(textRect)
 
         # update the parts of the screen that need it
         pygame.display.update( refresh )
@@ -502,7 +514,7 @@ def level(number, score=None):
             if event.type == pygame.QUIT:
                 running = False
         
-        pygame.display.update()
+        pygame.display.update(refresh)
                 
     pygame.quit()
     quit()
