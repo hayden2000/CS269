@@ -41,7 +41,7 @@ class Player:
         pygame.draw.rect(self.win,(255,0,0), (self.x, self.y, self.width, self.height))
 
     def moveLeft(self):
-        self.x-=self.vel
+        self.x-= self.vel
         self.left = True
         self.right = False
     def moveRight(self):
@@ -94,10 +94,14 @@ class Enemy:
         return self.width
     def getHeight(self):
         return self.height
-
     def draw(self):
         pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
-
+    def move(self, player,frame):
+        radius = math.sqrt((float(player.getX())-float(self.getX()))**2 +(float(player.getY())- float(self.getY()))**2)
+        if radius >= 150:
+            self.random_move(frame)
+        else:
+            self.run_away(player.getX()+(player.getWidth()/2), (player.getY()+player.getHeight()/2))
     def move_x(self, speed):
         self.x += speed
         #print("speed = " + str(speed))
@@ -162,17 +166,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        radius = math.sqrt((float(player.getX())-float(spider.getX()))**2 +(float(player.getY())- float(spider.getY()))**2)
-        #print (radius)
-        if radius >= 150:
-            spider.random_move(frame)
-        else:
-            spider.run_away(player.getX()+ (player.getWidth()/2), (player.getY()+player.getHeight()/2))
-        win.fill((0, 0, 0))
-        player.draw()
+        spider.move(player, frame)
         spider.draw()
+        player.draw()
         pygame.display.update()
         gameClock.tick(30)
     pygame.quit()
 if __name__ == "__main__":
     main()
+    
