@@ -54,36 +54,36 @@ def layout_level1(screen):
     edges = screen.get_rect()
     p_height = 30
     p_width = 100
-    platforms = pygame.sprite.Group()
+    platforms = []
     
     #first row
-    platforms.add(Block(4,60, p_width, p_height, "block1.png"))
-    platforms.add(Block(118,60, p_width, p_height, "block2.png"))
-    platforms.add(Block(480, 60, p_width, p_height, "block1.png"))
+    platforms.append(Block(4,60, p_width, p_height, "block1.png"))
+    platforms.append(Block(118,60, p_width, p_height, "block2.png"))
+    platforms.append(Block(480, 60, p_width, p_height, "block1.png"))
     
     #second row
-    platforms.add(Block(140,140, p_width, p_height, "block1.png"))
-    platforms.add(Block(417,140, p_width, p_height, "block2.png"))
-    platforms.add(Block(534,140, p_width/2, p_height, "block3.png"))
+    platforms.append(Block(140,140, p_width, p_height, "block1.png"))
+    platforms.append(Block(417,140, p_width, p_height, "block2.png"))
+    platforms.append(Block(534,140, p_width/2, p_height, "block3.png"))
     
     #third row
-    platforms.add(Block(5, 215, p_width, p_height, "block2.png"))
-    platforms.add(Block(136, 215, p_width, p_height, "block1.png"))
-    platforms.add(Block(266, 215, p_width, p_height, "block2.png"))
-    platforms.add(Block(386, 215, p_width/2, p_height, "block3.png"))
+    platforms.append(Block(5, 215, p_width, p_height, "block2.png"))
+    platforms.append(Block(136, 215, p_width, p_height, "block1.png"))
+    platforms.append(Block(266, 215, p_width, p_height, "block2.png"))
+    platforms.append(Block(386, 215, p_width/2, p_height, "block3.png"))
     
     #fourth row
-    platforms.add(Block(2, 302, p_width, p_height, "block1.png"))
-    platforms.add(Block(210, 302, p_width, p_height, "block2.png"))
-    platforms.add(Block(330, 302, p_width/2, p_height, "block3.png"))
-    platforms.add(Block(480, 302, p_width, p_height, "block2.png"))
+    platforms.append(Block(2, 302, p_width, p_height, "block1.png"))
+    platforms.append(Block(210, 302, p_width, p_height, "block2.png"))
+    platforms.append(Block(330, 302, p_width/2, p_height, "block3.png"))
+    platforms.append(Block(480, 302, p_width, p_height, "block2.png"))
     
     #fifth row
-    platforms.add(Block(2, 371, p_width, p_height, "block2.png"))
-    platforms.add(Block(129, 371, p_width/2, p_height, "block3.png"))
-    platforms.add(Block(267, 371, p_width/2, p_height, "block3.png"))
-    platforms.add(Block(342, 371, p_width, p_height, "block1.png"))
-    platforms.add(Block(578, 371, p_width, p_height, "block2.png"))
+    platforms.append(Block(2, 371, p_width, p_height, "block2.png"))
+    platforms.append(Block(129, 371, p_width/2, p_height, "block3.png"))
+    platforms.append(Block(267, 371, p_width/2, p_height, "block3.png"))
+    platforms.append(Block(342, 371, p_width, p_height, "block1.png"))
+    platforms.append(Block(578, 371, p_width, p_height, "block2.png"))
     
     return platforms
     

@@ -9,7 +9,7 @@ class Game:
 	def __init__(self):
 		pygame.init()
 		pygame.mixer.init()
-		self.screen = pygame.display.set_mode((600,400))
+		self.screen = pygame.display.set_mode((800,600))
 		self.platforms = layout_level1(self.screen)
 		pygame.display.set_caption("test")
 		self.clock = pygame.time.Clock()

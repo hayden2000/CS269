@@ -38,12 +38,12 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0,0.98)
 #		self.vel.x = 0
         keys = pygame.key.get_pressed()
-        if self.position.y > 400:
+        if self.position.y > 595:
             self.position.y = 0
         if self.position.x < 3:
             self.position.x = 3
-        if self.position.x > 595:
-            self.position.x = 595
+        if self.position.x > 795:
+            self.position.x = 795
         for platform in platforms:
             if self.rect.colliderect(platform):
                 if self.isJump == False:
