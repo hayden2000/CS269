@@ -24,17 +24,17 @@ screen = pygame.display.set_mode( (width, height) )
 ####################### Making Content #########################
 
 # load some images
-#spider = pygame.image.load( "Spider.png" ).convert_alpha()
+#spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
 #spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
 pygame.mixer.init()
-pygame.mixer.music.load('COMPLETE.ogg')
-broom = pygame.image.load( "Broom.png" ).convert_alpha()
-lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
+pygame.mixer.music.load('Audio/COMPLETE.ogg')
+broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
+lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
-lampImage = pygame.image.load( "lamp.png" ).convert_alpha()
+lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Cave.png" ).convert_alpha()
+Cave = pygame.image.load( "Assets/Cave.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
@@ -160,7 +160,7 @@ class Lamp:
 		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
 			self.recentFlip = True
 			pygame.mixer.init()
-			lit=pygame.mixer.Sound('COMPLETE1.wav')
+			lit=pygame.mixer.Sound('Audio/COMPLETE1.wav')
 			pygame.mixer.Sound.play(lit)
 			self.isLit = True
 			self.counter = 0
