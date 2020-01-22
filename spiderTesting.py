@@ -94,8 +94,11 @@ class Enemy:
         return self.width
     def getHeight(self):
         return self.height
-    def draw(self):
-        pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
+        
+    def draw(self, screen, spider_img):
+        screen.blit( spider_img, (self.x, self.y, self.width, self.height), spider_img.get_rect() )
+        #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
+        
     def move(self, player,frame):
         radius = math.sqrt((float(player.getX())-float(self.getX()))**2 +(float(player.getY())- float(self.getY()))**2)
         if radius >= 150:
@@ -166,8 +169,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+        win.fill( (0,0,0) )
         spider.move(player, frame)
-        spider.draw()
+        spider.draw(win, spider_img)
         player.draw()
         pygame.display.update()
         gameClock.tick(30)
