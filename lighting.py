@@ -150,19 +150,22 @@ class Lamp:
 	
 	def checkStatus( self, collisionRect ):
 		# If the rectangles collide and the lamp has not recently been lit
-		if collisionRect.colliderect( self.imageRect ):
+		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
+		    self.recentFlip = True
 		    pygame.mixer.init()
-		    lit=pygame.mixer.Sound('Audio/COMPLETE1.wav')
+		    lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
+		    lit.set_volume(0.1)
 		    pygame.mixer.Sound.play(lit)
 		    self.isLit = True
 		    self.counter = 0
 		elif self.isLit and self.timeLimit >= 0:
-			if self.counter >= self.timeLimit:
-				self.counter = 0
-				self.isLit = False
-				screen.fill( (0,0,0), self.lightRect  )
-			else:
-				self.counter += 1
+		    self.recentFlip = False
+		    if self.counter >= self.timeLimit:
+		        self.counter = 0
+		        self.isLit = False
+		        screen.fill( (0,0,0), self.lightRect )
+		    else:
+		        self.counter += 1
 		
 # Class to represent the playable character
 class Player:

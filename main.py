@@ -142,10 +142,10 @@ def startScreen():
         #label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
-        button('Start', 150, 550, white, grey, light_grey, fontBig, levelManager)
-        button('Instructions', 325, 550, white, grey, light_grey, fontBig, instructions)
-        button('Credits', 522, 550, white, grey, light_grey, fontBig, credits)
-        button('Quit', 654, 550, white, grey, light_grey, fontBig, quit)
+        button('Start', 150, 450, white, grey, light_grey, fontBig, levelManager)
+        button('Instructions', 325, 450, white, grey, light_grey, fontBig, instructions)
+        button('Credits', 522, 450, white, grey, light_grey, fontBig, credits)
+        button('Quit', 654, 450, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -252,7 +252,8 @@ def newLevelNotifier(number, score=None):
     
     if score != None:
         # Sound init
-        pygame.mixer.music.load('Audio/OPTION2.ogg')
+        pygame.mixer.music.load('Audio/BACKGROUND.ogg')
+        pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
      
     while running:
@@ -291,10 +292,7 @@ def level(number, score=None):
 
     running = True
     win = None
-    if score != None:
-        #score += score
-        score = score
-    else:
+    if score == None:
         score = 0
     max_levels = 2 # change when we add more levels
     level_time = 30.0 #seconds
@@ -319,12 +317,12 @@ def level(number, score=None):
     # mouse location
     tpos = pygame.mouse.get_pos()
     trect = broom.get_rect()
-    broomRect = broom.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
+    broomRect = broom.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
     broomActiveRect = pygame.Rect((4, 41),(106, 82))
 
     # get the light rectangle centered on the mouse
     trect = lightAlpha.get_rect()
-    lightActiveRect = lightAlpha.get_rect().move( tpos[0] - trect.width/2, tpos[1] - trect.height/2 )
+    lightActiveRect = lightAlpha.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
 
     # Create mouse object
     player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
@@ -358,7 +356,7 @@ def level(number, score=None):
     ##################################################
     # Sound init
     ##################################################
-    #pygame.mixer.music.stop() #stop background audio
+    pygame.mixer.music.stop() #stop background audio
     pygame.mixer.music.load('Audio/OPTION2.ogg')
     pygame.mixer.music.set_volume(.07)
     pygame.mixer.music.play(-1)
@@ -453,7 +451,6 @@ def level(number, score=None):
         for lamp in lampList:
             lamp.checkStatus( player.collisionRect )
             
-
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, lampList )
         lighting.renderPlayer( screen, refresh, player, lampList )
@@ -463,7 +460,7 @@ def level(number, score=None):
         refresh.append(textRect)
 
         # update the parts of the screen that need it
-        pygame.display.update( refresh )
+        #pygame.display.update( refresh )
 
 		# Check if the player has won
         counter = 0
@@ -471,8 +468,17 @@ def level(number, score=None):
             if lamp.isLit:
                 counter += 1
         if counter == len(lampList):
-            score += len(lampList) * 10
             win = True
+            
+        # score display
+        stext = fontSmall.render('{}'.format(counter + score), True, white)
+        stextRect = stext.get_rect()
+        stextRect.center = (25, 575)
+        
+        screen.blit(stext, stextRect)
+        refresh.append(stextRect)
+        
+        pygame.display.update(refresh)
 
         # clear out the refresh rects
         refresh = []
@@ -489,22 +495,19 @@ def level(number, score=None):
         # Collision Control
         ##################################################
         
-        
-        ##################################################
-        # Sound Control
-        ##################################################
-        
-        
         ####
         # Handle next round
         ####
         
-        if win == True and number < max_levels:
+        
+        if win != None:
             pygame.mouse.set_visible(True)
-            levelManager(win, score, number) #for more than 1 level
-        elif win == False:
-            pygame.mouse.set_visible(True)
-            endScreen(win, score, number)
+            score += counter # update score
+                       
+            if win == True and number < max_levels:
+                levelManager(win, score, number) #for more than 1 level
+            else:
+                endScreen(win, score, number)
             
         ####
         # If quit
@@ -529,8 +532,9 @@ def endScreen(win, score, level):
     running = True
     
     # Sound init
-    #pygame.mixer.music.load('Audio/Window_Demons.ogg')
-    #pygame.mixer.music.play()
+    pygame.mixer.music.load('Audio/BACKGROUND.ogg')
+    pygame.mixer.music.set_volume(1.0)
+    pygame.mixer.music.play(-1)
     
     while running:
     
@@ -539,20 +543,19 @@ def endScreen(win, score, level):
         bg = pygame.image.load("Assets/Cave.png")
         screen.blit(bg, (0, 0))
   
-        # label control 
-        label('Game Over', 400, 300, white, fontBig)
+        # button/label control 
         
         if win == True:
-            label('You won! Your score was {} through level {}'.format(score, level), 400, 375, white, fontSmall)
-        else:
-            label('You failed, try again! Your score was {} through level {}'.format(score, level), 400, 375, white, fontSmall)
-        
-        # button control
-        if win == True:
+            label('You won!', 400, 300, white, fontBig)
+            label('Your score was {} through level {}!'.format(score, level), 400, 375, white, fontSmall)
+            
             button('Play again', 135, 550, white, grey, light_grey, fontBig, startScreen)
         else:
+            label('Game Over', 400, 300, white, fontBig)
+            label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 375, white, fontSmall)
+        
             button('Try again', 135, 550, white, grey, light_grey, fontBig, startScreen)
-            
+ 
         button('Quit', 710, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
