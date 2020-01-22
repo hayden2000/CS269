@@ -154,7 +154,7 @@ class Lamp:
 		    self.recentFlip = True
 		    pygame.mixer.init()
 		    lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
-		    lit.set_volume(0.1)
+		    lit.set_volume(0.3)
 		    pygame.mixer.Sound.play(lit)
 		    self.isLit = True
 		    self.counter = 0

@@ -137,9 +137,6 @@ def startScreen():
         
         bg = pygame.image.load("Assets/StartScreen.png")
         screen.blit(bg, (0, 0))
-  
-        # label control 
-        #label('Shadow Puppets', 400, 300, white, fontBig)
         
         # button control
         button('Start', 150, 450, white, grey, light_grey, fontBig, levelManager)
@@ -288,8 +285,6 @@ def newLevelNotifier(number, score=None):
 
 def level(number, score=None):
 
-    ### VARIABLE NUMBER IS THE CURRENT LEVEL
-
     running = True
     win = None
     if score == None:
@@ -358,11 +353,11 @@ def level(number, score=None):
     ##################################################
     pygame.mixer.music.stop() #stop background audio
     pygame.mixer.music.load('Audio/OPTION2.ogg')
-    pygame.mixer.music.set_volume(.07)
+    pygame.mixer.music.set_volume(0.15)
     pygame.mixer.music.play(-1)
     
     ####
-    # Main Loop
+    # Main Loop :)
     ####
     
     while running:
@@ -407,7 +402,7 @@ def level(number, score=None):
             win = False
         
         ####
-        #GAME GOES HERE :)
+        #START OF GAME LOGIC :)))))
         ####
         
         ##################################################
@@ -425,16 +420,6 @@ def level(number, score=None):
                 # erase the existing broom
                 screen.fill( black, player.lightRect )
                 refresh.append( player.lightRect )
-        
-            #if event.type == pygame.MOUSEBUTTONDOWN:
-                #sys.exit()
-
-            #if event.type == pygame.KEYDOWN:
-                #sys.exit()
-
-            #if event.type == pygame.QUIT:
-                #sys.exit()
-
 
         # If the game is in focus, update mouse position
         if pygame.mouse.get_focused():
@@ -459,9 +444,6 @@ def level(number, score=None):
         screen.blit(text, textRect)
         refresh.append(textRect)
 
-        # update the parts of the screen that need it
-        #pygame.display.update( refresh )
-
 		# Check if the player has won
         counter = 0
         for lamp in lampList:
@@ -474,10 +456,10 @@ def level(number, score=None):
         stext = fontSmall.render('{}'.format(counter + score), True, white)
         stextRect = stext.get_rect()
         stextRect.center = (25, 575)
-        
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
         
+        # update the parts of the screen that need it
         pygame.display.update(refresh)
 
         # clear out the refresh rects
@@ -498,7 +480,6 @@ def level(number, score=None):
         ####
         # Handle next round
         ####
-        
         
         if win != None:
             pygame.mouse.set_visible(True)
