@@ -12,9 +12,7 @@
 
 ##################################################
 
-import pygame
-import sys
-import random
+import pygame, sys, random, os
 from pygame import gfxdraw
 
 # Import all the other classes here
@@ -27,6 +25,8 @@ from lighting import *
 ##################################################
 # SETUP
 ##################################################
+
+#os.environ['SDL_VIDEO_WINDOW_POS'] = "{0},{1}".format(0, 0)
 
 pygame.init()
 

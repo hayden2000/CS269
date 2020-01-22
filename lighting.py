@@ -29,7 +29,7 @@ lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
 lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Assets/Cave.png" ).convert_alpha()
+Cave = pygame.image.load( "Assets/CaveContrast.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
@@ -154,7 +154,7 @@ class Lamp:
 		    self.recentFlip = True
 		    pygame.mixer.init()
 		    lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
-		    lit.set_volume(0.3)
+		    lit.set_volume(0.5)
 		    pygame.mixer.Sound.play(lit)
 		    self.isLit = True
 		    self.counter = 0
