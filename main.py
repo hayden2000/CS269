@@ -12,13 +12,13 @@
 
 ##################################################
 
-import pygame, sys, random, os
+import pygame, sys, random, os, numpy
 from pygame import gfxdraw
 
 # Import all the other classes here
 from player import *
 #from collision import
-#from enemy-ai import
+from spiderTesting import *
 from lighting import *
 from Block import *
 
@@ -348,7 +348,9 @@ def level(number, score=None):
     
     #spider comes in during level 2
     if number == 2:
-        pass
+        spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
+        spider = Enemy(screen, 300, 500, spider_img)
+        frame = 0
     
     ##################################################
     # Collision init
@@ -426,6 +428,14 @@ def level(number, score=None):
         player.update()
         
         
+        ##################################################
+        # Enemy AI Control
+        ##################################################
+        
+        if number == 2:
+            frame += 1
+            spider.move(player, frame)
+            spider.draw(screen, spider_img)        
         
         ##################################################
         # Lighting Control
@@ -473,11 +483,6 @@ def level(number, score=None):
 
         # throttle the game speed to 30fps
         gameClock.tick(30)
-        
-        ##################################################
-        # Enemy AI Control
-        ##################################################
-        
         
         ##################################################
         # Collision Control

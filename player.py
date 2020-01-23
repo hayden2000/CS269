@@ -15,6 +15,9 @@ class Player(pygame.sprite.Sprite):
         self.lightRect = lightAlpha.get_rect()
         self.lightRect.center = (x,y)
         
+        self.x = x
+        self.y = y
+        
         self.width = width
         self.height = height
         self.platforms = platforms
@@ -25,9 +28,17 @@ class Player(pygame.sprite.Sprite):
         self.isJump = False
         self.hasKey = False
         
+    
+        
+   #  def gety(self):
+#         return self.rect.top
+        
     def jumpCheck(self):
         if not(self.isJump):
             self.isJump =True
+            
+    # def getx(self):
+#         return 2
 
     def jump(self):
 		#jump only if velocity y = 0
@@ -74,4 +85,6 @@ class Player(pygame.sprite.Sprite):
         self.position += self.vel + 0.5*self.acc
         self.rect.center = self.position
         self.lightRect.center = self.position
+        self.x = self.rect.left
+        self.y = self.rect.top
 
