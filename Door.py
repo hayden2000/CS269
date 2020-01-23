@@ -6,11 +6,11 @@ class Door:
         self.x = x
         self.y = y
         self.exit = exit
-        self.entrance = !exit
-        self.unlocked = false
+        self.entrance = not exit
+        self.unlocked = False
     
     #triggers next level load
-    def win(player_x, player_y):
+    def win(self, player_x, player_y):
         if(self.exit and player_x == self.x and player_y == self.y and self.unlocked):
             #trigger next level
             nextLevel = 1
@@ -23,7 +23,7 @@ class Door:
         
     
     def levelEnter(self):
-        if(self.exit == false):
+        if(self.exit == False):
             animate=1
             #trigger open and close door animation
         else:
