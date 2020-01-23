@@ -64,7 +64,7 @@ class Player(pygame.sprite.Sprite):
                     #figure this out
                     print("jumping")
                     
-        move_sound=pygame.mixer.Sound('WALKING_flt.ogg')
+        move_sound=pygame.mixer.Sound('Audio/WALKING_flt.ogg')
         if keys[pygame.K_LEFT]:
                
             move_sound.set_volume(.4)
