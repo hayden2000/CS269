@@ -40,6 +40,10 @@ class Block(pygame.sprite.Sprite):
         #setting coordinates
         self.rect.x = x_pos
         self.rect.y = y_pos
+        new_height = height - 2
+        #makes the rect 2 px high
+        self.rect.inflate(0, -40)
+        print(self.rect)
         #block defaults to platform
         
     def getX():
@@ -84,8 +88,8 @@ def layout_level1(screen):
     
     #third row
     platforms.append(Block(int(ar_x*5), int(ar_y*215), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*136), int(ar_y*215), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*266), int(ar_y*215), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*110), int(ar_y*215), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*272), int(ar_y*215), p_width, p_height, "block2.png"))
     platforms.append(Block(int(ar_x*386), int(ar_y*215), p_width/2, p_height/2, "block3.png"))
     
     #fourth row
@@ -96,9 +100,9 @@ def layout_level1(screen):
     
     #fifth row
     platforms.append(Block(int(ar_x*2), int(ar_y*371), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*129), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*267), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*342), int(ar_y*371), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*119), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*257), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*372), int(ar_y*371), p_width, p_height, "block1.png"))
     platforms.append(Block(int(ar_x*478), int(ar_y*371), p_width, p_height, "block2.png"))
     
     return platforms
@@ -149,6 +153,13 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
+#        self.rect.left = x-15
+#        self.rect.right = x+15
+#        self.rect.bottom = y-25
+#        self.rect.top = y+25
+        print(self.rect)
+        print(self.rect.top)
+        print(self.rect.bottom)
         self.width = width
         self.height = height
         self.platforms = platforms
@@ -185,6 +196,21 @@ class Player(pygame.sprite.Sprite):
     def onPlatform(self):
         for platform in self.platforms:
             if self.rect.colliderect(platform):
+                print(self.rect)
+                print(platform.rect)
+                if self.rect.center.y == platform.rect.center.y:
+                	if (self.rect.left >= platform.rect.right - 1 and self.rect.left <= platform.rect.right + 1) and self.rect.bottom > platform.rect.top:
+                       self.vel.y = -10
+                       self.acc.y = 0.98
+                       print("bump")
+                	if self.rect.right >= platform.rect.left - 1 and self.rect.right <= platform.rect.left + 1:
+                       #self.vel.x = 0
+                       print("bomp")
+                if self.rect.bottom >= platform.rect.top -1 or self.rect.bottom <= platform.rect.top + 1:
+                    self.position.y = platform.rect.top -22
+                    print("here")
+                    self.vel.y = 0
+                	self.acc.y = 0
                 self.platforming = True
                 return platform
         self.platforming = False
@@ -203,9 +229,21 @@ class Player(pygame.sprite.Sprite):
         if self.position.x > 795:
             self.position.x = 795
         p = self.onPlatform()
+        #print(self.rect.x)
+        #print(self.rect.y)
         if self.platforming:
-            self.vel.y = 0
-            self.acc.y = 0
+            if self.rect.bottom == p.rect.top:
+                self.position.y = p.rect.top - 22
+                self.vel.y = 0
+                self.acc.y = 0
+            elif self.rect.left == p.rect.right:
+                self.position.x = p.rect.right + 15
+            elif self.rect.right == p.rect.left:
+                self.position.x = p.rect.left - 15
+            elif self.rect.top == p.rect.bottom:
+                self.vel.y = -10
+            else:
+                print("somehow colliding?")
         else:
             #figure this out
             print("jumping")
