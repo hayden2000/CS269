@@ -21,15 +21,15 @@ screen = pygame.display.set_mode( (width, height) )
 ####################### Making Content #########################
 
 # load some images
-spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
-spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
+# spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
+# spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
-broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
-lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
+#broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
+lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
-lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
+#lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "Assets/CaveContrast.png" ).convert_alpha()
+Cave = pygame.image.load( "images/setting.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
@@ -57,7 +57,7 @@ class Lighting:
 		pass
 	
 	# Render the area illuminated by stationary lamps
-	def renderLamps(self, screen, refresh, lampList):
+	def renderLamps(self, screen, refresh, lampList, platforms):
 		
 		# Create light map surface "night"
 		night.fill( (0,0,0) )
@@ -83,14 +83,20 @@ class Lighting:
 # 					if item.colliderect( lamp.lightRect ):
 # 						trect = item.clip( lamp.lightRect )
 # 						screen.blit( spider, trect, trect.move(-item.left,-item.top) )
-			
+
+				# Draw the platforms which intersect the lamp's lighting circle
+				for plat in platforms:
+					if lamp.colliderect( plat.rect ):
+ 						trect = lamp.clip( plat.rect )
+ 						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+
 				# Draw the light map onto the screen
 				screen.blit( night, lamp.lightRect, lamp.lightRect, special_flags = pygame.BLEND_MULT )
 				refresh.append( lamp.lightRect )
 
 
 	# Render the light rectangle surrounding the player
-	def renderPlayer(self, screen, refresh, player, lampList):
+	def renderPlayer(self, screen, refresh, player, lampList, platforms):
 	
 		# Erase the area covered by the player light
 		drawBkg( screen, refresh, player.lightRect )
@@ -107,8 +113,14 @@ class Lighting:
 # 				trect = item.clip( player.lightRect )
 # 				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
 		
+		# Draw the platforms which intersect the player's lighting circle
+		for plat in platforms:
+			if player.lightRect.colliderect( plat.rect ):
+				trect = player.lightRect.clip( plat.rect )
+				screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+		
 		# Draw the player image
-		screen.blit( player.image, player.imageRect )
+		screen.blit( player.image, player.rect )
 		
 		# Create light map "night"
 		night.fill( (0,0,0) )
@@ -168,23 +180,22 @@ class Lamp:
 		        self.counter += 1
 		
 # Class to represent the playable character
-class Player:
-	
-	def __init__( self, image, imageRect, collisionRect, lightRect ):
-		self.image = image
-		self.imageRect = imageRect
-		self.collisionRect = collisionRect
-		self.lightRect = lightRect
-	
-	# Update the positions of all the rectangles, based on the center coordinates (x,y)
-	def updateCoors( self, x, y ):
-		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
-								  (self.imageRect.width, self.imageRect.height) )
-		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
-								  (self.lightRect.width, self.lightRect.height) )
-		self.collisionRect.left = self.imageRect.left
-		self.collisionRect.top = self.imageRect.top
-		
+#class Player:
+#	
+#	def __init__( self, image, imageRect, collisionRect, lightRect ):
+#		self.image = image
+#		self.imageRect = imageRect
+#		self.collisionRect = collisionRect
+#		self.lightRect = lightRect
+#	
+#	# Update the positions of all the rectangles, based on the center coordinates (x,y)
+#	def updateCoors( self, x, y ):
+#		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
+#								  (self.imageRect.width, self.imageRect.height) )
+#		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
+#								  (self.lightRect.width, self.lightRect.height) )
+#		self.collisionRect.left = self.imageRect.left
+#		self.collisionRect.top = self.imageRect.top
 
 ############## Setting up the Broom as a sprite ################
 
