@@ -100,7 +100,7 @@ class Enemy:
     	return pygame.Rect(self.x, self.y, width, height)
         
     def draw(self, screen, spider_img):
-        screen.blit( spider_img, (self.x, self.y, self.width, self.height), spider_img.get_rect() )
+        screen.blit( self.rotImage, (self.x, self.y, self.width, self.height), self.rotImage.get_rect() )
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
     def move(self, player, frame):
