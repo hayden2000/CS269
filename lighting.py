@@ -25,11 +25,11 @@ screen = pygame.display.set_mode( (width, height) )
 # spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
 #broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
-lightAlpha = pygame.image.load( "lightAlpha.png" ).convert_alpha()
+lightAlpha = pygame.image.load( "Assets/lightAlpha.png" ).convert_alpha()
 night = pygame.Surface( (width, height) )
-#lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
+lampImage = pygame.image.load( "Assets/lamp.png" ).convert_alpha()
 
-Cave = pygame.image.load( "images/setting.png" ).convert_alpha()
+Cave = pygame.image.load( "Assets/CaveContrast.png" ).convert_alpha()
 
 ####################### Filling the Screen #########################
 
@@ -86,8 +86,8 @@ class Lighting:
 
 				# Draw the platforms which intersect the lamp's lighting circle
 				for plat in platforms:
-					if lamp.colliderect( plat.rect ):
- 						trect = lamp.clip( plat.rect )
+					if lamp.lightRect.colliderect( plat.rect ):
+ 						trect = lamp.lightRect.clip( plat.rect )
  						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
 
 				# Draw the light map onto the screen

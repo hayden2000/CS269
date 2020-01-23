@@ -16,10 +16,11 @@ import pygame, sys, random, os
 from pygame import gfxdraw
 
 # Import all the other classes here
-#from player import *
+from player import *
 #from collision import
 #from enemy-ai import
 from lighting import *
+from Block import *
 
 ##################################################
 ##################################################
@@ -297,6 +298,11 @@ def level(number, score=None):
     # Player init
     ##################################################
     
+    platforms = layout_level1(screen)
+    
+    Layout(1, screen)
+    
+    player = Player(200,200,platforms)
     
     ##################################################
     # Lighting init
@@ -310,17 +316,17 @@ def level(number, score=None):
 
     # get the mouse position and put the broom so it is centered on the
     # mouse location
-    tpos = pygame.mouse.get_pos()
-    trect = broom.get_rect()
-    broomRect = broom.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
-    broomActiveRect = pygame.Rect((4, 41),(106, 82))
+    #tpos = pygame.mouse.get_pos()
+    #trect = broom.get_rect()
+   # broomRect = broom.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
+    #broomActiveRect = pygame.Rect((4, 41),(106, 82))
 
     # get the light rectangle centered on the mouse
-    trect = lightAlpha.get_rect()
-    lightActiveRect = lightAlpha.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
+    #trect = lightAlpha.get_rect()
+    #lightActiveRect = lightAlpha.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
 
     # Create mouse object
-    player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
+    #player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
 
     # instantiate lighting class
     lighting = Lighting()
@@ -334,7 +340,7 @@ def level(number, score=None):
 
     # Draw background illuminated by lights, then render light/darkness on top
     #lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
-    lighting.renderLamps( screen, refresh, lampList )
+    lighting.renderLamps( screen, refresh, lampList, platforms )
     
     ##################################################
     # Enemy AI init
@@ -408,37 +414,37 @@ def level(number, score=None):
         ##################################################
         # Player Control
         ##################################################
+        # handle events and erase things
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    player.jumpCheck()
+                    player.jump()
+            if event.type == pygame.QUIT:
+                running = False
+        
+        player.update()
+        
         
         
         ##################################################
         # Lighting Control
         ##################################################
         
-        # handle events and erase things
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEMOTION:
-                # erase the existing broom
-                screen.fill( black, player.lightRect )
-                refresh.append( player.lightRect )
 
         # If the game is in focus, update mouse position
         if pygame.mouse.get_focused():
-            pygame.mouse.set_visible(False)
-            tpos = pygame.mouse.get_pos()
-
-            # update the position of the cursor
-            player.updateCoors( tpos[0], tpos[1] )
-        
+            pygame.mouse.set_visible(False)        
         else:
             pygame.mouse.set_visible(True)
     
         # Check if the player touches any of the lamps
         for lamp in lampList:
-            lamp.checkStatus( player.collisionRect )
+            lamp.checkStatus( player.rect )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, lampList )
-        lighting.renderPlayer( screen, refresh, player, lampList )
+        lighting.renderLamps( screen, refresh, lampList, platforms )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms )
         
         # Draw the timer after everything else
         screen.blit(text, textRect)
@@ -494,9 +500,8 @@ def level(number, score=None):
         # If quit
         ####
         
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+#         for event in pygame.event.get():
+            
         
         pygame.display.update()
                 

@@ -6,32 +6,32 @@ from lighting import *
 
 
 
-class Game:
-	def __init__(self):
-		pygame.init()
-		pygame.mixer.init()
-		self.screen = pygame.display.set_mode((800,600))
+# class Game:
+# 	def __init__(self):
+# 		pygame.init()
+# 		pygame.mixer.init()
+# 		self.screen = pygame.display.set_mode((800,600))
 		self.platforms = layout_level1(self.screen)
-		pygame.display.set_caption("test")
-		self.clock = pygame.time.Clock()
-		self.running = True
-		self.renderer = Lighting()
+# 		pygame.display.set_caption("test")
+# 		self.clock = pygame.time.Clock()
+# 		self.running = True
+		# self.renderer = Lighting()
 
-	def getRunning(self):
-		return self.running
+	# def getRunning(self):
+# 		return self.running
 
 	def new(self):
 	    Layout(1, self.screen)
         #Pickup(1, 550, 27)
-	    self.all_sprites = pygame.sprite.Group()
+# 	    self.all_sprites = pygame.sprite.Group()
 	    self.player = Player(200,200,self.platforms)
-	    self.all_sprites.add(self.player)
+# 	    self.all_sprites.add(self.player)
 	    self.run()
 
 	def run(self):
-		self.playing = True
-		while self.playing:
-			self.clock.tick(50)
+# 		self.playing = True
+# 		while self.playing:
+# 			self.clock.tick(50)
 			self.events()
 			self.update()
 			self.draw()

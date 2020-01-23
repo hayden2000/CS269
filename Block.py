@@ -17,7 +17,7 @@ class Block(pygame.sprite.Sprite):
     def __init__(self, x_pos, y_pos, width, height, sprite):
         #creating a new block
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join('images',sprite)).convert()
+        self.image = pygame.image.load(os.path.join('Assets',sprite)).convert()
         #loading a sprite in and giving it a transparent background
         self.image.convert_alpha()
         self.image = pygame.Surface((width, height))
@@ -52,7 +52,7 @@ class Block(pygame.sprite.Sprite):
             
 def layout_level1(screen):
     #screen = pygame.display.set_mode([800,600])
-    background = pygame.image.load(os.path.join('images','setting.png')).convert()
+    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
     edges = screen.get_rect()
     p_height = 30
     p_width = 100
