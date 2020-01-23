@@ -102,11 +102,11 @@ class Enemy:
         
     def move(self, player, frame):
         radius= 120
-        #radius = math.sqrt(( float(player.getX() )-float( self.getX() ))**2 +(float( player.getY() )- float( self.getY() ))**2)
+        radius = math.sqrt(( float(player.getX() )-float( self.getX() ))**2 +(float( player.getY() )- float( self.getY() ))**2)
         if radius >= 150:
             self.random_move(frame)
         else:
-            self.run_away(player.width+(player.width/2), (player.y+player.height/2))
+            self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
     def move_x(self, speed):
         self.x += speed
         #print("speed = " + str(speed))
