@@ -332,7 +332,7 @@ def level(number, score=None):
     # Enemy AI init
     ##################################################
     
-    #spider comes in during level 2
+    #spider comes in during last level
     
     spider = None
     
