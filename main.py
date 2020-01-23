@@ -314,20 +314,6 @@ def level(number, score=None):
     if pygame.mouse.get_focused():
         pygame.mouse.set_visible(False)
 
-    # get the mouse position and put the broom so it is centered on the
-    # mouse location
-    #tpos = pygame.mouse.get_pos()
-    #trect = broom.get_rect()
-   # broomRect = broom.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
-    #broomActiveRect = pygame.Rect((4, 41),(106, 82))
-
-    # get the light rectangle centered on the mouse
-    #trect = lightAlpha.get_rect()
-    #lightActiveRect = lightAlpha.get_rect().move( int(tpos[0] - trect.width/2), int(tpos[1] - trect.height/2) )
-
-    # Create mouse object
-    #player = Player( broom, broomRect, broomActiveRect, lightActiveRect )
-
     # instantiate lighting class
     lighting = Lighting()
 
@@ -339,7 +325,6 @@ def level(number, score=None):
     screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
-    #lighting.drawBkg( screen, text, refresh, lightActiveRect, lampList )
     lighting.renderLamps( screen, refresh, lampList, platforms )
     
     ##################################################
