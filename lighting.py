@@ -87,8 +87,12 @@ class Lighting:
 				# Draw the spider enemy
 				if spider != None:
 					if spider.get_rect().colliderect( lamp.lightRect ):
-						trect = spider.get_rect().clip( lamp.lightRect )
-						screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
+						# image = spider.draw()
+# 						trect = image.get_rect().clip( lamp.lightRect )
+# 						screen.blit( image, trect, trect.move( -image.get_rect().left, -image.get_rect().top) )
+					 	spider.draw(screen, spider_img)
+# 						trect = spider.get_rect().clip( lamp.lightRect )
+# 						screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 
 				# Draw the light map onto the screen
 				screen.blit( night, lamp.lightRect, lamp.lightRect, special_flags = pygame.BLEND_MULT )
@@ -116,8 +120,13 @@ class Lighting:
 		# Draw the spider enemy
 		if spider != None:
 			if spider.get_rect().colliderect( player.lightRect ):
-				trect = spider.get_rect().clip( player.lightRect )
-				screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
+			
+				# image = spider.draw()
+# 				trect = spider.get_rect().clip( player.lightRect )
+# 				screen.blit( image, trect, trect.move( -image.get_rect().left, -image.get_rect().top))
+				spider.draw(screen, spider_img)
+				# trect = spider.get_rect().clip( player.lightRect )
+# 				screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 		
 		# Draw the player image
 		screen.blit( player.image, player.rect )

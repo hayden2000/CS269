@@ -166,8 +166,8 @@ def instructions():
     while running:
 
         screen.fill(black)
-        
-        bg = pygame.image.load("Assets/Cave.png")
+
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0)) 
   
         # label control 
@@ -199,7 +199,7 @@ def credits():
     
         screen.fill(black)
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -258,7 +258,7 @@ def newLevelNotifier(number, score=None):
     
         screen.fill(black) 
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -300,6 +300,7 @@ def level(number, score=None):
     
     platforms = layout_level1(screen)
     
+    #Layout(number, screen)
     Layout(1, screen)
     
     player = Player(200,200,platforms)
@@ -330,12 +331,12 @@ def level(number, score=None):
     ##################################################
     # Enemy AI init
     ##################################################
-    
-    #spider comes in during level 2
+
+    #spider comes in during last level
     
     spider = None
     
-    if number == 2:
+    if number == max_levels:
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
         spider = Enemy(screen, 300, 500, spider_img)
         frame = 0
@@ -347,6 +348,7 @@ def level(number, score=None):
     ##################################################
     # Sound init
     ##################################################
+
     pygame.mixer.music.stop() #stop background audio
     pygame.mixer.music.load('Audio/OPTION2.ogg')
     pygame.mixer.music.set_volume(0.15)
@@ -420,7 +422,7 @@ def level(number, score=None):
         # Enemy AI Control
         ##################################################
         
-        if number == 2:
+        if number == max_levels:
             frame += 1
             spider.move(player, frame)
             #spider.draw(screen, spider_img)        
@@ -428,7 +430,6 @@ def level(number, score=None):
         ##################################################
         # Lighting Control
         ##################################################
-        
 
         # If the game is in focus, update mouse position
         if pygame.mouse.get_focused():
@@ -492,9 +493,8 @@ def level(number, score=None):
         ####
         # If quit
         ####
-        
-#         for event in pygame.event.get():
-            
+
+#         for event in pygame.event.get(): 
         
         pygame.display.update(refresh)
                 
@@ -518,8 +518,8 @@ def endScreen(win, score, level):
     while running:
     
         screen.fill(black)
-        
-        bg = pygame.image.load("Assets/Cave.png")
+
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # button/label control 
