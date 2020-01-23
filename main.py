@@ -167,7 +167,7 @@ def instructions():
 
         screen.fill(black)
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0)) 
   
         # label control 
@@ -199,7 +199,7 @@ def credits():
     
         screen.fill(black)
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -258,7 +258,7 @@ def newLevelNotifier(number, score=None):
     
         screen.fill(black) 
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # label control 
@@ -519,7 +519,7 @@ def endScreen(win, score, level):
     
         screen.fill(black)
         
-        bg = pygame.image.load("Assets/Cave.png")
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
         # button/label control 
