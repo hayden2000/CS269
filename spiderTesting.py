@@ -84,6 +84,7 @@ class Enemy:
         self.currentSpeed = 1
         self.angle = 30
         self.image = image
+        self.originalImg = image
         self.rotSurf = pygame.Surface((800, 600))
 #list of image for walking right
 #list of image for walking left
@@ -99,7 +100,7 @@ class Enemy:
     	return pygame.Rect(self.x, self.y, width, height)
         
     def draw(self, screen, spider_img):
-        screen.blit( spider_img, (self.x, self.y, self.width, self.height), spider_img.get_rect() )
+        screen.blit( self.rotImage, (self.x, self.y, self.width, self.height),self.rotImage.get_rect() )
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
     def move(self, player, frame):
@@ -122,15 +123,14 @@ class Enemy:
         #if collide move other way
         self.move_x(self.maxVel*ratio_x)
         self.move_y(self.maxVel*ratio_y)
-        if(frame%25 == 1):
+        if(frame%10 == 1):
             chance = random.random()
             if(chance < .25):
-                self.angle += 25
+                self.angle += 5
             elif(chance < .5):
-                self.angle -= 25
+                self.angle -= 5
             else:
                 self.angle += 0
-            self.rotate()
         if(self.x + self.width >= self.win.get_width() or self.x < 0):
             self.angle = -(90 -self.angle)
             self.rotate()
@@ -150,12 +150,17 @@ class Enemy:
         #if collide move other way
         self.move_x(self.maxVel*ratio_x)
         self.move_y(self.maxVel*ratio_y)
-        #self.rotate()
+        self.rotate()
         
     def rotate(self):
-        self.rotSurf = pygame.Surface((800, 600))
-        self.rotSurf.blit(self.image, self.image.get_rect())
-        self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
+        width = (600*(numpy.cos(numpy.radians(90-self.angle)))) + (800*(numpy.cos(numpy.radians(self.angle))))
+        height = (600*(numpy.sin(numpy.radians(90-self.angle)))) + (800*(numpy.sin(numpy.radians(self.angle))))         
+        self.rotImage = pygame.Surface((600, 800))
+        self.rotImage = pygame.transform.rotate(self.originalImg, self.angle)
+        self.rect = self.rotImage.get_rect()
+        # self.rotSurf = pygame.Surface((800, 600))
+        # self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
+        # self.rotSurf.blit(self.image, self.image.get_rect())
         #self.image = self.rotSurf
         
         
