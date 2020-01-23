@@ -89,8 +89,7 @@ class Lighting:
 					if lamp.colliderect( plat.rect ):
  						trect = lamp.clip( plat.rect )
  						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
-				
-			
+
 				# Draw the light map onto the screen
 				screen.blit( night, lamp.lightRect, lamp.lightRect, special_flags = pygame.BLEND_MULT )
 				refresh.append( lamp.lightRect )
@@ -163,38 +162,40 @@ class Lamp:
 	
 	def checkStatus( self, collisionRect ):
 		# If the rectangles collide and the lamp has not recently been lit
-		if collisionRect.colliderect( self.imageRect ):
+		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
+		    self.recentFlip = True
 		    pygame.mixer.init()
-		    lit=pygame.mixer.Sound('Audio/COMPLETE1.wav')
+		    lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
+		    lit.set_volume(0.5)
 		    pygame.mixer.Sound.play(lit)
 		    self.isLit = True
 		    self.counter = 0
 		elif self.isLit and self.timeLimit >= 0:
-			if self.counter >= self.timeLimit:
-				self.counter = 0
-				self.isLit = False
-				screen.fill( (0,0,0), self.lightRect  )
-			else:
-				self.counter += 1
+		    self.recentFlip = False
+		    if self.counter >= self.timeLimit:
+		        self.counter = 0
+		        self.isLit = False
+		        screen.fill( (0,0,0), self.lightRect )
+		    else:
+		        self.counter += 1
 		
 # Class to represent the playable character
-# class Player:
-# 	
-# 	def __init__( self, image, imageRect, collisionRect, lightRect ):
-# 		self.image = image
-# 		self.imageRect = imageRect
-# 		self.collisionRect = collisionRect
-# 		self.lightRect = lightRect
-# 	
-# 	# Update the positions of all the rectangles, based on the center coordinates (x,y)
-# 	def updateCoors( self, x, y ):
-# 		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
-# 								  (self.imageRect.width, self.imageRect.height) )
-# 		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
-# 								  (self.lightRect.width, self.lightRect.height) )
-# 		self.collisionRect.left = self.imageRect.left
-# 		self.collisionRect.top = self.imageRect.top
-		
+#class Player:
+#	
+#	def __init__( self, image, imageRect, collisionRect, lightRect ):
+#		self.image = image
+#		self.imageRect = imageRect
+#		self.collisionRect = collisionRect
+#		self.lightRect = lightRect
+#	
+#	# Update the positions of all the rectangles, based on the center coordinates (x,y)
+#	def updateCoors( self, x, y ):
+#		self.imageRect = pygame.Rect( (x - self.imageRect.width/2, y - self.imageRect.height/2),
+#								  (self.imageRect.width, self.imageRect.height) )
+#		self.lightRect = pygame.Rect( (x - self.lightRect.width/2, y - self.lightRect.height/2),
+#								  (self.lightRect.width, self.lightRect.height) )
+#		self.collisionRect.left = self.imageRect.left
+#		self.collisionRect.top = self.imageRect.top
 
 ############## Setting up the Broom as a sprite ################
 
