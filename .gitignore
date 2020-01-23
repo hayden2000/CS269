@@ -27,3 +27,4 @@ Temporary Items
 .apdisk
 .DS_Store
 .DS_Store
+*.pyc
