@@ -100,10 +100,19 @@ class Enemy:
     	return pygame.Rect(self.x, self.y, width, height)
         
     def draw(self, screen, spider_img):
-        screen.blit( self.rotImage, (self.x, self.y, self.width, self.height),self.rotImage.get_rect() )
+        screen.blit( self.rotImage, (self.x, self.y, self.width, self.height), self.rotImage.get_rect() )
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
     def move(self, player, frame):
+        pygame.mixer.init()
+        spyd=pygame.mixer.Sound('Audio/SpiderNew.aif')
+        norm_player= ((player.getX()-0)/(800-0))
+        norm_spyd= ((self.getX()-0)/(800-0))
+        norm=abs((.25-abs(norm_player-norm_spyd)))
+        spyd.set_volume(norm)
+        
+        pygame.mixer.Sound.play(spyd)
+
         radius= 120
         radius = math.sqrt(( float(player.getX() )-float( self.getX() ))**2 +(float( player.getY() )- float( self.getY() ))**2)
         if radius >= 150:
@@ -189,4 +198,3 @@ class Enemy:
 #     pygame.quit()
 # if __name__ == "__main__":
 #     main()
-    

@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.position = vec(x, y)
         self.isJump = False
         self.hasKey = False
+        pygame.mixer.init()
         
     def getX(self):
         return self.rect.left
@@ -62,13 +63,24 @@ class Player(pygame.sprite.Sprite):
                 else:
                     #figure this out
                     print("jumping")
+                    
+        move_sound=pygame.mixer.Sound('WALKING_flt.ogg')
         if keys[pygame.K_LEFT]:
+               
+            move_sound.set_volume(.4)
+            pygame.mixer.Sound.play(move_sound)
+
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
                 self.vel.x = 0
             else:
                 self.acc.x = -1
+            
         if keys[pygame.K_RIGHT]:
+
+            move_sound.set_volume(.4)
+            pygame.mixer.Sound.play(move_sound)
+            
             if self.position.x > 800-self.width/2-self.vel.x:
                 self.acc.x = 0
                 self.vel.x = 0

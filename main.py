@@ -166,7 +166,7 @@ def instructions():
     while running:
 
         screen.fill(black)
-        
+
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0)) 
   
@@ -331,7 +331,7 @@ def level(number, score=None):
     ##################################################
     # Enemy AI init
     ##################################################
-    
+
     #spider comes in during last level
     
     spider = None
@@ -348,7 +348,7 @@ def level(number, score=None):
     ##################################################
     # Sound init
     ##################################################
-    
+
     pygame.mixer.music.stop() #stop background audio
     pygame.mixer.music.load('Audio/OPTION2.ogg')
     pygame.mixer.music.set_volume(0.15)
@@ -493,7 +493,7 @@ def level(number, score=None):
         ####
         # If quit
         ####
-        
+
 #         for event in pygame.event.get(): 
         
         pygame.display.update(refresh)
@@ -518,7 +518,7 @@ def endScreen(win, score, level):
     while running:
     
         screen.fill(black)
-        
+
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
