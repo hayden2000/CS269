@@ -21,7 +21,7 @@ screen = pygame.display.set_mode( (width, height) )
 ####################### Making Content #########################
 
 # load some images
-# spider = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
+spider_img = pygame.image.load( "Assets/Spider.png" ).convert_alpha()
 # spiderActiveRect = pygame.Rect( (1, 41), (124, 73) )
 
 #broom = pygame.image.load( "Assets/Broom.png" ).convert_alpha()
@@ -57,7 +57,7 @@ class Lighting:
 		pass
 	
 	# Render the area illuminated by stationary lamps
-	def renderLamps(self, screen, refresh, lampList, platforms):
+	def renderLamps(self, screen, refresh, lampList, platforms, spider = None):
 		
 		# Create light map surface "night"
 		night.fill( (0,0,0) )
@@ -77,18 +77,18 @@ class Lighting:
 					if item.imageRect.colliderect( lamp.lightRect ):
 						trect = item.imageRect.clip( lamp.lightRect )
 						screen.blit( lampImage, trect, trect.move(-item.imageRect.left,-item.imageRect.top) )
-			
-				# Draw the portions of the spiders inside the light rectangle
-				# for item in spiderList:
-# 					if item.colliderect( lamp.lightRect ):
-# 						trect = item.clip( lamp.lightRect )
-# 						screen.blit( spider, trect, trect.move(-item.left,-item.top) )
 
 				# Draw the platforms which intersect the lamp's lighting circle
 				for plat in platforms:
 					if lamp.lightRect.colliderect( plat.rect ):
  						trect = lamp.lightRect.clip( plat.rect )
  						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+				
+				# Draw the spider enemy
+				if spider != None:
+					if spider.get_rect().colliderect( lamp.lightRect ):
+						trect = spider.get_rect().clip( lamp.lightRect )
+						screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 
 				# Draw the light map onto the screen
 				screen.blit( night, lamp.lightRect, lamp.lightRect, special_flags = pygame.BLEND_MULT )
@@ -96,7 +96,7 @@ class Lighting:
 
 
 	# Render the light rectangle surrounding the player
-	def renderPlayer(self, screen, refresh, player, lampList, platforms):
+	def renderPlayer(self, screen, refresh, player, lampList, platforms, spider = None):
 	
 		# Erase the area covered by the player light
 		drawBkg( screen, refresh, player.lightRect )
@@ -106,18 +106,18 @@ class Lighting:
 			if item.imageRect.colliderect( player.lightRect ):
 				trect = item.imageRect.clip( player.lightRect )
 				screen.blit( lampImage, trect, trect.move(-item.imageRect.left,-item.imageRect.top) )
-		
-		# Draw the portions of the spiders inside the light rectangle
-		# for item in spiderList:
-# 			if item.colliderect( player.lightRect ):
-# 				trect = item.clip( player.lightRect )
-# 				screen.blit( spider, trect, trect.move(-item.left,-item.top) )
-		
+
 		# Draw the platforms which intersect the player's lighting circle
 		for plat in platforms:
 			if player.lightRect.colliderect( plat.rect ):
 				trect = player.lightRect.clip( plat.rect )
 				screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+		
+		# Draw the spider enemy
+		if spider != None:
+			if spider.get_rect().colliderect( player.lightRect ):
+				trect = spider.get_rect().clip( player.lightRect )
+				screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 		
 		# Draw the player image
 		screen.blit( player.image, player.rect )

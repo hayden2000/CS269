@@ -347,6 +347,9 @@ def level(number, score=None):
     ##################################################
     
     #spider comes in during level 2
+    
+    spider = None
+    
     if number == 2:
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
         spider = Enemy(screen, 300, 500, spider_img)
@@ -435,7 +438,7 @@ def level(number, score=None):
         if number == 2:
             frame += 1
             spider.move(player, frame)
-            spider.draw(screen, spider_img)        
+            #spider.draw(screen, spider_img)        
         
         ##################################################
         # Lighting Control
@@ -453,8 +456,8 @@ def level(number, score=None):
             lamp.checkStatus( player.rect )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, lampList, platforms )
-        lighting.renderPlayer( screen, refresh, player, lampList, platforms )
+        lighting.renderLamps( screen, refresh, lampList, platforms, spider )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms, spider )
         
         # Draw the timer after everything else
         screen.blit(text, textRect)

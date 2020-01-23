@@ -95,6 +95,8 @@ class Enemy:
         return self.width
     def getHeight(self):
         return self.height
+    def get_rect(self):
+    	return pygame.Rect(self.x, self.y, width, height)
         
     def draw(self, screen, spider_img):
         screen.blit( spider_img, (self.x, self.y, self.width, self.height), spider_img.get_rect() )
