@@ -194,23 +194,29 @@ class Player(pygame.sprite.Sprite):
                 print("no")
 
     def onPlatform(self):
+        displacement = range(-49, 49)
+        mini = range(-2, 2)
         for platform in self.platforms:
             if self.rect.colliderect(platform):
                 print(self.rect)
                 print(platform.rect)
-                if self.rect.center.y == platform.rect.center.y:
-                	if (self.rect.left >= platform.rect.right - 1 and self.rect.left <= platform.rect.right + 1) and self.rect.bottom > platform.rect.top:
-                       self.vel.y = -10
-                       self.acc.y = 0.98
-                       print("bump")
-                	if self.rect.right >= platform.rect.left - 1 and self.rect.right <= platform.rect.left + 1:
+                if (self.rect.center[1] - platform.rect.center[1]) in displacement:
+                    print("ranged")
+                    if (self.rect.left - platform.rect.right) in mini:
+                        self.rect.left = platform.rect.right
+                        self.rect.top = platform.rect.center[1]
+                        self.vel.x = 0
+                        print("bump")
+                    if (self.rect.right - platform.rect.left) in mini:
                        #self.vel.x = 0
-                       print("bomp")
+                        self.rect.right = platform.rect.left
+                        self.vel.x = 0
+                        print("bomp")
                 if self.rect.bottom >= platform.rect.top -1 or self.rect.bottom <= platform.rect.top + 1:
                     self.position.y = platform.rect.top -22
                     print("here")
                     self.vel.y = 0
-                	self.acc.y = 0
+                    self.acc.y = 0
                 self.platforming = True
                 return platform
         self.platforming = False
@@ -231,6 +237,7 @@ class Player(pygame.sprite.Sprite):
         p = self.onPlatform()
         #print(self.rect.x)
         #print(self.rect.y)
+        '''
         if self.platforming:
             if self.rect.bottom == p.rect.top:
                 self.position.y = p.rect.top - 22
@@ -247,6 +254,7 @@ class Player(pygame.sprite.Sprite):
         else:
             #figure this out
             print("jumping")
+        '''
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
