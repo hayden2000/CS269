@@ -266,7 +266,7 @@ def story(page=None):
         screen.fill(black)
 
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
-        screen.blit(bg, (0, 0)) 
+        screen.blit(bg, (0, 0))
         
         if page == 1:
             image('cat1', 100, 100, 600, 400)
@@ -279,12 +279,12 @@ def story(page=None):
         if page == 1:
             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
         else:
-            button('Back', 100, 550, white, grey, light_grey, fontBig, story, page-1)
+            button('Back', 100, 550, white, grey, light_grey, fontBig, story, page - 1)
         
         button('Skip', 700, 50, white, grey, light_grey, fontBig, levelManager)   
         
         if page < numberOfPages:
-            button('Next', 700, 550, white, grey, light_grey, fontBig, story, page+1)
+            button('Next', 700, 550, white, grey, light_grey, fontBig, story, page + 1)
         else:
             button('Start', 700, 550, white, grey, light_grey, fontBig, levelManager)
     
