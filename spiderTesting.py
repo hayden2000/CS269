@@ -3,72 +3,8 @@ import math
 import pygame
 import numpy
 from player import *
-# create a game clock
-gameClock = pygame.time.Clock()
+# create a game clock   
 
-# class Player:
-#     def __init__(self, win, x, y, width=30, height=50):
-#         self.x = x
-#         self.y = y
-#         self.win = win
-#         self.width = width
-#         self.height = height
-#         self.vel = 1
-#         self.isJump = False
-#         self.jumpCount = 9
-#         self.left = False
-#         self.right = False
-#         self.walkCount = 0
-# #list of image for walking right
-# #list of image for walking left
-#         self.gravity = 10
-# 
-#     def getIsJump(self):
-#         return self.isJump
-#     def setIsJump(self, jump):
-#         self.isJump = jump
-#     def getX(self):
-#         return self.x
-#     def getY(self):
-#         return self.y
-#     def getWidth(self):
-#         return self.width
-#     def getHeight(self):
-#         return self.height
-#     def getVel(self):
-#         return self.vel
-# 
-#     def draw(self):
-#         pygame.draw.rect(self.win,(255,0,0), (self.x, self.y, self.width, self.height))
-# 
-#     def moveLeft(self):
-#         self.x-= self.vel
-#         self.left = True
-#         self.right = False
-#     def moveRight(self):
-#         self.x+=self.vel
-#         self.left = False
-#         self.right = True
-#     def jump(self):
-#         if not(self.isJump):
-#             self.isJump = True
-#             self.left = False
-#             self.right = False
-#         else:
-#             if self.jumpCount>= -9:
-#                 neg = 1
-#                 if self.jumpCount < 0:
-#                     neg = -1
-#                 self.y -= (self.jumpCount**2)*0.5*neg
-#                 self.jumpCount -=1
-#             else:
-#                 self.isJump = False
-#                 self.jumpCount = 9
-#     def random_move(self):
-#         self.moveRight() 
-#     def stand(self):
-#         self.left = False
-#         self.right = False    
 
 class Enemy:
     def __init__(self, win, x, y, image, width=90, height=50):
@@ -113,8 +49,11 @@ class Enemy:
         
         pygame.mixer.Sound.play(spyd)
 
-        radius= 120
-        radius = math.sqrt(( float(player.getX() )-float( self.getX() ))**2 +(float( player.getY() )- float( self.getY() ))**2)
+        radius = 120
+        if(player.getX() == self.x):
+            radius = abs(player.getY()-self.y)
+        else:
+            radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
         if radius >= 150:
             self.random_move(frame)
         else:
@@ -167,34 +106,3 @@ class Enemy:
         self.rotImage = pygame.Surface((600, 800))
         self.rotImage = pygame.transform.rotate(self.originalImg, self.angle)
         self.rect = self.rotImage.get_rect()
-        # self.rotSurf = pygame.Surface((800, 600))
-        # self.rotSurf = pygame.transform.rotate(self.rotSurf, self.angle)
-        # self.rotSurf.blit(self.image, self.image.get_rect())
-        #self.image = self.rotSurf
-        
-        
-# def main():
-#     # pygame.init()
-# #     screenWidth = 800
-# #     screenHeight = 600
-#     # win = pygame.display.set_mode((screenWidth, screenHeight))
-#     spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
-#     #pygame.display.set_caption("Test")
-#     #player = Player(win, 300, 200)
-#     spider = Enemy(screen, 300, 500, spider_img)
-#     frame = 0
-#     #run = True
-#     while run:
-#         frame += 1
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 run = False
-#         win.fill( (0,0,0) )
-#         spider.move(player, frame)
-#         spider.draw(screen, spider_img)
-#         # player.draw()
-# #         pygame.display.update()
-# #         gameClock.tick(30)
-#     pygame.quit()
-# if __name__ == "__main__":
-#     main()
