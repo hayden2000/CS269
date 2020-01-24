@@ -71,6 +71,7 @@ def layout_level1(screen):
     #screen = pygame.display.set_mode([800,600])
     background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
     edges = screen.get_rect()
+    p3_width = 50
     p_height = 50
     #p_width = 150
     p_width = 100
@@ -106,13 +107,12 @@ def layout_level1(screen):
     platforms.append(Block(750,490, p_width, p_height, "block2.png"))
     
     
-    platforms.append(Block(225,70, p_width, p_height, "block3.png"))
-    platforms.append(Block(175,175, p_width, p_height, "block3.png"))
-    platforms.append(Block(725,175, p_width, p_height, "block3.png"))
-    platforms.append(Block(475,175, p_width, p_height, "block3.png"))
-    platforms.append(Block(675,280, p_width, p_height, "block3.png"))
-    platforms.append(Block(225,490, p_width, p_height, "block3.png"))
-    platforms.append(Block(375,490, p_width, p_height, "block3.png"))
+    platforms.append(Block(225,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(175,175, p3_width, p_height, "block3.png"))
+    platforms.append(Block(725,175, p3_width, p_height, "block3.png"))
+    platforms.append(Block(675,280, p3_width, p_height, "block3.png"))
+    platforms.append(Block(225,490, p3_width, p_height, "block3.png"))
+    platforms.append(Block(375,490, p3_width, p_height, "block3.png"))
     
     '''
     #first row
