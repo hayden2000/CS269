@@ -267,9 +267,6 @@ def story(page=None):
 
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0)) 
-  
-        # label control 
-        label('Story #{} - Shadow Puppets'.format(page), 400, 50, white, fontBig)
         
         if page == 1:
             image('cat1', 100, 100, 600, 400)
