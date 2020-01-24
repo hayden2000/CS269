@@ -75,16 +75,23 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
     textRect.center = (x, y)
     
     mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
     
     # Action if clicked
     if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
         text = font.render(message, True, textColor, highColor)
         roundCorners(textRect, highColor)
+        
+        clicked = False
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN: 
+                clicked = True
 
-        if click[0] == 1:
-            if level != None:
+        if clicked == True:
+            clicked = False
+            if level != None and number != None:
                 action(level, number)
+            elif level != None:
+                action(level)
             else:
                 action()
     else:
@@ -92,6 +99,11 @@ def button(message, x, y, textColor, initColor, highColor, font, action, level=N
         roundCorners(textRect, initColor)
 
     screen.blit(text, textRect) 
+    
+def image(pic, x, y, w, h):
+    bg = pygame.image.load("Assets/{}.png".format(pic))
+    bg = pygame.transform.scale(bg, (w, h))
+    screen.blit(bg, (x, y))
     
 def roundCorners(textRect, color):
     # Get the corners of the buttons
@@ -140,7 +152,7 @@ def startScreen():
         screen.blit(bg, (0, 0))
         
         # button control
-        button('Start', 150, 450, white, grey, light_grey, fontBig, levelManager)
+        button('Start', 150, 450, white, grey, light_grey, fontBig, storyManager)
         button('Instructions', 325, 450, white, grey, light_grey, fontBig, instructions)
         button('Credits', 522, 450, white, grey, light_grey, fontBig, credits)
         button('Quit', 654, 450, white, grey, light_grey, fontBig, quit)
@@ -217,6 +229,67 @@ def credits():
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
+    
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        pygame.display.update()
+                
+    pygame.quit()
+    quit()
+    
+##################################################    
+##################################################
+# STORY MANAGER
+##################################################
+    
+def storyManager(page=None):
+    
+    if page != None:
+        story(page)
+    else:
+        story(1)
+    
+##################################################  
+##################################################
+# STORY SCREEN
+##################################################
+    
+def story(page=None):
+
+    running = True
+    numberOfPages = 3
+    
+    while running:
+
+        screen.fill(black)
+
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
+        screen.blit(bg, (0, 0)) 
+  
+        # label control 
+        label('Story #{} - Shadow Puppets'.format(page), 400, 50, white, fontBig)
+        
+        if page == 1:
+            image('cat1', 100, 100, 600, 400)
+        elif page == 2:
+            image('cat2', 100, 100, 600, 400)
+        else:
+            image('cat3', 100, 100, 600, 400)
+        
+        # button control
+        if page == 1:
+            button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        else:
+            button('Back', 100, 550, white, grey, light_grey, fontBig, story, page-1)
+        
+        button('Skip', 700, 50, white, grey, light_grey, fontBig, levelManager)   
+        
+        if page < numberOfPages:
+            button('Next', 700, 550, white, grey, light_grey, fontBig, story, page+1)
+        else:
+            button('Start', 700, 550, white, grey, light_grey, fontBig, levelManager)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -340,10 +413,6 @@ def level(number, score=None):
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
         spider = Enemy(screen, 300, 500, spider_img)
         frame = 0
-    
-    ##################################################
-    # Collision init
-    ##################################################
     
     ##################################################
     # Sound init
@@ -473,10 +542,6 @@ def level(number, score=None):
         # throttle the game speed to 30fps
         gameClock.tick(30)
         
-        ##################################################
-        # Collision Control
-        ##################################################
-        
         ####
         # Handle next round
         ####
@@ -489,14 +554,9 @@ def level(number, score=None):
                 levelManager(win, score, number) #for more than 1 level
             else:
                 endScreen(win, score, number)
-            
-        ####
-        # If quit
-        ####
-
-#         for event in pygame.event.get(): 
         
         pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
