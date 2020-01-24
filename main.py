@@ -447,11 +447,11 @@ def level(number, score=None):
         time_sec_int = int(current_time) % 60
         
         
-        if time_sec_int < 10:
+        if time_min < 5 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
-        elif time_sec_int < 300:
+        elif time_min < 5:
             text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
@@ -545,8 +545,8 @@ def level(number, score=None):
             else:
                 endScreen(win, score, number)
         
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
