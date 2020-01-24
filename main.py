@@ -565,6 +565,14 @@ def endScreen(win, score, level):
     pygame.mixer.music.set_volume(1.0)
     pygame.mixer.music.play(-1)
     
+    high_score = 0
+    with open("Data/Score.sdwp","r+") as f:
+        high_score = f.readline()
+        if int(high_score) < score:
+            f.seek(0) 
+            f.truncate()
+            f.write(str(score))
+    
     while running:
     
         screen.fill(black)
@@ -584,6 +592,8 @@ def endScreen(win, score, level):
             label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 375, white, fontSmall)
         
             button('Try again', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            
+        label('High Score: {}'.format(high_score), 400, 425, white, fontSmall)
  
         button('Quit', 710, 550, white, grey, light_grey, fontBig, quit)
     
