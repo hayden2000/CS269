@@ -497,6 +497,7 @@ def level(number, score=None):
 #         for event in pygame.event.get(): 
         
         pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
