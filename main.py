@@ -12,7 +12,7 @@
 
 ##################################################
 
-import pygame, sys, random, os, numpy
+import pygame, sys, random, os, numpy, math
 from pygame import gfxdraw
 
 # Import all the other classes here
@@ -39,7 +39,7 @@ screen = pygame.display.set_mode((800,600))
 
 # color schemes - changes everywhere :)
 white = (255, 255, 255)
-yellow = (255, 255, 0)
+green = (0, 255, 0)
 red = (255, 0, 0)
 black = (0, 0, 0)
 grey = (127, 127, 127)
@@ -361,8 +361,8 @@ def level(number, score=None):
     if score == None:
         score = 0
     max_levels = 2 # change when we add more levels
-    level_time = 30.0 #seconds
     start_time = pygame.time.get_ticks()
+    #level_time = 30.0 #seconds
     
     ##################################################
     # Player init
@@ -439,29 +439,22 @@ def level(number, score=None):
         # Timer
         ####
         
-        current_time = (pygame.time.get_ticks() - start_time) / 1000.0
-        countdown_time = level_time - current_time
+        timer = pygame.time.get_ticks() - start_time
+        current_time = (timer) / 1000.0
+        #countdown_time = level_time - current_time
         
-        time_min = int(countdown_time / 60.0)
-        time_sec_int = int(countdown_time) % 60
-        time_mili = round(countdown_time % 60.0, 1)
+        time_min = int(current_time / 60.0)
+        time_sec_int = int(current_time) % 60
         
-        if countdown_time > 10.0 and time_sec_int > 9:
-        	text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
-        	textRect = text.get_rect()
-        	textRect.center = (750, 575)
-        elif countdown_time > 10.0 and time_sec_int < 10:
-        	text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
-        	textRect = text.get_rect()
-        	textRect.center = (750, 575)
-        elif countdown_time > 5:
-        	text = fontSmall.render('{}:0{}'.format(time_min, time_mili), True, yellow)
-        	textRect = text.get_rect()
-        	textRect.center = (750, 575)
-        elif countdown_time > 0:
-        	text = fontSmall.render('{}:0{}'.format(time_min, time_mili), True, red)
-        	textRect = text.get_rect()
-        	textRect.center = (750, 575)
+        
+        if time_sec_int < 10:
+            text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
+            textRect = text.get_rect()
+            textRect.center = (750, 575)
+        elif time_sec_int < 300:
+            text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
+            textRect = text.get_rect()
+            textRect.center = (750, 575)
         else:
             win = False
         
@@ -482,7 +475,6 @@ def level(number, score=None):
                 running = False
         
         player.update()
-        
         
         ##################################################
         # Enemy AI Control
@@ -520,13 +512,14 @@ def level(number, score=None):
         for lamp in lampList:
             if lamp.isLit:
                 counter += 1
-        if counter == len(lampList):
+        if counter == 2:######len(lampList)
             win = True
             
         # score display
-        stext = fontSmall.render('{}'.format(counter + score), True, white)
+        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (100 * counter)
+        stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
-        stextRect.center = (25, 575)
+        stextRect.center = (40, 575)
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
         
@@ -545,7 +538,7 @@ def level(number, score=None):
         
         if win != None:
             pygame.mouse.set_visible(True)
-            score += counter # update score
+            score += score + cur_score # update score
                        
             if win == True and number < max_levels:
                 levelManager(win, score, number) #for more than 1 level
@@ -580,7 +573,7 @@ def endScreen(win, score, level):
         screen.blit(bg, (0, 0))
   
         # button/label control 
-        
+
         if win == True:
             label('You won!', 400, 300, white, fontBig)
             label('Your score was {} through level {}!'.format(score, level), 400, 375, white, fontSmall)
