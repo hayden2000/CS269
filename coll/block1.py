@@ -253,24 +253,7 @@ class Player(pygame.sprite.Sprite):
             self.position.x = 795
         #print(self.rect.x)
         #print(self.rect.y)
-        '''
-        if self.platforming:
-            if self.rect.bottom == p.rect.top:
-                self.position.y = p.rect.top - 22
-                self.vel.y = 0
-                self.acc.y = 0
-            elif self.rect.left == p.rect.right:
-                self.position.x = p.rect.right + 15
-            elif self.rect.right == p.rect.left:
-                self.position.x = p.rect.left - 15
-            elif self.rect.top == p.rect.bottom:
-                self.vel.y = -10
-            else:
-                print("somehow colliding?")
-        else:
-            #figure this out
-            print("jumping")
-        '''
+        
         if keys[pygame.K_LEFT]:
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0

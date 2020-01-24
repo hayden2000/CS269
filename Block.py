@@ -6,6 +6,131 @@
 import pygame
 import os
 import sys
+from pygame.locals import *
+from lighting import *
+
+bg = pygame.image.load('Assets/CaveContrast.png')
+b1 = pygame.image.load('Assets/block1.png')
+b2 = pygame.image.load('Assets/block2.png')
+b3 = pygame.image.load('Assets/block3.png')
+
+class Block(pygame.sprite.Sprite):
+    #block code that tells the program what type of block this will be
+    #0 = platform, 1 = wall
+    block_type = 0
+    
+    def __init__(self, x_pos, y_pos, width, height, sprite):
+        #creating a new block
+        pygame.sprite.Sprite.__init__(self)
+        if sprite == "block1.png":
+            self.image = b1
+        elif sprite == "block2.png":
+            self.image = b2
+        elif sprite == "block3.png":
+            self.image = b3
+        else:
+            self.image = b1
+        self.image = pygame.transform.scale(self.image, (int(width), int(height)))
+        #loading a sprite in and giving it a transparent background
+        #self.image.convert_alpha()
+        #self.image = pygame.Surface((width, height))
+        #self.image.fill((0,0,255))
+        #self.image.set_colorkey()
+        #giving a rigidbody
+        self.rect = self.image.get_rect()
+        #setting coordinates
+        self.rect.x = x_pos
+        self.rect.y = y_pos
+        new_height = height - 2
+        #makes the rect 2 px high
+        self.rect.inflate(0, -40)
+        print(self.rect)
+        #block defaults to platform
+        
+    def getX():
+        return self.rect.x
+    
+    def getY(): 
+        return self.rect.y
+    
+    def setX(new_x):
+        self.rect.x = new_x
+        
+    def setY(new_y):
+        self.rect.y = new_y
+        
+    def setBlock(num):
+        #change block to either a platform or wall
+        if num != 0:
+            self.block_type = 1
+        else:
+            self.block_type = 0
+            
+            
+def layout_level1(screen):
+    #screen = pygame.display.set_mode([800,600])
+    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
+    edges = screen.get_rect()
+    p_height = 50
+    p_width = 150
+    platforms = []
+    ar_x = 1.3
+    ar_y = 1.5
+    
+    #first row
+    platforms.append(Block(int(ar_x*4),int(ar_y*60), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*118),int(ar_y*60), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*480), int(ar_y*60), p_width, p_height, "block1.png"))
+    
+    #second row
+    platforms.append(Block(int(ar_x*140),int(ar_y*140), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*417),int(ar_y*140), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*534),int(ar_y*140), p_width/2, p_height/2, "block3.png"))
+    
+    #third row
+    platforms.append(Block(int(ar_x*5), int(ar_y*215), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*110), int(ar_y*215), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*272), int(ar_y*215), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*386), int(ar_y*215), p_width/2, p_height/2, "block3.png"))
+    
+    #fourth row
+    platforms.append(Block(int(ar_x*2), int(ar_y*302), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*210), int(ar_y*302), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*330), int(ar_y*302), p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*480), int(ar_y*302), p_width, p_height, "block2.png"))
+    
+    #fifth row
+    platforms.append(Block(int(ar_x*2), int(ar_y*371), p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*119), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*257), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*372), int(ar_y*371), p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*478), int(ar_y*371), p_width, p_height, "block2.png"))
+    
+    return platforms
+    
+
+class Layout():
+    #dimensions are 800x600
+    level = 1
+    def __init__(self, cur_level, screen):
+        self.level = cur_level
+        if cur_level == 1:
+            layout_level1(screen)
+        else:
+            print("level does not exist yet")
+
+if __name__=="__main__":
+    print(layout_level1())
+
+
+
+
+
+'''
+#This class creates a block object for platforms
+import pygame
+import os
+import sys
 
 from lighting import *
 
@@ -102,7 +227,7 @@ class Layout():
 
 if __name__=="__main__":
     print(layout_level1())
- 
+'''
 '''   
 class Pickup():
     pickup_type = 1
