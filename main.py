@@ -512,7 +512,7 @@ def level(number, score=None):
         for lamp in lampList:
             if lamp.isLit:
                 counter += 1
-        if counter == 2:######len(lampList)
+        if counter == len(lampList):
             win = True
             
         # score display
