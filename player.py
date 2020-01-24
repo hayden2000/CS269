@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
             pic.set_colorkey((0,0,0))
             self.walkLeft.append(pygame.transform.flip(pic, True, False))
         self.jumpSprite = []
-        
+
     def getX(self):
         return self.rect.left
         

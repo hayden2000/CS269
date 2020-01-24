@@ -18,7 +18,7 @@ class Door:
     #unlocks the door
     def unlock(self, unlock):
         self.unlocked = unlock
-        #open door animation
+        #open door animation/sound
         #light lamp
         
     

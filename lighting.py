@@ -147,8 +147,9 @@ class Lighting:
 # Class to represent the stationary lamps
 class Lamp:
 
-	def __init__( self, center, image, lightImage, timer = -1, isLit = False ):
-		self.coors = center
+	def __init__( self, midbottom, image, lightImage, timer = -1, isLit = False ):
+		self.coors = ( midbottom[0], midbottom[1] - 40 )
+		#self.coors[1] = midbottom[1] + ( image.get_rect().height )/2
 		self.lightImage = lightImage
 		self.image = image
 		
