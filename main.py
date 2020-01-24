@@ -516,7 +516,7 @@ def level(number, score=None):
             win = True
             
         # score display
-        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3)
+        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (100 * counter)
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
         stextRect.center = (40, 575)
