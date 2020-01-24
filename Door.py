@@ -19,22 +19,21 @@ class Door:
     #triggers next level load
     def win(self, player):
         if(self.exit and player.rect.collidepoint( self.center ) and self.unlocked):
-            #trigger next level
             return True
     
     #unlocks the door
     def unlock(self):
         self.unlocked = True
         #open door animation/sound
-        #light lamp
+        
         
     
-    def levelEnter(self):
-        if(self.exit == False):
-            animate=1
-            #trigger open and close door animation
-        else:
-            print("Error: Incorrect Door Class")
+    # def levelEnter(self):
+#         if(self.exit == False):
+#             animate=1
+#             #trigger open and close door animation
+#         else:
+#             print("Error: Incorrect Door Class")
     
             
         
