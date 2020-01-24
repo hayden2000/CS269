@@ -368,7 +368,7 @@ def level(number, score=None):
     # Player init
     ##################################################
     
-    platforms = layout_level1(screen)
+    platforms, lampList = layout_level1(screen)
     
     #Layout(number, screen)
     Layout(1, screen)
@@ -389,7 +389,7 @@ def level(number, score=None):
     lighting = Lighting()
 
     # Create a list of lamp object
-    lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
+    #lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []

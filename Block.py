@@ -47,10 +47,10 @@ class Block(pygame.sprite.Sprite):
         print(self.rect)
         #block defaults to platform
         
-    def getX():
+    def getX(self):
         return self.rect.x
     
-    def getY(): 
+    def getY(self): 
         return self.rect.y
     
     def setX(new_x):
@@ -77,6 +77,37 @@ def layout_level1(screen):
     ar_x = 1.3
     ar_y = 1.5
     
+    
+    #first row
+    platforms.append(Block(int(ar_x*4),70, p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*118),70, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*480), 70, p_width, p_height, "block1.png"))
+    
+    #second row
+    platforms.append(Block(int(ar_x*140),175, p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*417),175, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*534),175, p_width/2, p_height/2, "block3.png"))
+    
+    #third row
+    platforms.append(Block(int(ar_x*5), 280, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*110), 280, p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*272), 280, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*386), 280, p_width/2, p_height/2, "block3.png"))
+    
+    #fourth row
+    platforms.append(Block(int(ar_x*2), 385, p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*210), 385, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*330), 385, p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*480), 385, p_width, p_height, "block2.png"))
+    
+    #fifth row
+    platforms.append(Block(int(ar_x*2), 490, p_width, p_height, "block2.png"))
+    platforms.append(Block(int(ar_x*119), 490, p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*257), 490, p_width/2, p_height/2, "block3.png"))
+    platforms.append(Block(int(ar_x*372), 490, p_width, p_height, "block1.png"))
+    platforms.append(Block(int(ar_x*478), 490, p_width, p_height, "block2.png"))
+    
+    '''
     #first row
     platforms.append(Block(int(ar_x*4),int(ar_y*60), p_width, p_height, "block1.png"))
     platforms.append(Block(int(ar_x*118),int(ar_y*60), p_width, p_height, "block2.png"))
@@ -105,8 +136,13 @@ def layout_level1(screen):
     platforms.append(Block(int(ar_x*257), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
     platforms.append(Block(int(ar_x*372), int(ar_y*371), p_width, p_height, "block1.png"))
     platforms.append(Block(int(ar_x*478), int(ar_y*371), p_width, p_height, "block2.png"))
+    '''
+    lampHeight = lampImage.get_height()
     
-    return platforms
+    lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
+    
+    
+    return platforms, lampList
     
 
 class Layout():
