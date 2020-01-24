@@ -8,6 +8,7 @@ import os
 import sys
 from pygame.locals import *
 from lighting import *
+from Door import *
 
 bg = pygame.image.load('Assets/CaveContrast.png')
 b1 = pygame.image.load('Assets/block1.png')
@@ -178,8 +179,9 @@ def layout_level1(screen):
     
     lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
     
+    doorList = [Door( (50, 70), False), Door( (750, 490), True)]
     
-    return platforms, lampList
+    return platforms, lampList, doorList
     
 
 class Layout():

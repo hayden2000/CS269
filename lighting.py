@@ -57,7 +57,7 @@ class Lighting:
 		pass
 	
 	# Render the area illuminated by stationary lamps
-	def renderLamps(self, screen, refresh, lampList, platforms, spider = None):
+	def renderLamps(self, screen, refresh, lampList, platforms, doors, spider = None):
 		
 		# Create light map surface "night"
 		night.fill( (0,0,0) )
@@ -84,6 +84,13 @@ class Lighting:
  						trect = lamp.lightRect.clip( plat.rect )
  						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
 				
+				
+				# Draw the doors
+				for door in doors:
+					if door.rect.colliderect( lamp.lightRect ):
+						trect = door.rect.clip( lamp.lightRect )
+						screen.blit( door.image, trect, trect.move(-door.rect.left,-door.rect.top) )
+				
 				# Draw the spider enemy
 				if spider != None:
 					if spider.get_rect().colliderect( lamp.lightRect ):
@@ -100,7 +107,7 @@ class Lighting:
 
 
 	# Render the light rectangle surrounding the player
-	def renderPlayer(self, screen, refresh, player, lampList, platforms, spider = None):
+	def renderPlayer(self, screen, refresh, player, lampList, platforms, doors, spider = None):
 	
 		# Erase the area covered by the player light
 		drawBkg( screen, refresh, player.lightRect )
@@ -116,6 +123,12 @@ class Lighting:
 			if player.lightRect.colliderect( plat.rect ):
 				trect = player.lightRect.clip( plat.rect )
 				screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+		
+		# Draw the doors
+		for door in doors:
+			if door.rect.colliderect( player.lightRect ):
+				trect = door.rect.clip( player.lightRect )
+				screen.blit( door.image, trect, trect.move(-door.rect.left,-door.rect.top) )
 		
 		# Draw the spider enemy
 		if spider != None:
@@ -164,30 +177,31 @@ class Lamp:
 		self.timeLimit = timer * 30    #Convert from seconds to frames
 		self.counter = 0
 		
-	def turnOn( self ):
-		self.isLit = True
+# 	def turnOn( self ):
+# 		self.isLit = True
+# 	
+# 	def turnOff( self ):
+# 		self.isLit = False
 	
-	def turnOff( self ):
-		self.isLit = False
-	
-	def checkStatus( self, collisionRect ):
-		# If the rectangles collide and the lamp has not recently been lit
-		if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
-		    self.recentFlip = True
-		    pygame.mixer.init()
-		    lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
-		    lit.set_volume(0.5)
-		    pygame.mixer.Sound.play(lit)
-		    self.isLit = True
-		    self.counter = 0
-		elif self.isLit and self.timeLimit >= 0:
-		    self.recentFlip = False
-		    if self.counter >= self.timeLimit:
-		        self.counter = 0
-		        self.isLit = False
-		        screen.fill( (0,0,0), self.lightRect )
-		    else:
-		        self.counter += 1
+	def checkStatus( self, collisionRect, win ):
+		if not win:
+			# If the rectangles collide and the lamp has not recently been lit
+			if collisionRect.colliderect( self.imageRect ) and self.recentFlip == False:
+				self.recentFlip = True
+				pygame.mixer.init()
+				lit=pygame.mixer.Sound('Audio/COMPLETE.ogg')
+				lit.set_volume(0.5)
+				pygame.mixer.Sound.play(lit)
+				self.isLit = True
+				self.counter = 0
+			elif self.isLit and self.timeLimit >= 0:
+				self.recentFlip = False
+				if self.counter >= self.timeLimit:
+					self.counter = 0
+					self.isLit = False
+					screen.fill( (0,0,0), self.lightRect )
+				else:
+					self.counter += 1
 		
 # Class to represent the playable character
 #class Player:

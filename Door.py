@@ -1,23 +1,30 @@
 #Door.py
 
+import pygame
+
+door_img = pygame.image.load("Assets/door.png")
+
 class Door:
-    def __init__(self, x, y, image, exit):
-        self.image = image
-        self.x = x
-        self.y = y
+    def __init__(self, midbottom, exit):
+        self.image = door_img
+        
+        self.center = ( midbottom[0], midbottom[1] - (self.image.get_height()/2) )
+        self.rect = door_img.get_rect()
+        self.rect.center = self.center
+        
         self.exit = exit
         self.entrance = not exit
         self.unlocked = False
     
     #triggers next level load
-    def win(self, player_x, player_y):
-        if(self.exit and player_x == self.x and player_y == self.y and self.unlocked):
+    def win(self, player):
+        if(self.exit and player.rect.collidepoint( self.center ) and self.unlocked):
             #trigger next level
-            nextLevel = 1
+            return True
     
     #unlocks the door
-    def unlock(self, unlock):
-        self.unlocked = unlock
+    def unlock(self):
+        self.unlocked = True
         #open door animation/sound
         #light lamp
         
