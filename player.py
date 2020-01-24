@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
                
             move_sound.set_volume(.4)
-            pygame.mixer.Sound.play(move_sound)
+            #pygame.mixer.Sound.play(move_sound)
 
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
 
             move_sound.set_volume(.4)
-            pygame.mixer.Sound.play(move_sound)
+            #pygame.mixer.Sound.play(move_sound)
             
             if self.position.x > 800-self.width/2-self.vel.x:
                 self.acc.x = 0
