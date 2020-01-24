@@ -360,7 +360,7 @@ def level(number, score=None):
     win = None
     if score == None:
         score = 0
-    max_levels = 2 # change when we add more levels
+    max_levels = 4 # change when we add more levels
     start_time = pygame.time.get_ticks()
     #level_time = 30.0 #seconds
     
@@ -368,10 +368,15 @@ def level(number, score=None):
     # Player init
     ##################################################
     
-    platforms, lampList = layout_level1(screen)
+    if number == 1:    
+    	platforms, lampList = layout_level1(screen)
+    elif number == 2:
+    	platforms, lampList = layout_level2(screen)
+    else:
+    	platforms, lampList = layout_level3(screen)
     
     #Layout(number, screen)
-    Layout(1, screen)
+    #Layout(1, screen)
     
     player = Player(200,200,platforms)
     
@@ -545,8 +550,8 @@ def level(number, score=None):
             else:
                 endScreen(win, score, number)
         
-        #pygame.display.update(refresh)
-        pygame.display.update()
+        pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
