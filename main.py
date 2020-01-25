@@ -153,7 +153,7 @@ def startScreen():
         
         # button control
         button('Start', 150, 450, white, grey, light_grey, fontBig, storyManager)
-        button('Instructions', 325, 450, white, grey, light_grey, fontBig, instructions)
+        button('Instructions', 325, 450, white, grey, light_grey, fontBig, tutorialManager)
         button('Credits', 522, 450, white, grey, light_grey, fontBig, credits)
         button('Quit', 654, 450, white, grey, light_grey, fontBig, quit)
     
@@ -166,32 +166,175 @@ def startScreen():
     pygame.quit()
     quit()
     
-##################################################  
+##################################################    
 ##################################################
-# INSTRUCTION SCREEN
+# TUTORIAL MANAGER
 ##################################################
     
-def instructions():
+def tutorialManager(page=None):
+    
+    if page != None:
+        tutorial(page)
+    else:
+        tutorial(1)
+    
+##################################################  
+##################################################
+# TUTORIAL SCREEN
+##################################################
+    
+def tutorial(page=None):
 
     running = True
+    win = None
+    numberOfPages = 3
+    
+    ##################################################
+    # Player init
+    ##################################################
+    
+    platforms, lampList = None
+    
+    if page == 1:
+        platforms, lampList = layout_level1(screen)
+    elif page == 2:
+        platforms, lampList = layout_level2(screen)
+    
+    #Layout(number, screen)
+    Layout(1, screen)
+    
+    player = Player(200,200,platforms)
+    
+    ##################################################
+    # Lighting init
+    ##################################################
+    
+    # get the current mouse information, and make the cursor invisible if
+    # it is focused on the game window
+    pygame.event.pump()
+    if pygame.mouse.get_focused():
+        pygame.mouse.set_visible(False)
+
+    # instantiate lighting class
+    lighting = Lighting()
+
+    # Create a list of lamp object
+    #lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
+
+    # set up the refresh rectangle container
+    refresh = []
+    screen.fill(black)
+
+    # Draw background illuminated by lights, then render light/darkness on top
+    lighting.renderLamps( screen, refresh, lampList, platforms )
+    
+    ##################################################
+    # Sound init
+    ##################################################
+
+    pygame.mixer.music.stop() #stop background audio
+    pygame.mixer.music.load('Audio/OPTION2.ogg')
+    pygame.mixer.music.set_volume(0.15)
+    pygame.mixer.music.play(-1)
+    
+    ####
+    # Main Loop :)
+    ####
     
     while running:
 
-        screen.fill(black)
-
-        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
-        screen.blit(bg, (0, 0)) 
-  
-        # label control 
-        label('Instructions - Shadow Puppets', 400, 50, white, fontBig)
-        
-        # button control
-        button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
+        ####
+        # Initialize the window
+        ####
     
+        screen.fill(black)
+        
+        #bg = pygame.image.load("Assets/Cave.png")
+        #screen.blit(bg, (0, 0))
+        
+        ####
+        #START OF GAME LOGIC :)))))
+        ####
+        
+        ##################################################
+        # Player Control
+        ##################################################
+        # handle events and erase things
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    player.jumpCheck()
+                    player.jump()
             if event.type == pygame.QUIT:
                 running = False
+        
+        player.update()
+        
+        ##################################################
+        # Lighting Control
+        ##################################################
+
+        # If the game is in focus, update mouse position
+        if pygame.mouse.get_focused():
+            pygame.mouse.set_visible(False)        
+        else:
+            pygame.mouse.set_visible(True)
+    
+        # Check if the player touches any of the lamps
+        for lamp in lampList:
+            lamp.checkStatus( player.rect )
+            
+        # Render everything to the screen
+        lighting.renderLamps( screen, refresh, lampList, platforms )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms )
+
+		# Check if the player has won
+        # counter = 0
+#         for lamp in lampList:
+#             if lamp.isLit:
+#                 counter += 1
+#         if counter == len(lampList):
+#             win = True
+
+        # Title label
+        text = fontBig.render('Tutorial - Shadow Puppets', True, white)
+        textRect = text.get_rect()
+        textRect.center = (400, 50)
+        screen.blit(text, textRect)
+        refresh.append(textRect)
+        
+        # if page == 1:
+#             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+#         else:
+#             button('Back', 100, 550, white, grey, light_grey, fontBig, tutorial, page - 1)
+#         
+#         button('Skip', 700, 50, white, grey, light_grey, fontBig, storyManager)   
+#         
+#         if page < numberOfPages:
+#             button('Next', 700, 550, white, grey, light_grey, fontBig, tutorial, page + 1)
+#         else:
+#             button('Start', 700, 550, white, grey, light_grey, fontBig, storyManager)
+                
+        # update the parts of the screen that need it
+        pygame.display.update(refresh)
+
+        # clear out the refresh rects
+        refresh = []
+
+        # throttle the game speed to 30fps
+        gameClock.tick(30)
+                
+        ####
+        # Handle next round
+        ####
+        
+        if win != None:
+            pygame.mouse.set_visible(True)
+                       
+            if win == True and number < numberOfPages:
+                tutorialManager(number + 1)
+            else:
+                storyManager()
         
         pygame.display.update()
                 
@@ -598,7 +741,10 @@ def endScreen(win, score, level):
         
             button('Try again', 135, 550, white, grey, light_grey, fontBig, startScreen)
             
-        label('High Score: {}'.format(high_score), 400, 425, white, fontSmall)
+        if int(high_score) < score:
+            label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 425, white, fontSmall)
+        else:
+            label('High Score: {}'.format(high_score), 400, 425, white, fontSmall)
  
         button('Quit', 710, 550, white, grey, light_grey, fontBig, quit)
     
