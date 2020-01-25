@@ -636,7 +636,8 @@ def level(number, score=None):
             win = True
             
         # score display
-        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (100 * counter)
+        #cur_score = int(1000 - timer / 300) + (25 * counter)
+        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
         stextRect.center = (40, 575)
@@ -691,6 +692,9 @@ def endScreen(win, score, level):
             f.seek(0) 
             f.truncate()
             f.write(str(score))
+    
+    with open("Data/History.sdwp","a+") as f:
+        f.write('{}, {}, {}, {}\n'.format(win, level, score, high_score))
     
     while running:
     
