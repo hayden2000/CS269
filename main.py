@@ -105,6 +105,9 @@ def image(pic, x, y, w, h):
     bg = pygame.transform.scale(bg, (w, h))
     screen.blit(bg, (x, y))
     
+def textBox(x, y, initColor, highColor, font):
+    pass
+    
 def roundCorners(textRect, color):
     # Get the corners of the buttons
     x0, y0 = textRect.topleft
@@ -317,8 +320,9 @@ def tutorial(page=None):
                 tutorialManager(page + 1)
             else:
                 storyManager()
-        
-        pygame.display.update()
+                
+        pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
