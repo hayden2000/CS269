@@ -706,19 +706,19 @@ def endScreen(win, score, level):
             label('You won!', 400, 300, white, fontBig)
             label('Your score was {} through level {}!'.format(score, level), 400, 375, white, fontSmall)
             
-            button('Play again', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Play again', 135, 550, white, grey, light_grey, fontBig, levelManager)
         else:
             label('Game Over', 400, 300, white, fontBig)
             label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 375, white, fontSmall)
         
-            button('Try again', 135, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Try again', 135, 550, white, grey, light_grey, fontBig, levelManager)
             
         if int(high_score) < score:
             label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 425, white, fontSmall)
         else:
             label('High Score: {}'.format(high_score), 400, 425, white, fontSmall)
  
-        button('Quit', 710, 550, white, grey, light_grey, fontBig, quit)
+        button('Back', 710, 550, white, grey, light_grey, fontBig, startScreen)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
