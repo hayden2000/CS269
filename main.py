@@ -658,8 +658,7 @@ def level(number, score=None):
         
         if win != None:
             pygame.mouse.set_visible(True)
-            score += score + cur_score # update score
-                       
+            score = score + cur_score # update score
             if win == True and number < max_levels:
                 levelManager(win, score, number) #for more than 1 level
             else:
