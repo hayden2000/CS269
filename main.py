@@ -153,8 +153,8 @@ def startScreen():
         
         # button control
         button('Start', 150, 450, white, grey, light_grey, fontBig, storyManager)
-        button('Instructions', 325, 450, white, grey, light_grey, fontBig, tutorialManager)
-        button('Credits', 522, 450, white, grey, light_grey, fontBig, credits)
+        button('Tutorial', 310, 450, white, grey, light_grey, fontBig, tutorialManager)
+        button('Credits', 492, 450, white, grey, light_grey, fontBig, credits)
         button('Quit', 654, 450, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
@@ -187,13 +187,11 @@ def tutorial(page=None):
 
     running = True
     win = None
-    numberOfPages = 3
+    numberOfPages = 2
     
     ##################################################
     # Player init
     ##################################################
-    
-    platforms, lampList = None
     
     if page == 1:
         platforms, lampList = layout_level1(screen)
@@ -217,9 +215,6 @@ def tutorial(page=None):
 
     # instantiate lighting class
     lighting = Lighting()
-
-    # Create a list of lamp object
-    #lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []
@@ -248,10 +243,7 @@ def tutorial(page=None):
         ####
     
         screen.fill(black)
-        
-        #bg = pygame.image.load("Assets/Cave.png")
-        #screen.blit(bg, (0, 0))
-        
+
         ####
         #START OF GAME LOGIC :)))))
         ####
@@ -289,31 +281,21 @@ def tutorial(page=None):
         lighting.renderPlayer( screen, refresh, player, lampList, platforms )
 
 		# Check if the player has won
-        # counter = 0
-#         for lamp in lampList:
-#             if lamp.isLit:
-#                 counter += 1
-#         if counter == len(lampList):
-#             win = True
+        counter = 0
+        for lamp in lampList:
+            if lamp.isLit:
+                counter += 1
+        if counter == len(lampList):
+            win = True
 
         # Title label
-        text = fontBig.render('Tutorial - Shadow Puppets', True, white)
+        text = fontBig.render('Tutorial', True, white)
         textRect = text.get_rect()
         textRect.center = (400, 50)
         screen.blit(text, textRect)
         refresh.append(textRect)
         
-        # if page == 1:
-#             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-#         else:
-#             button('Back', 100, 550, white, grey, light_grey, fontBig, tutorial, page - 1)
-#         
-#         button('Skip', 700, 50, white, grey, light_grey, fontBig, storyManager)   
-#         
-#         if page < numberOfPages:
-#             button('Next', 700, 550, white, grey, light_grey, fontBig, tutorial, page + 1)
-#         else:
-#             button('Start', 700, 550, white, grey, light_grey, fontBig, storyManager)
+        #button('Skip', 700, 50, white, grey, light_grey, fontBig, storyManager)   
                 
         # update the parts of the screen that need it
         pygame.display.update(refresh)
@@ -331,8 +313,8 @@ def tutorial(page=None):
         if win != None:
             pygame.mouse.set_visible(True)
                        
-            if win == True and number < numberOfPages:
-                tutorialManager(number + 1)
+            if win == True and page < numberOfPages:
+                tutorialManager(page + 1)
             else:
                 storyManager()
         
@@ -503,25 +485,19 @@ def level(number, score=None):
     win = None
     if score == None:
         score = 0
-    max_levels = 4 # change when we add more levels
+    max_levels = 2 # change when we add more levels
     start_time = pygame.time.get_ticks()
-    #level_time = 30.0 #seconds
     
     ##################################################
     # Player init
     ##################################################
     
-    if number == 1:    
-    	platforms, lampList = layout_level1(screen)
-    elif number == 2:
-    	platforms, lampList = layout_level2(screen)
-    else:
+    if number == 1 or number == 2:    
     	platforms, lampList = layout_level3(screen)
     
     #Layout(number, screen)
-    #Layout(1, screen)
     
-    player = Player(200,200,platforms)
+    player = Player(200, 200, platforms)
     
     ##################################################
     # Lighting init
@@ -535,9 +511,6 @@ def level(number, score=None):
 
     # instantiate lighting class
     lighting = Lighting()
-
-    # Create a list of lamp object
-    #lampList = [ Lamp( (150,150), lampImage, lightAlpha, 5 ), Lamp( (650,150), lampImage, lightAlpha, 5 ), Lamp( (150,450), lampImage, lightAlpha, 5 ), Lamp( (650,450), lampImage, lightAlpha, 5 ) ]
 
     # set up the refresh rectangle container
     refresh = []
@@ -580,20 +553,15 @@ def level(number, score=None):
     
         screen.fill(black)
         
-        #bg = pygame.image.load("Assets/Cave.png")
-        #screen.blit(bg, (0, 0))
-        
         ####
         # Timer
         ####
         
         timer = pygame.time.get_ticks() - start_time
         current_time = (timer) / 1000.0
-        #countdown_time = level_time - current_time
         
         time_min = int(current_time / 60.0)
         time_sec_int = int(current_time) % 60
-        
         
         if time_min < 5 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
