@@ -372,7 +372,6 @@ def highscores():
 
     running = True
     min_number = None
-    
     user_array = []
     
     with open("Data/History.sdwp","r+") as f:
@@ -393,7 +392,7 @@ def highscores():
         # label control 
         label('High Scores - Shadow Puppets', 400, 50, white, fontBig)
         
-        if min_number == None:
+        if min_number == 0:
             label('No Scores, Get Playing! :)', 400, 300, white, fontBig)
         else:
             for i in range(8):
