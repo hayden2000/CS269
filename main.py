@@ -543,10 +543,15 @@ def level(number, score=None):
 
     running = True
     win = None
+    counter = 0
+    old_counter = 0
+    cycle = 0
     if score == None:
         score = 0
     max_levels = 2 # change when we add more levels
     start_time = pygame.time.get_ticks()
+    
+    rtext = fontSmall.render('', True, white) 
     
     ##################################################
     # Player init
@@ -681,13 +686,32 @@ def level(number, score=None):
         screen.blit(text, textRect)
         refresh.append(textRect)
 
-		# Check if the player has won
+        # Check if the player has won
+        
+        old_counter = counter
         counter = 0
         for lamp in lampList:
             if lamp.isLit:
                 counter += 1
         if counter == len(lampList):
             win = True
+            
+        # bonus display 
+        if old_counter - 1 == counter:
+            rtext = fontSmall.render('-20', True, red)  
+            cycle = 0
+        elif old_counter + 1 == counter:
+            rtext = fontSmall.render('+20', True, green)
+            cycle = 0
+        else:
+            if cycle == 30:
+                rtext = fontSmall.render('', True, white) 
+            cycle = cycle + 1
+            
+        rtextRect = rtext.get_rect()
+        rtextRect.center = (40, 550)
+        screen.blit(rtext, rtextRect)
+        refresh.append(rtextRect)
             
         # score display
         #cur_score = int(1000 - timer / 300) + (25 * counter)
