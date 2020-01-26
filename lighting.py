@@ -57,7 +57,8 @@ class Lighting:
 		pass
 	
 	# Render the area illuminated by stationary lamps
-	def renderLamps(self, screen, refresh, lampList, platforms, doors, spider = None):
+
+	def renderLamps(self, screen, refresh, player, lampList, platforms, doors, spider = None):
 		
 		# Create light map surface "night"
 		night.fill( (0,0,0) )
@@ -101,6 +102,12 @@ class Lighting:
 # 						trect = spider.get_rect().clip( lamp.lightRect )
 # 						screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 
+				key = player.getKey()
+				if key.isVisible:
+					if lamp.lightRect.colliderect( key.rect ):
+ 						trect = lamp.lightRect.clip( key.rect )
+ 						screen.blit( key.image, trect, trect.move(-key.rect.left,-key.rect.top) )
+
 				# Draw the light map onto the screen
 				screen.blit( night, lamp.lightRect, lamp.lightRect, special_flags = pygame.BLEND_MULT )
 				refresh.append( lamp.lightRect )
@@ -140,6 +147,12 @@ class Lighting:
 				spider.draw(screen, spider_img)
 				# trect = spider.get_rect().clip( player.lightRect )
 # 				screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
+		
+		key = player.getKey()
+		if key.isVisible:
+			if player.lightRect.colliderect( key.rect ):
+				trect = player.lightRect.clip( key.rect )
+				screen.blit( key.image, trect, trect.move(-key.rect.left,-key.rect.top) )
 		
 		# Draw the player image
 		screen.blit( player.image, player.rect )

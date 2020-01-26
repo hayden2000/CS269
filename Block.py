@@ -70,8 +70,66 @@ class Block(pygame.sprite.Sprite):
         else:
             self.block_type = 0
             
-            
+
 def layout_level1(screen):
+	#screen = pygame.display.set_mode([800,600])
+    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
+    edges = screen.get_rect()
+    p3_width = 50
+    p_height = 50
+    #p_width = 150
+    p_width = 100
+    platforms = []
+    ar_x = 1.3
+    ar_y = 1.5
+    
+    platforms.append(Block(50,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,490, p_width, p_height, "block1.png"))
+    
+    platforms.append(Block(450,385, p_width, p_height, "block1.png"))
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [Lamp( ( 450, 385), lampImage, lightAlpha, 10 ), Lamp( ( 750, 490), lampImage, lightAlpha, isLit = True )]
+    
+    return platforms, lampList
+    
+def layout_level2(screen):
+	#screen = pygame.display.set_mode([800,600])
+    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
+    edges = screen.get_rect()
+    p3_width = 50
+    p_height = 50
+    #p_width = 150
+    p_width = 100
+    platforms = []
+    ar_x = 1.3
+    ar_y = 1.5
+    
+    platforms.append(Block(50,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,490, p_width, p_height, "block1.png"))
+
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [Lamp( ( 250, 490), lampImage, lightAlpha, 1 ), Lamp( ( 750, 490), lampImage, lightAlpha, 5 )]
+    
+    return platforms, lampList
+    
+
+def layout_level3(screen):
     #screen = pygame.display.set_mode([800,600])
     background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
     edges = screen.get_rect()
