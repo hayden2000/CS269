@@ -258,7 +258,7 @@ def tutorial(page=None):
             if event.type == pygame.QUIT:
                 running = False
         
-        player.update()
+        player.update(spider)
         
         ##################################################
         # Lighting Control
@@ -666,7 +666,7 @@ def level(number, score=None):
             if event.type == pygame.QUIT:
                 running = False
         
-        player.update()
+        player.update(spider)
         
         ##################################################
         # Enemy AI Control

@@ -3,6 +3,7 @@ import math
 import pygame
 import numpy
 from player import *
+
 # create a game clock   
 
 class Enemy:
@@ -21,6 +22,9 @@ class Enemy:
         self.image = image
         self.originalImg = image
         self.rotSurf = pygame.Surface((800, 600))
+        #temp
+        self.rect = image.get_rect()
+        self.dead = False
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -35,7 +39,8 @@ class Enemy:
     	return pygame.Rect(self.x, self.y, width, height)
         
     def draw(self, screen, spider_img):
-        screen.blit( self.rotImage, (self.x, self.y, self.width, self.height), self.rotImage.get_rect() )
+    	if not self.dead:
+        	screen.blit( self.rotImage, (self.x, self.y, self.width, self.height), self.rotImage.get_rect() )
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
     def move(self, player, frame):
@@ -90,6 +95,8 @@ class Enemy:
     def run_away(self, player_x, player_y):
         diff_x = player_x -self.center_x
         diff_y = player_y -self.center_y
+        if diff_x == 0:
+        	diff_x = 1
         playerAngle = numpy.degrees(numpy.arctan(diff_y/diff_x))
         self.angle = playerAngle+180
         ratio_x = numpy.cos(numpy.radians(self.angle))
@@ -105,3 +112,13 @@ class Enemy:
         self.rotImage = pygame.Surface((600, 800))
         self.rotImage = pygame.transform.rotate(self.originalImg, self.angle)
         self.rect = self.rotImage.get_rect()
+        
+    def collideSpider(self):
+    	print("collided")
+    	self.maxVel= 0
+    	self.image = pygame.Surface((800, 600), pygame.SRCALPHA)
+    	self.originalImage = pygame.Surface((800, 600), pygame.SRCALPHA)
+    	self.rotImage = pygame.Surface((100, 100), pygame.SRCALPHA)
+    	self.dead = True
+    	
+    	
