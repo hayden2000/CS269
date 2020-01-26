@@ -402,7 +402,7 @@ def highscores():
         
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button('Play Again', 400, 550, white, grey, light_grey, fontBig, levelManager)
+        button('Play', 400, 550, white, grey, light_grey, fontBig, levelManager)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
@@ -704,7 +704,16 @@ def level(number, score=None):
         refresh.append(rtextRect)
             
         # score display
-        cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
+        #cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
+        # interval = 300000 / 7
+#         if timer < interval:
+#             cur_score = 1000 - int(3 * timer / 1000)
+#         elif timer < 3 * interval:
+#             cur_score = 1000 - int(2 * timer / 1000)
+#         else:
+#             cur_score = 1000 - int(timer / 1000)
+        cur_score = int((1 - timer / 300000) * 1000) + (20 * counter)
+            
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
         stextRect.center = (40, 575)
@@ -831,7 +840,7 @@ def endScreen(win, score, level):
         
         # render text
         stext = fontSmall.render(text_result, True, white)
-        if stext.get_width() > 260:
+        if stext.get_width() > 260: # truncate if too long
             text_result = text_result[:-1]
             stext = fontSmall.render(text_result, True, white)
         stextRect = stext.get_rect()
