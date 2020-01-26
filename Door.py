@@ -25,21 +25,8 @@ class Door:
     def unlock(self):
         if not self.unlocked:
             self.unlocked = True
+            #open door animation/sound
             pygame.mixer.music.load('Audio/Door.aif')
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play()
-        #open door animation/sound
         
-        
-    
-    # def levelEnter(self):
-#         if(self.exit == False):
-#             animate=1
-#             #trigger open and close door animation
-#         else:
-#             print("Error: Incorrect Door Class")
-    
-            
-        
-    
-    
