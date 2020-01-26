@@ -18,11 +18,18 @@ class Key(pygame.sprite.Sprite):
 		self.isVisible = True
 		
 	def collidePlayer(self):
+		print("got it")
 		self.isVisible = False
+		self.rect.y = -100
 	
 	def draw(self, screen):
 		if self.isVisible:
 			screen.blit(self.image, int(self.rect.x), int(self.rect.y))
+	
+	def getVis(self):
+		return self.isVisible
+	
+	
 		
 		
 

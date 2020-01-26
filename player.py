@@ -172,15 +172,24 @@ class Player(pygame.sprite.Sprite):
         
         self.rect.midbottom = self.position
         self.lightRect.center = self.position
-        if spider != None:
+        if spider != None and self.hasKey == False:
         	keyAppear = self.checkSpiderCollide(spider)
         	if keyAppear:
         		self.k.appearKey(spider)
         		spider.collideSpider()
-        		spider = None
+        		spider.rect.x = -100
+        		spider.rect.y = -100
         		self.hasKey = True
+        if self.k.getVis():
+        	self.collideKey()
         		
-	
+        		
+    def collideKey(self):
+    	if self.rect.colliderect(self.k.rect):
+    		self.k.collidePlayer()
+    		self.hasKey = True
+		
+		
     def motion(self):
         nowTicks = pygame.time.get_ticks()
         if self.vel.x != 0:
