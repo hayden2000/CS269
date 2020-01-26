@@ -8,11 +8,14 @@ import os
 import sys
 from pygame.locals import *
 from lighting import *
+from Letters import *
 
 bg = pygame.image.load('Assets/CaveContrast.png')
 b1 = pygame.image.load('Assets/block1.png')
 b2 = pygame.image.load('Assets/block2.png')
 b3 = pygame.image.load('Assets/block3.png')
+
+cat = pygame.image.load('Assets/cat1.png')
 
 class Block(pygame.sprite.Sprite):
     #block code that tells the program what type of block this will be
@@ -236,8 +239,9 @@ def layout_level3(screen):
     
     lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
     
+    letter = Letter( cat, pygame.Rect((300,300), (50,50)) )
     
-    return platforms, lampList
+    return platforms, lampList, letter
     
 
 class Layout():

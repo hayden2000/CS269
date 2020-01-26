@@ -57,7 +57,7 @@ class Lighting:
 		pass
 	
 	# Render the area illuminated by stationary lamps
-	def renderLamps(self, screen, refresh, lampList, platforms, spider = None):
+	def renderLamps(self, screen, refresh, lampList, platforms, letter = None, spider = None):
 		
 		# Create light map surface "night"
 		night.fill( (0,0,0) )
@@ -83,6 +83,12 @@ class Lighting:
 					if lamp.lightRect.colliderect( plat.rect ):
  						trect = lamp.lightRect.clip( plat.rect )
  						screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+ 				
+ 				# Draw the letter icon
+				if letter != None:
+					if letter.rect.colliderect( lamp.lightRect ):
+						trect = lamp.lightRect.clip( letter.rect )
+						pygame.draw.rect( screen, (0,100,0), trect )
 				
 				# Draw the spider enemy
 				if spider != None:
@@ -100,7 +106,7 @@ class Lighting:
 
 
 	# Render the light rectangle surrounding the player
-	def renderPlayer(self, screen, refresh, player, lampList, platforms, spider = None):
+	def renderPlayer(self, screen, refresh, player, lampList, platforms, letter = None, spider = None):
 	
 		# Erase the area covered by the player light
 		drawBkg( screen, refresh, player.lightRect )
@@ -116,6 +122,12 @@ class Lighting:
 			if player.lightRect.colliderect( plat.rect ):
 				trect = player.lightRect.clip( plat.rect )
 				screen.blit( plat.image, trect, trect.move(-plat.rect.left,-plat.rect.top) )
+		
+		# Draw the letter icon
+		if letter != None:
+			if letter.rect.colliderect( player.lightRect ):
+				trect = player.lightRect.clip( letter.rect )
+				pygame.draw.rect( screen, (0,100,0), trect )
 		
 		# Draw the spider enemy
 		if spider != None:

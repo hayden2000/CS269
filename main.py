@@ -491,13 +491,14 @@ def level(number, score=None):
         score = 0
     max_levels = 2 # change when we add more levels
     start_time = pygame.time.get_ticks()
+    pauseTime = 0 # for recording time spent reading letters
     
     ##################################################
     # Player init
     ##################################################
     
     if number == 1 or number == 2:    
-    	platforms, lampList = layout_level3(screen)
+    	platforms, lampList, letter = layout_level3(screen)
     
     #Layout(number, screen)
     
@@ -521,7 +522,7 @@ def level(number, score=None):
     screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
-    lighting.renderLamps( screen, refresh, lampList, platforms )
+    lighting.renderLamps( screen, refresh, lampList, platforms, letter )
     
     ##################################################
     # Enemy AI init
@@ -561,7 +562,7 @@ def level(number, score=None):
         # Timer
         ####
         
-        timer = pygame.time.get_ticks() - start_time
+        timer = (pygame.time.get_ticks() - start_time) - pauseTime
         current_time = (timer) / 1000.0
         
         time_min = int(current_time / 60.0)
@@ -591,10 +592,14 @@ def level(number, score=None):
                 if event.key == pygame.K_SPACE:
                     player.jumpCheck()
                     player.jump()
+                elif event.key == pygame.K_e:
+                	pauseTime += letter.display( screen, player )
             if event.type == pygame.QUIT:
                 running = False
         
         player.update()
+        
+        
         
         ##################################################
         # Enemy AI Control
@@ -620,8 +625,8 @@ def level(number, score=None):
             lamp.checkStatus( player.rect )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, lampList, platforms, spider )
-        lighting.renderPlayer( screen, refresh, player, lampList, platforms, spider )
+        lighting.renderLamps( screen, refresh, lampList, platforms, letter, spider )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms, letter, spider )
         
         # Draw the timer after everything else
         screen.blit(text, textRect)
