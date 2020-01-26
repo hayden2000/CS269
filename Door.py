@@ -23,10 +23,11 @@ class Door:
     
     #unlocks the door
     def unlock(self):
-        self.unlocked = True
-        pygame.mixer.music.load('Audio/Door.aif')
-        pygame.mixer.music.set_volume(1)
-        pygame.mixer.music.play(-1)
+        if not self.unlocked:
+            self.unlocked = True
+            pygame.mixer.music.load('Audio/Door.aif')
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play()
         #open door animation/sound
         
         
