@@ -736,12 +736,17 @@ def level(number, score=None):
         if win != None:             
             if win == True and number < max_levels:
                 if doors[1].win( player ):
+                    print("here1")
                     pygame.mouse.set_visible(True)
+                    print("here2")
                     score = score + cur_score # update score
+                    print("here3")
                     levelManager(win, score, number) #for more than 1 level
+                    print("here4")
             else:
+                print("yeeee")
                 pygame.mouse.set_visible(True)
-                score += counter # update score
+                score = score + cur_score # update score
                 endScreen(win, score, number)
                 
         

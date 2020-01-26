@@ -43,10 +43,10 @@ class Door:
         if not self.unlocked:
             self.unlocked = True
             #open door animation/sound
-            pygame.mixer.music.load('Audio/Door.aif')
+            pygame.mixer.music.load('Audio/Door.ogg')
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play()
-        
+            
         self.doorMotion()
         
     def doorMotion(self):
@@ -57,5 +57,6 @@ class Door:
                 self.currentSprite = self.currentSprite + 1
                 #bottom = self.rect.bottom
                 self.image = self.opennning[self.currentSprite]
+                
                 #self.rect = self.image.get_rect()
                 #self.rect.bottom = bottom
