@@ -21,7 +21,7 @@ class Enemy:
         self.angle = 30
         self.image = image
         self.originalImg = image
-        self.rotSurf = pygame.Surface((800, 600))
+        self.rotImage = pygame.Surface((800, 600))
         #temp
         self.rect = image.get_rect()
         self.dead = False
@@ -37,6 +37,9 @@ class Enemy:
         return self.height
     def get_rect(self):
     	return pygame.Rect(self.x, self.y, width, height)
+    	
+    def isDead(self):
+    	return self.dead
         
     def draw(self, screen, spider_img):
     	if not self.dead:
@@ -55,9 +58,9 @@ class Enemy:
 
         radius = 120
         if(player.getX() == self.x):
-            radius = abs(player.getY()-self.y)
+        	radius = abs(player.getY()-self.y)
         else:
-            radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
+        	radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
         if radius >= 150:
             self.random_move(frame)
         else:

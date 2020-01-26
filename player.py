@@ -8,7 +8,7 @@ from spiderTesting import *
 #vec = pygame.math.Vector2
 
 class Player(pygame.sprite.Sprite):
-    k = Key(-100, -100, 50)
+    
     def __init__(self, x, y, platforms, width = 30, height = 50, mass = 1):
         pygame.sprite.Sprite.__init__(self)
         self.currentSprite = 0
@@ -38,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.platforming = True
         self.isJump = False
         self.hasKey = False
+        self.k = Key(-100, -100, 50)
         
     def get_images(self, a, b, wid, hei):
         sprite = pygame.image.load('Assets/Walking.png').convert()
@@ -118,10 +119,12 @@ class Player(pygame.sprite.Sprite):
     			print("aha!")
     			return True
     	return False
-	def getKey(self):
-		return k	
-	def hasKey(self):
-		return self.hasKey
+    	
+    def getKey(self):
+    	return self.k	
+    def hasKey(self):
+    	return self.hasKey
+    	
     def update(self, spider = None):
         self.motion()
         self.acc = vec(0,0.98)
@@ -171,7 +174,8 @@ class Player(pygame.sprite.Sprite):
         if spider != None:
         	keyAppear = self.checkSpiderCollide(spider)
         	if keyAppear:
-        		k.appearKey(spider)
+        		self.k.appearKey(spider)
+        		spider.collideSpider()
         		spider = None
         		self.hasKey = True
         		

@@ -674,7 +674,8 @@ def level(number, score=None):
         
         if number == max_levels:
             frame += 1
-            spider.move(player, frame)
+            if not spider.isDead():
+            	spider.move(player, frame)
             #spider.draw(screen, spider_img)        
         
         ##################################################
