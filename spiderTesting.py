@@ -5,7 +5,6 @@ import numpy
 from player import *
 # create a game clock   
 
-
 class Enemy:
     def __init__(self, win, x, y, image, width=90, height=50):
         self.x = x

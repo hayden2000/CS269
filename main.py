@@ -105,9 +105,6 @@ def image(pic, x, y, w, h):
     bg = pygame.transform.scale(bg, (w, h))
     screen.blit(bg, (x, y))
     
-def textBox(x, y, initColor, highColor, font):
-    pass
-    
 def roundCorners(textRect, color):
     # Get the corners of the buttons
     x0, y0 = textRect.topleft
@@ -155,11 +152,12 @@ def startScreen():
         screen.blit(bg, (0, 0))
         
         # button control
-        button('Start', 150, 450, white, grey, light_grey, fontBig, storyManager)
-        button('Tutorial', 310, 450, white, grey, light_grey, fontBig, tutorialManager)
-        button('Credits', 492, 450, white, grey, light_grey, fontBig, credits)
-        button('Quit', 654, 450, white, grey, light_grey, fontBig, quit)
-    
+        button('Start', 76, 450, white, grey, light_grey, fontBig, storyManager)
+        button('Tutorial', 213, 450, white, grey, light_grey, fontBig, tutorialManager)
+        button('Credits', 371, 450, white, grey, light_grey, fontBig, credits)
+        button('High Scores', 561, 450, white, grey, light_grey, fontBig, highscores)
+        button('Quit', 728, 450, white, grey, light_grey, fontBig, quit)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -200,9 +198,6 @@ def tutorial(page=None):
         platforms, lampList = layout_level1(screen)
     elif page == 2:
         platforms, lampList = layout_level2(screen)
-    
-    #Layout(number, screen)
-    Layout(1, screen)
     
     player = Player(200,200,platforms)
     
@@ -368,6 +363,60 @@ def credits():
     pygame.quit()
     quit()
     
+##################################################  
+##################################################
+# HIGH SCORES SCREEN
+##################################################
+    
+def highscores():
+
+    running = True
+    min_number = None
+    
+    user_array = []
+    
+    with open("Data/History.sdwp","r+") as f:
+        for line in f:
+            user_array.append(line.split(', '))
+    
+    user_array = sorted(user_array, key=lambda x: -int(x[2]))
+    
+    while running:
+    
+        screen.fill(black)
+        
+        bg = pygame.image.load("Assets/TransitionScreenBackground.png")
+        screen.blit(bg, (0, 0))
+        
+        min_number = len(user_array)
+  
+        # label control 
+        label('High Scores - Shadow Puppets', 400, 50, white, fontBig)
+        
+        if min_number == None:
+            label('No Scores, Get Playing! :)', 400, 300, white, fontBig)
+        else:
+            for i in range(10):
+                if min_number > i:
+                    if i > 0 and user_array[i - 1][2] == user_array[i][2]:
+                        label('{}. {} - {}'.format(i, user_array[i][3], user_array[i][2]), 400, 110 + i * 45, white, fontSmall)
+                    else:
+                        label('{}. {} - {}'.format(i + 1, user_array[i][3], user_array[i][2]), 400, 110 + i * 45, white, fontSmall)
+        
+        # button control
+        button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button('Play Again', 400, 550, white, grey, light_grey, fontBig, levelManager)
+        button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
+    
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        pygame.display.update()
+                
+    pygame.quit()
+    quit()
+    
 ##################################################    
 ##################################################
 # STORY MANAGER
@@ -420,6 +469,11 @@ def story(page=None):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if page < numberOfPages:
+                    story(page + 1)
+                else:
+                    levelManager()
         
         pygame.display.update()
                 
@@ -472,6 +526,8 @@ def newLevelNotifier(number, score=None):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                level(number, score)
         
         pygame.display.update()
                 
@@ -498,8 +554,6 @@ def level(number, score=None):
     
     if number == 1 or number == 2:    
     	platforms, lampList = layout_level3(screen)
-    
-    #Layout(number, screen)
     
     player = Player(200, 200, platforms)
     
@@ -685,17 +739,17 @@ def endScreen(win, score, level):
     pygame.mixer.music.set_volume(1.0)
     pygame.mixer.music.play(-1)
     
+    text_box = pygame.Rect(400, 425, 100, 32)
+    text_result = ''
     high_score = 0
+    
     with open("Data/Score.sdwp","r+") as f:
         high_score = f.readline()
         if int(high_score) < score:
             f.seek(0) 
             f.truncate()
-            f.write(str(score))
-    
-    with open("Data/History.sdwp","a+") as f:
-        f.write('{}, {}, {}, {}\n'.format(win, level, score, high_score))
-    
+            f.write(str(score))       
+      
     while running:
     
         screen.fill(black)
@@ -703,30 +757,81 @@ def endScreen(win, score, level):
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
   
-        # button/label control 
+        ####
+        # Labels
+        ####
 
         if win == True:
-            label('You won!', 400, 300, white, fontBig)
-            label('Your score was {} through level {}!'.format(score, level), 400, 375, white, fontSmall)
-            
-            button('Play again', 135, 550, white, grey, light_grey, fontBig, levelManager)
+            label('You won!', 400, 200, white, fontBig)
+            label('Your score was {} through level {}!'.format(score, level), 400, 275, white, fontSmall)
         else:
-            label('Game Over', 400, 300, white, fontBig)
-            label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 375, white, fontSmall)
-        
-            button('Try again', 135, 550, white, grey, light_grey, fontBig, levelManager)
+            label('Game Over', 400, 200, white, fontBig)
+            label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 275, white, fontSmall)
             
         if int(high_score) < score:
-            label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 425, white, fontSmall)
+            label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 325, white, fontSmall)
         else:
-            label('High Score: {}'.format(high_score), 400, 425, white, fontSmall)
- 
-        button('Back', 710, 550, white, grey, light_grey, fontBig, startScreen)
+            label('High Score: {}'.format(high_score), 400, 325, white, fontSmall)
+            
+        ####
+        # Enter button
+        ####
+            
+        text = fontBig.render('Enter', True, white, grey)
+        textRect = text.get_rect()
+        textRect.center = (600, 425)
+    
+        mouse = pygame.mouse.get_pos()
+        
+        if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
+            text = fontBig.render('Enter', True, white, light_grey)
+            roundCorners(textRect, light_grey)
+        
+            clicked = False
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN: 
+                    clicked = True
+
+            if clicked == True:
+                if text_result == '':
+                    text_result = 'Anonymous'
+                with open("Data/History.sdwp","a+") as f:
+                            f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
+                highscores()
+        else:
+            text = fontBig.render('Enter', True, white, grey)
+            roundCorners(textRect, grey)
+
+        screen.blit(text, textRect)
+        
+        ####
+        # Typing
+        ####
+        
+        label('Type name:', 200, 425, white, fontSmall)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    text_result = text_result[:-1]
+                if event.key == pygame.K_RETURN:
+                    if text_result == '':
+                        text_result = 'Anonymous'
+                    with open("Data/History.sdwp","a+") as f:
+                                f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
+                    highscores()
+                else:
+                    text_result += event.unicode
         
+        gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
+        
+        stext = fontSmall.render(text_result, True, white)
+        stextRect = stext.get_rect()
+        stextRect.center = (400, 425)
+        screen.blit(stext, stextRect)
+          
         pygame.display.update()
                 
     pygame.quit()
