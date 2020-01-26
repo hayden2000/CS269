@@ -828,6 +828,9 @@ def endScreen(win, score, level):
         gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
         
         stext = fontSmall.render(text_result, True, white)
+        if stext.get_width() > 260:
+            text_result = text_result[:-1]
+            stext = fontSmall.render(text_result, True, white)
         stextRect = stext.get_rect()
         stextRect.center = (400, 425)
         screen.blit(stext, stextRect)
