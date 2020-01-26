@@ -2,22 +2,24 @@
 # 1/13/2020
 # Shadow Puppets Project, CS267
 
+##################################################
+
+# Project credits:
+# art by Alaleh Naderi, Changling Li, and Matthew Maring
+# collision by Natalie Lunbeck and Brendan Martin
+# doors/letters/tutorial by Brendan Martim, Sawyer Strong, and Matthew Maring
+# enemy-ai by Sawyer Strong
+# infrastructure/scoring by Matthew Maring
 # lighting by Brendan Martin
-# enemy-ai by
-# collision by 
-# player by
-# sounds by
-# art by
-# infrastructure see above
+# player by Changling Li and Brendan Martin
+# sounds by Chris Shaffrey
 
 ##################################################
 
 import pygame, sys, random, os, numpy, math
 from pygame import gfxdraw
 
-# Import all the other classes here
 from player import *
-#from collision import
 from spiderTesting import *
 from lighting import *
 from Block import *
@@ -26,8 +28,6 @@ from Block import *
 ##################################################
 # SETUP
 ##################################################
-
-#os.environ['SDL_VIDEO_WINDOW_POS'] = "{0},{1}".format(0, 0)
 
 pygame.init()
 
@@ -145,7 +145,6 @@ def startScreen():
     running = True
      
     while running:
-    
         screen.fill(black) 
         
         bg = pygame.image.load("Assets/StartScreen.png")
@@ -230,16 +229,10 @@ def tutorial(page=None):
     pygame.mixer.music.set_volume(0.15)
     pygame.mixer.music.play(-1)
     
-    ####
     # Main Loop :)
-    ####
-    
     while running:
 
-        ####
         # Initialize the window
-        ####
-    
         screen.fill(black)
 
         ####
@@ -291,9 +284,7 @@ def tutorial(page=None):
         textRect = text.get_rect()
         textRect.center = (400, 50)
         screen.blit(text, textRect)
-        refresh.append(textRect)
-        
-        #button('Skip', 700, 50, white, grey, light_grey, fontBig, storyManager)   
+        refresh.append(textRect) 
                 
         # update the parts of the screen that need it
         pygame.display.update(refresh)
@@ -303,11 +294,8 @@ def tutorial(page=None):
 
         # throttle the game speed to 30fps
         gameClock.tick(30)
-                
-        ####
-        # Handle next round
-        ####
         
+        # Handle next round
         if win != None:
             pygame.mouse.set_visible(True)
                        
@@ -340,14 +328,12 @@ def credits():
   
         # label control 
         label('Credits - Shadow Puppets', 400, 50, white, fontBig)
-        
         label('Producer - Sawyer Strong', 400, 125, white, fontSmall)
         label('Designer - Brendan Martin', 400, 175, white, fontSmall)
         label('Lead Programmers - Natalie Lunbeck and Matthew Maring', 400, 225, white, fontSmall)
         label('Lead Visual Artists - Changling Li and Alaleh Naderi', 400, 275, white, fontSmall)
         label('Lead Audio Artist - Chris Shaffrey', 400, 325, white, fontSmall)
-        label('Lead QA - Changling Li', 400, 375, white, fontSmall)
-        
+        label('Lead QA - Changling Li', 400, 375, white, fontSmall) 
         label('Colby College, 2020 Jan Plan, CS269 Game Design', 400, 475, white, fontSmall)
         
         # button control
@@ -386,7 +372,6 @@ def highscores():
         
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
-        
         min_number = len(user_array)
   
         # label control 
@@ -458,6 +443,7 @@ def story(page=None):
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
         
+        # story screens
         if page == 1:
             image('cat1', 100, 100, 600, 400)
         elif page == 2:
@@ -465,14 +451,16 @@ def story(page=None):
         else:
             image('cat3', 100, 100, 600, 400)
         
-        # button control
+        # back button
         if page == 1:
             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
         else:
             button('Back', 100, 550, white, grey, light_grey, fontBig, story, page - 1)
         
+        # skip button
         button('Skip', 700, 50, white, grey, light_grey, fontBig, levelManager)   
         
+        # next/start button
         if page < numberOfPages:
             button('Next', 700, 550, white, grey, light_grey, fontBig, story, page + 1)
         else:
@@ -513,8 +501,8 @@ def newLevelNotifier(number, score=None):
     
     running = True
     
+    # Sound init
     if score != None:
-        # Sound init
         pygame.mixer.music.load('Audio/BACKGROUND.ogg')
         pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
@@ -555,6 +543,7 @@ def level(number, score=None):
 
     running = True
     win = None
+    
     counter = 0
     old_counter = 0
     cycle = 0
@@ -601,7 +590,6 @@ def level(number, score=None):
     #spider comes in during last level
     
     spider = None
-    
     if number == max_levels:
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
         spider = Enemy(screen, 300, 500, spider_img)
@@ -616,22 +604,13 @@ def level(number, score=None):
     pygame.mixer.music.set_volume(0.15)
     pygame.mixer.music.play(-1)
     
-    ####
     # Main Loop :)
-    ####
-    
     while running:
     
-        ####
         # Initialize the window
-        ####
-    
         screen.fill(black)
         
-        ####
         # Timer
-        ####
-        
         timer = pygame.time.get_ticks() - start_time
         current_time = (timer) / 1000.0
         
@@ -699,7 +678,6 @@ def level(number, score=None):
         refresh.append(textRect)
 
         # Check if the player has won
-        
         old_counter = counter
         counter = 0
         for lamp in lampList:
@@ -726,7 +704,6 @@ def level(number, score=None):
         refresh.append(rtextRect)
             
         # score display
-        #cur_score = int(1000 - timer / 300) + (25 * counter)
         cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
@@ -743,10 +720,7 @@ def level(number, score=None):
         # throttle the game speed to 30fps
         gameClock.tick(30)
         
-        ####
         # Handle next round
-        ####
-        
         if win != None:
             pygame.mouse.set_visible(True)
             score = score + cur_score # update score
@@ -792,11 +766,8 @@ def endScreen(win, score, level):
 
         bg = pygame.image.load("Assets/TransitionScreenBackground.png")
         screen.blit(bg, (0, 0))
-  
-        ####
+        
         # Labels
-        ####
-
         if win == True:
             label('You won!', 400, 200, white, fontBig)
             label('Your score was {} through level {}!'.format(score, level), 400, 275, white, fontSmall)
@@ -808,11 +779,8 @@ def endScreen(win, score, level):
             label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 325, white, fontSmall)
         else:
             label('High Score: {}'.format(high_score), 400, 325, white, fontSmall)
-            
-        ####
+
         # Enter button
-        ####
-            
         text = fontBig.render('Enter', True, white, grey)
         textRect = text.get_rect()
         textRect.center = (600, 425)
@@ -840,10 +808,7 @@ def endScreen(win, score, level):
 
         screen.blit(text, textRect)
         
-        ####
         # Typing
-        ####
-        
         label('Type name:', 200, 425, white, fontSmall)
     
         for event in pygame.event.get():
@@ -861,8 +826,10 @@ def endScreen(win, score, level):
                 else:
                     text_result += event.unicode
         
+        # text box background
         gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
         
+        # render text
         stext = fontSmall.render(text_result, True, white)
         if stext.get_width() > 260:
             text_result = text_result[:-1]
