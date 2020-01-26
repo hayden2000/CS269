@@ -23,6 +23,7 @@ from player import *
 from spiderTesting import *
 from lighting import *
 from Block import *
+from Door import *
 
 ##################################################
 ##################################################
@@ -558,10 +559,9 @@ def level(number, score=None):
     # Player init
     ##################################################
     
-    if number == 1 or number == 2:    
-    	platforms, lampList = layout_level3(screen)
-    
-    player = Player(200, 200, platforms)
+    #if number == 1 or number == 2: 
+    platforms, lampList, doors = layout_level3(screen) 
+    player = Player(doors[0].center[0],doors[0].center[1],platforms)
     
     ##################################################
     # Lighting init
@@ -580,8 +580,7 @@ def level(number, score=None):
     refresh = []
     screen.fill(black)
 
-    # Draw background illuminated by lights, then render light/darkness on top
-    lighting.renderLamps( screen, refresh, player, lampList, platforms )
+    lighting.renderLamps( screen, refresh, player, lampList, doors, platforms )
     
     ##################################################
     # Enemy AI init
@@ -668,11 +667,11 @@ def level(number, score=None):
     
         # Check if the player touches any of the lamps
         for lamp in lampList:
-            lamp.checkStatus( player.rect )
+            lamp.checkStatus( player.rect, win )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, player, lampList, platforms, spider )
-        lighting.renderPlayer( screen, refresh, player, lampList, platforms, spider )
+        lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, spider )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors, spider )
         
         # Draw the timer after everything else
         screen.blit(text, textRect)
@@ -731,13 +730,20 @@ def level(number, score=None):
         gameClock.tick(30)
         
         # Handle next round
-        if win != None:
-            pygame.mouse.set_visible(True)
-            score = score + cur_score # update score
+        if win == True:
+            doors[1].unlock()
+        
+        if win != None:             
             if win == True and number < max_levels:
-                levelManager(win, score, number) #for more than 1 level
+                if doors[1].win( player ):
+                    pygame.mouse.set_visible(True)
+                    score = score + cur_score # update score
+                    levelManager(win, score, number) #for more than 1 level
             else:
+                pygame.mouse.set_visible(True)
+                score += counter # update score
                 endScreen(win, score, number)
+                
         
         pygame.display.update(refresh)
         #pygame.display.update()

@@ -8,11 +8,13 @@ import os
 import sys
 from pygame.locals import *
 from lighting import *
+from Door import *
 
 bg = pygame.image.load('Assets/CaveContrast.png')
 b1 = pygame.image.load('Assets/block1.png')
 b2 = pygame.image.load('Assets/block2.png')
 b3 = pygame.image.load('Assets/block3.png')
+b4 = pygame.image.load('Assets/block4.png')
 
 class Block(pygame.sprite.Sprite):
     #block code that tells the program what type of block this will be
@@ -28,6 +30,8 @@ class Block(pygame.sprite.Sprite):
             self.image = b2
         elif sprite == "block3.png":
             self.image = b3
+        elif sprite == "block4.png":
+        	self.image = b4
         else:
             self.image = b1
         self.image = pygame.transform.scale(self.image, (int(width), int(height)))
@@ -133,9 +137,17 @@ def layout_level3(screen):
     p_height = 50
     #p_width = 150
     p_width = 100
+    p4_height = 105
+    p4_width = 15
+    
+    #ar_x = 1.3
+    #ar_y = 1.5
+    
     platforms = []
-    ar_x = 1.3
-    ar_y = 1.5
+    
+    
+    
+    
     
     platforms.append(Block(50,70, p_width, p_height, "block1.png"))
     platforms.append(Block(750,70, p_width, p_height, "block1.png"))
@@ -164,13 +176,26 @@ def layout_level3(screen):
     platforms.append(Block(650,490, p_width, p_height, "block2.png"))
     platforms.append(Block(750,490, p_width, p_height, "block2.png"))
     
-    
     platforms.append(Block(225,70, p3_width, p_height, "block3.png"))
     platforms.append(Block(175,175, p3_width, p_height, "block3.png"))
     platforms.append(Block(725,175, p3_width, p_height, "block3.png"))
     platforms.append(Block(675,280, p3_width, p_height, "block3.png"))
     platforms.append(Block(225,490, p3_width, p_height, "block3.png"))
     platforms.append(Block(375,490, p3_width, p_height, "block3.png"))
+    
+    # Walls
+    platforms.append(Block(310,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(400,385, p4_width, p4_height, "block4.png"))
+    
+    #Floor
+    platforms.append(Block(50,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,590, p_width, p_height, "block1.png"))
     
     '''
     #first row
@@ -236,8 +261,9 @@ def layout_level3(screen):
     
     lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
     
+    doorList = [Door( (50, 70), False), Door( (750, 490), True)]
     
-    return platforms, lampList
+    return platforms, lampList, doorList
     
 
 class Layout():
