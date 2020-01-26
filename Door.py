@@ -18,9 +18,12 @@ class Door:
     #unlocks the door
     def unlock(self, unlock):
         self.unlocked = unlock
-        #open door animation
+        #open door animation/sound
         #light lamp
-        
+        pygame.mixer.init()
+        open=pygame.mixer.Sound('Audio/Door.ogg')
+        open.set_volume(0.5)
+        pygame.mixer.Sound.play(open)
     
     def levelEnter(self):
         if(self.exit == False):
