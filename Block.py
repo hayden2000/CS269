@@ -47,8 +47,9 @@ class Block(pygame.sprite.Sprite):
         new_height = height - 2
         #makes the rect 2 px high
         self.rect.inflate(0, -40)
-        print(self.rect)
+        #print(self.rect)
         #block defaults to platform
+        self.collisionRect = pygame.Rect((self.rect.left, self.rect.top), (self.rect.width, self.rect.height/2))
         
     def getX(self):
         return self.rect.x

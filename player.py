@@ -84,28 +84,28 @@ class Player(pygame.sprite.Sprite):
         for platform in self.platforms:
             #hit = self.rect.colliderect(platform)
             
-            if self.rect.colliderect(platform):
+            if self.rect.colliderect(platform.collisionRect):
                 #left
                 if self.vel.x > 0:
-                    self.position.x = platform.rect.left - (self.width/2)
+                    self.position.x = platform.collisionRect.left - (self.width/2)
                     self.vel.x = 0
                 #right
                 elif self.vel.x < 0:
-                    self.position.x = platform.rect.right + (self.width/2)
+                    self.position.x = platform.collisionRect.right + (self.width/2)
                     self.vel.x = 0
                         
     def hitY(self):
         for platform in self.platforms:
             #hit = self.rect.colliderect(platform)
             
-            if self.rect.colliderect(platform):
+            if self.rect.colliderect(platform.collisionRect):
                 #top
                 if self.vel.y > 0:
-                    self.position.y = platform.rect.top
+                    self.position.y = platform.collisionRect.top
                     self.vel.y = 0
                 #bottom
                 elif self.vel.y < 0:
-                    self.position.y = platform.rect.bottom + self.height
+                    self.position.y = platform.collisionRect.bottom + self.height
                     self.vel.y = 0
 
 
