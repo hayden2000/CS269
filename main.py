@@ -396,12 +396,25 @@ def highscores():
         if min_number == None:
             label('No Scores, Get Playing! :)', 400, 300, white, fontBig)
         else:
-            for i in range(10):
+            for i in range(8):
                 if min_number > i:
-                    if i > 0 and user_array[i - 1][2] == user_array[i][2]:
-                        label('{}. {} - {}'.format(i, user_array[i][3], user_array[i][2]), 400, 110 + i * 45, white, fontSmall)
-                    else:
-                        label('{}. {} - {}'.format(i + 1, user_array[i][3], user_array[i][2]), 400, 110 + i * 45, white, fontSmall)
+                    factor = i + 1
+                    if i > 6 and user_array[i - 7][2] == user_array[i][2]:
+                        factor = i - 6
+                    elif i > 5 and user_array[i - 6][2] == user_array[i][2]:
+                        factor = i - 5
+                    elif i > 4 and user_array[i - 5][2] == user_array[i][2]:
+                        factor = i - 4
+                    elif i > 3 and user_array[i - 4][2] == user_array[i][2]:
+                        factor = i - 3
+                    elif i > 2 and user_array[i - 3][2] == user_array[i][2]:
+                        factor = i - 2
+                    elif i > 1 and user_array[i - 2][2] == user_array[i][2]:
+                        factor = i - 1
+                    elif i > 0 and user_array[i - 1][2] == user_array[i][2]:
+                        factor = i
+                        
+                    label('{}. {} - {}'.format(factor, user_array[i][3], user_array[i][2]), 400, 110 + i * 45, white, fontSmall)
         
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
