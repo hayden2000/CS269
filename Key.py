@@ -11,6 +11,12 @@ class Key(pygame.sprite.Sprite):
 		self.rect.y = y_pos
 		self.isVisible = False
 		
+	def setY(self, new_y):
+		self.rect.y = new_y
+	
+	def getRect(self):
+		return self.rect
+		
 	def appearKey(self,spider):
 		print("key is here")
 		self.rect.centerx = spider.getX()

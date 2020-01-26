@@ -176,6 +176,9 @@ class Player(pygame.sprite.Sprite):
         	keyAppear = self.checkSpiderCollide(spider)
         	if keyAppear:
         		self.k.appearKey(spider)
+        		for p in self.platforms:
+        			if self.k.rect.colliderect(p):
+        				self.k.getRect().bottom = p.rect.top + 20
         		spider.collideSpider()
         		spider.rect.x = -100
         		spider.rect.y = -100
@@ -188,7 +191,7 @@ class Player(pygame.sprite.Sprite):
     	if self.rect.colliderect(self.k.rect):
     		self.k.collidePlayer()
     		self.hasKey = True
-		
+    		
 		
     def motion(self):
         nowTicks = pygame.time.get_ticks()
