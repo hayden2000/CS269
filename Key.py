@@ -5,7 +5,7 @@ class Key(pygame.sprite.Sprite):
 	def __init__(self, x_pos, y_pos, size):
 		img = pygame.image.load('Assets/key.png')
 		self.image = img
-		#self.image = pygame.transform.scale(self.image, (size, size))
+		self.image = pygame.transform.scale(self.image, (50, 50))
 		self.rect = self.image.get_rect()
 		self.rect.centerx = x_pos
 		self.rect.y = y_pos

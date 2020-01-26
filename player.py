@@ -122,6 +122,7 @@ class Player(pygame.sprite.Sprite):
     	
     def getKey(self):
     	return self.k	
+    	
     def hasKey(self):
     	return self.hasKey
     	

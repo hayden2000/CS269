@@ -218,7 +218,7 @@ def tutorial(page=None):
     screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
-    lighting.renderLamps( screen, refresh, lampList, platforms )
+    lighting.renderLamps( screen, refresh, player, lampList, platforms )
     
     ##################################################
     # Sound init
@@ -268,7 +268,7 @@ def tutorial(page=None):
             lamp.checkStatus( player.rect )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, lampList, platforms )
+        lighting.renderLamps( screen, refresh, player, lampList, platforms )
         lighting.renderPlayer( screen, refresh, player, lampList, platforms )
 
 		# Check if the player has won
@@ -581,7 +581,7 @@ def level(number, score=None):
     screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
-    lighting.renderLamps( screen, refresh, lampList, platforms )
+    lighting.renderLamps( screen, refresh, player, lampList, platforms )
     
     ##################################################
     # Enemy AI init
@@ -671,7 +671,7 @@ def level(number, score=None):
             lamp.checkStatus( player.rect )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, lampList, platforms, spider )
+        lighting.renderLamps( screen, refresh, player, lampList, platforms, spider )
         lighting.renderPlayer( screen, refresh, player, lampList, platforms, spider )
         
         # Draw the timer after everything else
