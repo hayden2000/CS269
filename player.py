@@ -1,7 +1,8 @@
 import pygame 
 vec = pygame.math.Vector2
 from Block import *
-
+from Key import *
+from spiderTesting import *
 
 
 #vec = pygame.math.Vector2
@@ -36,6 +37,8 @@ class Player(pygame.sprite.Sprite):
         self.position = vec(x, y)
         self.platforming = True
         self.isJump = False
+        self.hasKey = False
+        self.k = Key(-100, -100, 50)
         
     def get_images(self, a, b, wid, hei):
         sprite = pygame.image.load('Assets/Walking.png').convert()
@@ -107,9 +110,22 @@ class Player(pygame.sprite.Sprite):
                 elif self.vel.y < 0:
                     self.position.y = platform.rect.bottom + self.height
                     self.vel.y = 0
-
-
-    def update(self):
+                    
+    def checkSpiderCollide(self,spider):
+    	print("testing")
+    	print(spider.get_rect())
+    	if spider != None:
+    		if self.rect.colliderect(spider.get_rect()):
+    			print("aha!")
+    			return True
+    	return False
+    	
+    def getKey(self):
+    	return self.k	
+    def hasKey(self):
+    	return self.hasKey
+    	
+    def update(self, spider = None):
         self.motion()
         self.acc = vec(0,0.98)
         #self.hit()
@@ -155,7 +171,15 @@ class Player(pygame.sprite.Sprite):
         
         self.rect.midbottom = self.position
         self.lightRect.center = self.position
-
+        if spider != None:
+        	keyAppear = self.checkSpiderCollide(spider)
+        	if keyAppear:
+        		self.k.appearKey(spider)
+        		spider.collideSpider()
+        		spider = None
+        		self.hasKey = True
+        		
+	
     def motion(self):
         nowTicks = pygame.time.get_ticks()
         if self.vel.x != 0:
