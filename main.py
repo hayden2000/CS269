@@ -175,7 +175,10 @@ def startScreen():
 def tutorialManager(page=None):
     
     if page != None:
-        tutorial(page)
+        if page == 4:
+            storyManager()
+        else:
+            tutorial(page)
     else:
         tutorial(1)
     
@@ -188,18 +191,20 @@ def tutorial(page=None):
 
     running = True
     win = None
-    numberOfPages = 2
+    numberOfPages = 3
     
     ##################################################
     # Player init
     ##################################################
     
     if page == 1:
-        platforms, lampList = layout_level1(screen)
+        platforms, lampList, doors = layout_level1(screen)
     elif page == 2:
-        platforms, lampList = layout_level2(screen)
+        platforms, lampList, doors = layout_level2(screen)
+    elif page == 3:
+    	platforms, lampList, doors = layout_level3(screen)
     
-    player = Player(200,200,platforms)
+    player = Player(doors[0].center[0],doors[0].center[1],platforms)
     
     ##################################################
     # Lighting init
@@ -219,7 +224,7 @@ def tutorial(page=None):
     screen.fill(black)
 
     # Draw background illuminated by lights, then render light/darkness on top
-    lighting.renderLamps( screen, refresh, player, lampList, platforms )
+    lighting.renderLamps( screen, refresh, player, lampList, platforms, doors )
     
     ##################################################
     # Sound init
@@ -252,7 +257,7 @@ def tutorial(page=None):
             if event.type == pygame.QUIT:
                 running = False
         
-        player.update(spider)
+        player.update()
         
         ##################################################
         # Lighting Control
@@ -266,11 +271,11 @@ def tutorial(page=None):
     
         # Check if the player touches any of the lamps
         for lamp in lampList:
-            lamp.checkStatus( player.rect )
+            lamp.checkStatus( player.rect, win )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, player, lampList, platforms )
-        lighting.renderPlayer( screen, refresh, player, lampList, platforms )
+        lighting.renderLamps( screen, refresh, player, lampList, platforms, doors )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors )
 
 		# Check if the player has won
         counter = 0
@@ -286,6 +291,17 @@ def tutorial(page=None):
         textRect.center = (400, 50)
         screen.blit(text, textRect)
         refresh.append(textRect) 
+        
+        # Instructions
+        if page == 1:
+            label("Left/Right Arrow Keys To Move", 400, 100, white, fontBig)
+            label("Space to jump", 400, 150, white, fontBig)
+        
+        	# text = fontBig.render('Tutorial', True, white)
+#             textRect = text.get_rect()
+#             textRect.center = (400, 50)
+#             screen.blit(text, textRect)
+#             refresh.append(textRect)
                 
         # update the parts of the screen that need it
         pygame.display.update(refresh)
@@ -297,15 +313,30 @@ def tutorial(page=None):
         gameClock.tick(30)
         
         # Handle next round
-        if win != None:
-            pygame.mouse.set_visible(True)
-                       
-            if win == True and page < numberOfPages:
-                tutorialManager(page + 1)
+        if win == True:
+            doors[1].unlock()
+        
+        if win != None:             
+            if win == True and page <= numberOfPages:
+                if doors[1].win( player ):
+                    pygame.mouse.set_visible(True)
+                    tutorialManager(page + 1) #for more than 1 level
             else:
+                pygame.mouse.set_visible(True)
                 storyManager()
                 
-        pygame.display.update(refresh)
+        
+        
+        # Handle next round
+        # if win != None:
+#             pygame.mouse.set_visible(True)
+#                        
+#             if win == True and page < numberOfPages:
+#                 tutorialManager(page + 1)
+#             else:
+#                 storyManager()
+                
+        #pygame.display.update(refresh)
         #pygame.display.update()
                 
     pygame.quit()
@@ -559,9 +590,13 @@ def level(number, score=None):
     # Player init
     ##################################################
     
-    #if number == 1 or number == 2: 
-    platforms, lampList, doors = layout_level3(screen) 
-    player = Player(doors[0].center[0],doors[0].center[1],platforms)
+
+    if number == 1 or number == 2:
+        platforms, lampList, doors = layout_level4(screen)
+    else:
+    	platforms, lampList, doors = layout_level4(screen)
+    
+    player = Player(doors[0].center[0],doors[0].center[1], platforms)
     
     ##################################################
     # Lighting init
@@ -734,17 +769,12 @@ def level(number, score=None):
             doors[1].unlock()
         
         if win != None:             
-            if win == True and number < max_levels:
+            if win == True and number <= max_levels:
                 if doors[1].win( player ):
-                    print("here1")
                     pygame.mouse.set_visible(True)
-                    print("here2")
                     score = score + cur_score # update score
-                    print("here3")
                     levelManager(win, score, number) #for more than 1 level
-                    print("here4")
             else:
-                print("yeeee")
                 pygame.mouse.set_visible(True)
                 score = score + cur_score # update score
                 endScreen(win, score, number)
