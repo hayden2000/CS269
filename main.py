@@ -175,10 +175,7 @@ def startScreen():
 def tutorialManager(page=None):
     
     if page != None:
-        if page == 4:
-            storyManager()
-        else:
-            tutorial(page)
+        tutorial(page)
     else:
         tutorial(1)
     
@@ -294,8 +291,8 @@ def tutorial(page=None):
         
         # Instructions
         if page == 1:
-            label("Left/Right Arrow Keys To Move", 400, 100, white, fontBig)
-            label("Space to jump", 400, 150, white, fontBig)
+            label("Left/Right arrow keys to move", 400, 100, white, fontSmall)
+            label("Space to jump", 400, 150, white, fontSmall)
         
         	# text = fontBig.render('Tutorial', True, white)
 #             textRect = text.get_rect()
@@ -317,13 +314,19 @@ def tutorial(page=None):
             doors[1].unlock()
         
         if win != None:             
-            if win == True and page <= numberOfPages:
+            if win == True and page < numberOfPages:
                 if doors[1].win( player ):
                     pygame.mouse.set_visible(True)
                     tutorialManager(page + 1) #for more than 1 level
+            elif win == True:
+                if doors[1].win( player ):
+                    pygame.mouse.set_visible(True)
+                    storyManager()
             else:
                 pygame.mouse.set_visible(True)
                 storyManager()
+        
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -705,8 +708,10 @@ def level(number, score=None):
             if lamp.isLit:
                 counter += 1
         if counter == len(lampList):
-            win = True
-            
+            if number == max_levels and player.hasKey == True:
+                win = True
+            elif number < max_levels:
+                win = True
             
         # bonus display 
         if old_counter - 1 == counter:
@@ -756,16 +761,20 @@ def level(number, score=None):
             doors[1].unlock()
         
         if win != None:             
-            if win == True and number <= max_levels:
-                if doors[1].win( player ):
+            if win == True and number < max_levels:
+                if doors[1].win(player):
                     pygame.mouse.set_visible(True)
                     score = score + cur_score # update score
                     levelManager(win, score, number) #for more than 1 level
+            elif win == True:
+                if doors[1].win(player):
+                    pygame.mouse.set_visible(True)
+                    score = score + cur_score # update score
+                    endScreen(win, score, number)
             else:
                 pygame.mouse.set_visible(True)
                 score = score + cur_score # update score
-                endScreen(win, score, number)
-                
+                endScreen(win, score, number)      
         
         #pygame.display.update(refresh)
         pygame.display.update()

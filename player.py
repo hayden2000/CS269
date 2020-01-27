@@ -182,7 +182,7 @@ class Player(pygame.sprite.Sprite):
         		spider.collideSpider()
         		spider.rect.x = -100
         		spider.rect.y = -100
-        		self.hasKey = True
+        		#self.hasKey = True
         if self.k.getVis():
         	self.collideKey()
         		
