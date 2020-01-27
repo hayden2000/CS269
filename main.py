@@ -570,7 +570,7 @@ def level(number, score=None):
     cycle = 0
     if score == None:
         score = 0
-    max_levels = 2 # change when we add more levels
+    max_levels = 4 # change when we add more levels
     start_time = pygame.time.get_ticks()
     
     rtext = fontSmall.render('', True, white) 
@@ -580,8 +580,12 @@ def level(number, score=None):
     ##################################################
     
 
-    if number == 1 or number == 2:
+    if number == 1:
         platforms, lampList, doors = layout_level4(screen)
+    elif number == 2:
+    	platforms, lampList, doors = layout_level5(screen)
+    elif number == 3:
+    	platforms, lampList, doors = layout_level6(screen)
     else:
     	platforms, lampList, doors = layout_level4(screen)
     
@@ -776,8 +780,8 @@ def level(number, score=None):
                 score = score + cur_score # update score
                 endScreen(win, score, number)      
         
-        #pygame.display.update(refresh)
-        pygame.display.update()
+        pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
