@@ -647,11 +647,11 @@ def level(number, score=None):
         time_min = int(current_time / 60.0)
         time_sec_int = int(current_time) % 60
         
-        if time_min < 3 and time_sec_int < 10:
+        if current_time > 0 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
-        elif time_min < 3:
+        elif current_time > 0:
             text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
