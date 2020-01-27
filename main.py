@@ -581,11 +581,11 @@ def level(number, score=None):
     
 
     if number == 1:
-        platforms, lampList, doors = layout_level4(screen)
+        platforms, lampList, doors = layout_level6(screen)
     elif number == 2:
     	platforms, lampList, doors = layout_level5(screen)
     elif number == 3:
-    	platforms, lampList, doors = layout_level6(screen)
+    	platforms, lampList, doors = layout_level4(screen)
     else:
     	platforms, lampList, doors = layout_level4(screen)
     
@@ -639,16 +639,16 @@ def level(number, score=None):
         
         # Timer
         timer = pygame.time.get_ticks() - start_time
-        current_time = (timer) / 1000.0
+        current_time = 180 - (timer) / 1000.0
         
         time_min = int(current_time / 60.0)
         time_sec_int = int(current_time) % 60
         
-        if time_min < 5 and time_sec_int < 10:
+        if time_min < 3 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
-        elif time_min < 5:
+        elif time_min < 3:
             text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
             textRect.center = (750, 575)
@@ -743,7 +743,7 @@ def level(number, score=None):
 #             cur_score = 1000 - int(2 * timer / 1000)
 #         else:
 #             cur_score = 1000 - int(timer / 1000)
-        cur_score = int((1 - timer / 300000) * 1000)# + (20 * counter)
+        cur_score = int((1 - timer / 180000) * 1000)# + (20 * counter)
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
@@ -780,8 +780,8 @@ def level(number, score=None):
                 score = score + cur_score # update score
                 endScreen(win, score, number)      
         
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
