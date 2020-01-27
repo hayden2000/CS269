@@ -74,7 +74,6 @@ class Block(pygame.sprite.Sprite):
 def layout_level1(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     platforms = []
     ar_x = 1.3
@@ -100,7 +99,6 @@ def layout_level1(screen):
 def layout_level2(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     platforms = []
     ar_x = 1.3
@@ -125,10 +123,10 @@ def layout_level2(screen):
     
     return platforms, lampList, doorList
     
+
 def layout_level3(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     platforms = []
     ar_x = 1.3
@@ -152,11 +150,16 @@ def layout_level3(screen):
     
     return platforms, lampList, doorList
     
+    
+    
+#def layout_level3(screen):
+	
+    
+    
 
 def layout_level4(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     p4_height = 105
     p4_width = 15
