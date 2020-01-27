@@ -305,8 +305,8 @@ def tutorial(page=None):
             else:
                 storyManager()
                 
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -686,6 +686,7 @@ def level(number, score=None):
         if counter == len(lampList):
             win = True
             
+            
         # bonus display 
         if old_counter - 1 == counter:
             rtext = fontSmall.render('-20', True, red)  
@@ -735,23 +736,27 @@ def level(number, score=None):
         
         if win != None:             
             if win == True and number < max_levels:
-                if doors[1].win( player ):
-                    print("here1")
+                if doors[1].win(player):
                     pygame.mouse.set_visible(True)
-                    print("here2")
                     score = score + cur_score # update score
-                    print("here3")
                     levelManager(win, score, number) #for more than 1 level
-                    print("here4")
+            elif win == True:
+                if number == 1:
+                    pygame.mouse.set_visible(True)
+                    score = score + cur_score # update score
+                    endScreen(win, score, number)
+                elif number == max_levels and doors[1].win(player):
+                    pygame.mouse.set_visible(True)
+                    score = score + cur_score # update score
+                    endScreen(win, score, number)
             else:
-                print("yeeee")
                 pygame.mouse.set_visible(True)
                 score = score + cur_score # update score
                 endScreen(win, score, number)
                 
         
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()

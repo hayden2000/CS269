@@ -48,7 +48,7 @@ class Enemy:
         
     def move(self, player, frame):
         pygame.mixer.init()
-        spyd=pygame.mixer.Sound('Audio/SpiderNew.aif')
+        spyd=pygame.mixer.Sound('Audio/SpiderNew.ogg')
         norm_player= ((player.getX()-0)/(800-0))
         norm_spyd= ((self.getX()-0)/(800-0))
         norm=abs((.25-abs(norm_player-norm_spyd)))
