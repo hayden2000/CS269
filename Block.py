@@ -150,12 +150,6 @@ def layout_level3(screen):
     
     return platforms, lampList, doorList
     
-    
-    
-#def layout_level3(screen):
-	
-    
-    
 
 def layout_level4(screen):
     p3_width = 50
@@ -164,13 +158,7 @@ def layout_level4(screen):
     p4_height = 105
     p4_width = 15
     
-    #ar_x = 1.3
-    #ar_y = 1.5
-    
     platforms = []
-    
-    
-    
     
     
     platforms.append(Block(50,70, p_width, p_height, "block1.png"))
@@ -223,12 +211,214 @@ def layout_level4(screen):
     
     lampHeight = lampImage.get_height()
     
-    lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
+    lampList = [ Lamp( (150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
     
     doorList = [Door( (50, 70), False), Door( (750, 490), True)]
     
     return platforms, lampList, doorList
     
+
+def layout_level5(screen):
+    p3_width = 50
+    p_height = 50
+    p_width = 100
+    p4_height = 105
+    p4_width = 15
+    
+    platforms = []
+    
+    
+    platforms.append(Block(50,70, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(50,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(50,385, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,385, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,385, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    
+    platforms.append(Block(150,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(350,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(450,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(650,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(250,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(550,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(750,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(150,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(350,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(150,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(550,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(750,490, p_width, p_height, "block2.png"))
+    
+    platforms.append(Block(525,280, p3_width, p_height, "block3.png"))
+    platforms.append(Block(225,385, p3_width, p_height, "block3.png"))
+    platforms.append(Block(725,385, p3_width, p_height, "block3.png"))
+    platforms.append(Block(225,490, p3_width, p_height, "block3.png"))
+    platforms.append(Block(475,490, p3_width, p_height, "block3.png"))
+    
+    # Walls
+    platforms.append(Block(190,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(510,280, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,385, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(500,490, p4_width, p4_height, "block4.png"))
+    
+    #Floor
+    platforms.append(Block(50,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,590, p_width, p_height, "block1.png"))
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [ Lamp( (650, 175), lampImage, lightAlpha, 15 ), Lamp( (150,280), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 20 ) ]
+    
+    doorList = [Door( (750, 490), False), Door( (50, 70), True)]
+    
+    
+    
+    return platforms, lampList, doorList
+    
+    
+def layout_level6(screen):
+    p3_width = 50
+    p_height = 50
+    p_width = 100
+    p4_height = 105
+    p4_width = 15
+    
+    platforms = []
+    
+    
+    platforms.append(Block(750,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,385, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,490, p_width, p_height, "block1.png"))
+    
+    platforms.append(Block(350,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(550,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(250,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(450,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(650,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(150,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(550,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(50,490, p_width, p_height, "block2.png"))
+    platforms.append(Block(350,490, p_width, p_height, "block2.png"))
+    platforms.append(Block(450,490, p_width, p_height, "block2.png"))
+    
+    platforms.append(Block(125,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(375,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(575,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(725,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(75,280, p3_width, p_height, "block3.png"))
+    platforms.append(Block(725,490, p3_width, p_height, "block3.png"))
+    
+    # Walls
+    platforms.append(Block(300,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(710,70, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,280, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(510,280, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(400,385, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(700,385, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(310,490, p4_width, p4_height, "block4.png"))
+    
+    #Floor
+    platforms.append(Block(50,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,590, p_width, p_height, "block1.png"))
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [ Lamp( (575, 70), lampImage, lightAlpha, 15 ), Lamp( (250,280), lampImage, lightAlpha, 10 ), Lamp( (250,490), lampImage, lightAlpha, 20 ) ]
+    
+    doorList = [Door( (50, 490), False), Door( (350, 490), True)]
+    
+    
+    
+    return platforms, lampList, doorList
+
+def layout_level7(screen):
+    p3_width = 50
+    p_height = 50
+    p_width = 100
+    p4_height = 105
+    p4_width = 15
+    
+    platforms = []
+    
+    
+    platforms.append(Block(50,70, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,70, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,70, p_width, p_height, "block1.png"))
+    platforms.append(Block(50,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,175, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,280, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    
+    platforms.append(Block(150,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(350,70, p_width, p_height, "block2.png"))
+    platforms.append(Block(650,175, p_width, p_height, "block2.png"))
+    platforms.append(Block(250,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(650,280, p_width, p_height, "block2.png"))
+    platforms.append(Block(50,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(650,385, p_width, p_height, "block2.png"))
+    platforms.append(Block(150,490, p_width, p_height, "block2.png"))
+    platforms.append(Block(450,490, p_width, p_height, "block2.png"))
+    
+    platforms.append(Block(775,70, p3_width, p_height, "block3.png"))
+    platforms.append(Block(225,175, p3_width, p_height, "block3.png"))
+    platforms.append(Block(775,280, p3_width, p_height, "block3.png"))
+    platforms.append(Block(225,385, p3_width, p_height, "block3.png"))
+    platforms.append(Block(725,385, p3_width, p_height, "block3.png"))
+    platforms.append(Block(775,490, p3_width, p_height, "block3.png"))
+    
+    # Walls
+    platforms.append(Block(500,0, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(700,0, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,70, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(400,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(700,175, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,385, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(700,385, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(200,490, p4_width, p4_height, "block4.png"))
+    platforms.append(Block(400,490, p4_width, p4_height, "block4.png"))
+    
+    #Floor
+    platforms.append(Block(50,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,590, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,590, p_width, p_height, "block1.png"))
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
+    
+    doorList = [Door( (50, 70), False), Door( (750, 490), True)]
+    
+    
+    
+    return platforms, lampList, doorList
 
 class Layout():
     #dimensions are 800x600
