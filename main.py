@@ -718,21 +718,21 @@ def level(number, score=None):
                 win = True
             
         # bonus display 
-        if old_counter - 1 == counter:
-            rtext = fontSmall.render('-20', True, red)  
-            cycle = 0
-        elif old_counter + 1 == counter:
-            rtext = fontSmall.render('+20', True, green)
-            cycle = 0
-        else:
-            if cycle == 30:
-                rtext = fontSmall.render('', True, white) 
-            cycle = cycle + 1
-            
-        rtextRect = rtext.get_rect()
-        rtextRect.center = (40, 550)
-        screen.blit(rtext, rtextRect)
-        refresh.append(rtextRect)
+        # if old_counter - 1 == counter:
+#             rtext = fontSmall.render('-20', True, red)  
+#             cycle = 0
+#         elif old_counter + 1 == counter:
+#             rtext = fontSmall.render('+20', True, green)
+#             cycle = 0
+#         else:
+#             if cycle == 30:
+#                 rtext = fontSmall.render('', True, white) 
+#             cycle = cycle + 1
+#             
+#         rtextRect = rtext.get_rect()
+#         rtextRect.center = (40, 550)
+#         screen.blit(rtext, rtextRect)
+#         refresh.append(rtextRect)
             
         # score display
         #cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
@@ -743,7 +743,7 @@ def level(number, score=None):
 #             cur_score = 1000 - int(2 * timer / 1000)
 #         else:
 #             cur_score = 1000 - int(timer / 1000)
-        cur_score = int((1 - timer / 300000) * 1000) + (20 * counter)
+        cur_score = int((1 - timer / 300000) * 1000)# + (20 * counter)
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
