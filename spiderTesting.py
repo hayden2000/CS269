@@ -7,7 +7,7 @@ from player import *
 # create a game clock   
 
 class Enemy:
-    def __init__(self, win, x, y, image, width=90, height=50):
+    def __init__(self, win, x, y, image, width=75, height=55):
         self.x = x
         self.y = y
         self.center_x = x + (width/2)
@@ -15,16 +15,16 @@ class Enemy:
         self.win = win
         self.width = width
         self.height = height
-        self.maxVel = 2
+        self.maxVel = 10
         self.downForce = 5
         self.currentSpeed = 1
         self.angle = 30
-        self.image = image
         self.originalImg = image
-        self.rotImage = pygame.Surface((800, 600))
+        self.rotImage = pygame.Surface((400, 300))
         #temp
         self.rect = image.get_rect()
         self.dead = False
+        self.whichImg = 0
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -40,9 +40,45 @@ class Enemy:
     	
     def isDead(self):
     	return self.dead
+    
+    def get_rect(self):
+    	return pygame.Rect(self.x, self.y, self.width, self.height)
+    	
+    def get_rotRect(self):
+        rect = self.rect
+        rect.center = (self.center_x, self.center_y)
+        return rect
+    
+    def get_images(self, x, y):
+        sprite = pygame.image.load('Assets/Spider_Sprite.png').convert_alpha()
+        getimage = pygame.Surface((75,55))
+        getimage.set_colorkey((0,0,0))
+        getimage.blit(sprite,(0,0),(x,y,75,55))
+        getimage = pygame.transform.scale(getimage,(75, 55))
+        return getimage
         
-    def draw(self, screen, spider_img):
-    	if not self.dead:
+    # def load_images(self):
+#     	
+#     
+#     
+#         for pic in self.standing:
+#             pic.set_colorkey((0,0,0))
+#         self.walkRight = [self.get_images(20,140,29,50), self.get_images(59, 20, 29, 50),self.get_images(59, 80, 29, 50),
+#                           self.get_images(59,140,29,50), self.get_images(98, 20, 29, 50),self.get_images(137, 20, 29, 50),
+#                           self.get_images(176,20,29,50), self.get_images(98, 80, 29, 50),self.get_images(98, 140, 29, 50),
+#                           self.get_images(137, 80, 29, 50)]
+#         self.walkLeft = []
+#         for pic in self.walkRight:
+#             pic.set_colorkey((0,0,0))
+#             self.walkLeft.append(pygame.transform.flip(pic, True, False))
+#         self.jumpSprite = []
+    
+    
+    def get_rotImage(self):
+        return self.rotImage
+    
+    def draw(self, screen):
+        if not self.dead:
         	screen.blit( self.rotImage, (self.x, self.y, self.width, self.height), self.rotImage.get_rect() )
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
@@ -55,7 +91,14 @@ class Enemy:
         spyd.set_volume(norm)
         
         pygame.mixer.Sound.play(spyd)
-
+        
+        num = frame % 5
+        if num == 1:
+            if(self.whichImg >= 5):
+                 self.whichImg = 0
+            self.originalImg = self.get_images(20, 20 + (self.whichImg * 75))
+            self.whichImg += 1
+        	
         radius = 120
         if(player.getX() == self.x):
         	radius = abs(player.getY()-self.y)
@@ -65,11 +108,17 @@ class Enemy:
             self.random_move(frame)
         else:
             self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
+            
     def move_x(self, speed):
         self.x += speed
+        self.center_x = self.x + (self.width/2)
+        
         #print("speed = " + str(speed))
+        
     def move_y(self, speed):
         self.y -= speed
+        self.center_y = self.y + (self.height/2)
+        
     def random_move(self, frame):
         if(self.angle >= 360 or self.angle <= -360):
             self.angle = self.angle%360

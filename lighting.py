@@ -94,13 +94,12 @@ class Lighting:
 				
 				# Draw the spider enemy
 				if spider != None:
-					if spider.get_rect().colliderect( lamp.lightRect ):
-						# image = spider.draw()
-# 						trect = image.get_rect().clip( lamp.lightRect )
-# 						screen.blit( image, trect, trect.move( -image.get_rect().left, -image.get_rect().top) )
-					 	spider.draw(screen, spider_img)
-# 						trect = spider.get_rect().clip( lamp.lightRect )
-# 						screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
+					if spider.get_rotRect().colliderect( lamp.lightRect ):
+ 						trect = spider.get_rotRect().clip( lamp.lightRect )
+ 						#screen.blit( image, trect, trect.move( -image.get_rect().left, -image.get_rect().top) )
+ 						
+ 						screen.blit( spider.get_rotImage(), trect, trect.move(-spider.getX(),-spider.getY()) )
+						#screen.blit( spider.get_rotImage, spider.get_rect(), spider.get_rotImage().get_rect() )
 
 				key = player.getKey()
 				if key.isVisible:
@@ -139,12 +138,13 @@ class Lighting:
 		
 		# Draw the spider enemy
 		if spider != None:
-			if spider.get_rect().colliderect( player.lightRect ):
-			
+			if spider.get_rotRect().colliderect( player.lightRect ):
+				trect = spider.get_rotRect().clip( player.lightRect )
+				screen.blit( spider.get_rotImage(), trect, trect.move(-spider.getX(),-spider.getY()) )
 				# image = spider.draw()
 # 				trect = spider.get_rect().clip( player.lightRect )
 # 				screen.blit( image, trect, trect.move( -image.get_rect().left, -image.get_rect().top))
-				spider.draw(screen, spider_img)
+				#spider.draw(screen)
 				# trect = spider.get_rect().clip( player.lightRect )
 # 				screen.blit( spider_img, trect, trect.move(-spider.getX(),-spider.getY()) )
 		
