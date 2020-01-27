@@ -72,12 +72,33 @@ class Block(pygame.sprite.Sprite):
             
 
 def layout_level1(screen):
-	#screen = pygame.display.set_mode([800,600])
-    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
-    edges = screen.get_rect()
     p3_width = 50
     p_height = 50
-    #p_width = 150
+    p_width = 100
+    platforms = []
+    ar_x = 1.3
+    ar_y = 1.5
+
+    platforms.append(Block(50,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(150,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(250,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(350,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(450,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(750,490, p_width, p_height, "block1.png"))
+    
+    lampHeight = lampImage.get_height()
+    
+    lampList = [Lamp( (750, 490), lampImage, lightAlpha, 10 )]
+    
+    doorList = [Door( (50, 490), False), Door( (650, 490), True)]
+    
+    return platforms, lampList, doorList
+
+def layout_level2(screen):
+    p3_width = 50
+    p_height = 50
     p_width = 100
     platforms = []
     ar_x = 1.3
@@ -96,17 +117,16 @@ def layout_level1(screen):
     
     lampHeight = lampImage.get_height()
     
-    lampList = [Lamp( ( 450, 385), lampImage, lightAlpha, 10 ), Lamp( ( 750, 490), lampImage, lightAlpha, isLit = True )]
+    lampList = [Lamp( (450, 385), lampImage, lightAlpha, 10 ), Lamp( (650, 490), lampImage, lightAlpha, isLit = True )]
     
-    return platforms, lampList
+    doorList = [Door( (50, 490), False), Door( (750, 490), True)]
     
-def layout_level2(screen):
-	#screen = pygame.display.set_mode([800,600])
-    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
-    edges = screen.get_rect()
+    return platforms, lampList, doorList
+    
+
+def layout_level3(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     platforms = []
     ar_x = 1.3
@@ -124,18 +144,22 @@ def layout_level2(screen):
     
     lampHeight = lampImage.get_height()
     
-    lampList = [Lamp( ( 250, 490), lampImage, lightAlpha, 1 ), Lamp( ( 750, 490), lampImage, lightAlpha, 5 )]
+    lampList = [Lamp( (250, 490), lampImage, lightAlpha, 1 ), Lamp( (650, 490), lampImage, lightAlpha, 5 )]
     
-    return platforms, lampList
+    doorList = [Door( (50, 490), False), Door( (750, 490), True)]
+    
+    return platforms, lampList, doorList
+    
+    
+    
+#def layout_level3(screen):
+	
+    
     
 
-def layout_level3(screen):
-    #screen = pygame.display.set_mode([800,600])
-    background = pygame.image.load(os.path.join('Assets','CaveContrast.png')).convert()
-    edges = screen.get_rect()
+def layout_level4(screen):
     p3_width = 50
     p_height = 50
-    #p_width = 150
     p_width = 100
     p4_height = 105
     p4_width = 15
@@ -197,66 +221,6 @@ def layout_level3(screen):
     platforms.append(Block(650,590, p_width, p_height, "block1.png"))
     platforms.append(Block(750,590, p_width, p_height, "block1.png"))
     
-    '''
-    #first row
-    platforms.append(Block(int(ar_x*4),70, p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*118),70, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*480), 70, p_width, p_height, "block1.png"))
-    
-    #second row
-    platforms.append(Block(int(ar_x*140),175, p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*417),175, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*534),175, p_width/2, p_height/2, "block3.png"))
-    
-    #third row
-    platforms.append(Block(int(ar_x*5), 280, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*110), 280, p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*272), 280, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*386), 280, p_width/2, p_height/2, "block3.png"))
-    
-    #fourth row
-    platforms.append(Block(int(ar_x*2), 385, p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*210), 385, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*330), 385, p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*480), 385, p_width, p_height, "block2.png"))
-    
-    #fifth row
-    platforms.append(Block(int(ar_x*2), 490, p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*119), 490, p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*257), 490, p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*372), 490, p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*478), 490, p_width, p_height, "block2.png"))
-    '''
-    '''
-    #first row
-    platforms.append(Block(int(ar_x*4),int(ar_y*60), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*118),int(ar_y*60), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*480), int(ar_y*60), p_width, p_height, "block1.png"))
-    
-    #second row
-    platforms.append(Block(int(ar_x*140),int(ar_y*140), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*417),int(ar_y*140), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*534),int(ar_y*140), p_width/2, p_height/2, "block3.png"))
-    
-    #third row
-    platforms.append(Block(int(ar_x*5), int(ar_y*215), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*110), int(ar_y*215), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*272), int(ar_y*215), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*386), int(ar_y*215), p_width/2, p_height/2, "block3.png"))
-    
-    #fourth row
-    platforms.append(Block(int(ar_x*2), int(ar_y*302), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*210), int(ar_y*302), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*330), int(ar_y*302), p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*480), int(ar_y*302), p_width, p_height, "block2.png"))
-    
-    #fifth row
-    platforms.append(Block(int(ar_x*2), int(ar_y*371), p_width, p_height, "block2.png"))
-    platforms.append(Block(int(ar_x*119), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*257), int(ar_y*371), p_width/2, p_height/2, "block3.png"))
-    platforms.append(Block(int(ar_x*372), int(ar_y*371), p_width, p_height, "block1.png"))
-    platforms.append(Block(int(ar_x*478), int(ar_y*371), p_width, p_height, "block2.png"))
-    '''
     lampHeight = lampImage.get_height()
     
     lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
