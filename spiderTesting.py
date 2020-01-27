@@ -117,7 +117,7 @@ class Enemy:
         self.rect = self.rotImage.get_rect()
         
     def collideSpider(self):
-    	print("collided")
+    	#print("collided")
     	self.maxVel= 0
     	self.image = pygame.Surface((800, 600), pygame.SRCALPHA)
     	self.originalImage = pygame.Surface((800, 600), pygame.SRCALPHA)

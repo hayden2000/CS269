@@ -43,7 +43,7 @@ class Block(pygame.sprite.Sprite):
         new_height = height - 2
         #makes the rect 2 px high
         self.rect.inflate(0, -40)
-        print(self.rect)
+        #print(self.rect)
         #block defaults to platform
         
     def getX():
@@ -160,9 +160,9 @@ class Player(pygame.sprite.Sprite):
 #        self.rect.right = x+15
 #        self.rect.bottom = y-25
 #        self.rect.top = y+25
-        print(self.rect)
-        print(self.rect.top)
-        print(self.rect.bottom)
+        #print(self.rect)
+        #print(self.rect.top)
+        #print(self.rect.bottom)
         self.width = width
         self.height = height
         self.platforms = platforms

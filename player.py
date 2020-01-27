@@ -25,9 +25,9 @@ class Player(pygame.sprite.Sprite):
 #        self.rect.right = x+15
 #        self.rect.bottom = y-25
 #        self.rect.top = y+25
-        print(self.rect)
-        print(self.rect.top)
-        print(self.rect.bottom)
+        #print(self.rect)
+        #print(self.rect.top)
+        #print(self.rect.bottom)
         self.width = width
         self.height = height
         self.platforms = platforms
@@ -112,11 +112,10 @@ class Player(pygame.sprite.Sprite):
                     self.vel.y = 0
                     
     def checkSpiderCollide(self,spider):
-    	print("testing")
-    	print(spider.get_rect())
+    	#print("testing")
+    	#print(spider.get_rect())
     	if spider != None:
     		if self.rect.colliderect(spider.get_rect()):
-    			print("aha!")
     			return True
     	return False
     	

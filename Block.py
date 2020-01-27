@@ -48,7 +48,7 @@ class Block(pygame.sprite.Sprite):
         new_height = height - 2
         #makes the rect 2 px high
         self.rect.inflate(0, -40)
-        print(self.rect)
+        #print(self.rect)
         #block defaults to platform
         
     def getX(self):

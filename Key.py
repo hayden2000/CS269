@@ -18,13 +18,13 @@ class Key(pygame.sprite.Sprite):
 		return self.rect
 		
 	def appearKey(self,spider):
-		print("key is here")
+		#print("key is here")
 		self.rect.centerx = spider.getX()
 		self.rect.y = spider.getY()
 		self.isVisible = True
 		
 	def collidePlayer(self):
-		print("got it")
+		#print("got it")
 		self.isVisible = False
 		self.rect.y = -100
 	

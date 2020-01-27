@@ -152,11 +152,10 @@ def startScreen():
         screen.blit(bg, (0, 0))
         
         # button control
-        button('Start', 76, 450, white, grey, light_grey, fontBig, storyManager)
-        button('Tutorial', 213, 450, white, grey, light_grey, fontBig, tutorialManager)
-        button('Credits', 371, 450, white, grey, light_grey, fontBig, credits)
-        button('High Scores', 561, 450, white, grey, light_grey, fontBig, highscores)
-        button('Quit', 728, 450, white, grey, light_grey, fontBig, quit)
+        button('Start', 104, 450, white, grey, light_grey, fontBig, storyManager)
+        button('Credits', 283, 450, white, grey, light_grey, fontBig, credits)
+        button('High Scores', 501, 450, white, grey, light_grey, fontBig, highscores)
+        button('Quit', 696, 450, white, grey, light_grey, fontBig, quit)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -321,10 +320,10 @@ def tutorial(page=None):
             elif win == True:
                 if doors[1].win( player ):
                     pygame.mouse.set_visible(True)
-                    storyManager()
+                    levelManager()
             else:
                 pygame.mouse.set_visible(True)
-                storyManager()
+                levelManager()
         
         pygame.display.update()
                 
@@ -479,13 +478,13 @@ def story(page=None):
             button('Back', 100, 550, white, grey, light_grey, fontBig, story, page - 1)
         
         # skip button
-        button('Skip', 700, 50, white, grey, light_grey, fontBig, levelManager)   
+        button('Skip', 700, 50, white, grey, light_grey, fontBig, tutorialManager)   
         
         # next/start button
         if page < numberOfPages:
             button('Next', 700, 550, white, grey, light_grey, fontBig, story, page + 1)
         else:
-            button('Start', 700, 550, white, grey, light_grey, fontBig, levelManager)
+            button('Start', 700, 550, white, grey, light_grey, fontBig, tutorialManager)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -494,7 +493,7 @@ def story(page=None):
                 if page < numberOfPages:
                     story(page + 1)
                 else:
-                    levelManager()
+                    tutorialManager()
         
         pygame.display.update()
                 
@@ -540,6 +539,10 @@ def newLevelNotifier(number, score=None):
         
         if score != None:
             label('Current Score: {}'.format(score), 400, 345, white, fontSmall)
+        else:
+            # button control
+            button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+        button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
         
         # button control
         button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
@@ -733,16 +736,7 @@ def level(number, score=None):
 #         rtextRect.center = (40, 550)
 #         screen.blit(rtext, rtextRect)
 #         refresh.append(rtextRect)
-            
-        # score display
-        #cur_score = int(math.log(1000000/timer, 10) * 1000 / 3) + (20 * counter)
-        # interval = 300000 / 7
-#         if timer < interval:
-#             cur_score = 1000 - int(3 * timer / 1000)
-#         elif timer < 3 * interval:
-#             cur_score = 1000 - int(2 * timer / 1000)
-#         else:
-#             cur_score = 1000 - int(timer / 1000)
+
         cur_score = int((1 - timer / 180000) * 1000)# + (20 * counter)
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
@@ -750,6 +744,15 @@ def level(number, score=None):
         stextRect.center = (40, 575)
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
+        
+        keyStatus = ' '
+        if player.hasKey:
+            keyStatus = 'Key collected'
+        ttext = fontSmall.render(keyStatus, True, white)
+        ttextRect = ttext.get_rect()
+        ttextRect.topleft = (10, 10)
+        screen.blit(ttext, ttextRect)
+        refresh.append(ttextRect)
         
         # update the parts of the screen that need it
         pygame.display.update(refresh)
