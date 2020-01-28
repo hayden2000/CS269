@@ -429,6 +429,7 @@ def layout_level8(screen):
     platforms.append(Block(550,280, p_width, p_height, "block1.png"))
     platforms.append(Block(250,490, p_width, p_height, "block1.png"))
     platforms.append(Block(550,490, p_width, p_height, "block1.png"))
+    platforms.append(Block(650,70, p_width, p_height, "block1.png"))
     
     platforms.append(Block(150,70, p_width, p_height, "block2.png"))
     platforms.append(Block(350,70, p_width, p_height, "block2.png"))
@@ -449,7 +450,6 @@ def layout_level8(screen):
     platforms.append(Block(775,490, p3_width, p_height, "block3.png"))
     
     # Walls
-    platforms.append(Block(500,0, p4_width, p4_height, "block4.png"))
     platforms.append(Block(700,0, p4_width, p4_height, "block4.png"))
     platforms.append(Block(200,70, p4_width, p4_height, "block4.png"))
     platforms.append(Block(200,175, p4_width, p4_height, "block4.png"))
