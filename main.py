@@ -662,11 +662,11 @@ def level(number, score=None):
         if current_time > 0 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
-            textRect.center = (750, 575)
+            textRect.bottomright = (790, 590)
         elif current_time > 0:
             text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
-            textRect.center = (750, 575)
+            textRect.bottomright = (790, 590)
         else:
             win = False
         
@@ -764,13 +764,13 @@ def level(number, score=None):
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
-        stextRect.center = (40, 575)
+        stextRect.bottomleft = (10, 590)
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
         
-        ntext = fontSmall.render('{}'.format(number), True, white)
+        ntext = fontSmall.render('Level #{}'.format(number), True, white)
         ntextRect = ntext.get_rect()
-        ntextRect.center = (780, 25)
+        ntextRect.topright = (790, 10)
         screen.blit(ntext, ntextRect)
         refresh.append(ntextRect)
         
