@@ -572,7 +572,8 @@ def level(number, score=None):
     win = None
     
     counter = 0
-    old_counter = 0
+    letter_read = False
+    old_letter_read = False
     cycle = 0
     if score == None:
         score = 0
@@ -713,16 +714,20 @@ def level(number, score=None):
         lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors, letter, spider )
       
         # if player touching letter, draw instructions
+        
         if letter != None:
             if letter.checkCollide(player):
         	    letter.drawInstruction(screen, fontSmall, white)
-        
+        	    
+        if letter.letter_closed == True:
+            letter_read = True
+            
         # Draw the timer after everything else
         screen.blit(text, textRect)
         refresh.append(textRect)
 
         # Check if the player has won
-        old_counter = counter
+        
         counter = 0
         for lamp in lampList:
             if lamp.isLit:
@@ -732,25 +737,26 @@ def level(number, score=None):
                 win = True
             elif number < max_levels:
                 win = True
+        
+        #bonus display
+        if letter_read != old_letter_read:
+            old_letter_read = True
+            rtext = fontSmall.render('+50', True, green)
+            cycle = 0
+        else:
+            old_letter_read = letter_read
+            if cycle == 30:
+                rtext = fontSmall.render('', True, white) 
+            cycle = cycle + 1
             
-        # bonus display 
-        # if old_counter - 1 == counter:
-#             rtext = fontSmall.render('-20', True, red)  
-#             cycle = 0
-#         elif old_counter + 1 == counter:
-#             rtext = fontSmall.render('+20', True, green)
-#             cycle = 0
-#         else:
-#             if cycle == 30:
-#                 rtext = fontSmall.render('', True, white) 
-#             cycle = cycle + 1
-#             
-#         rtextRect = rtext.get_rect()
-#         rtextRect.center = (40, 550)
-#         screen.blit(rtext, rtextRect)
-#         refresh.append(rtextRect)
+        rtextRect = rtext.get_rect()
+        rtextRect.center = (40, 550)
+        screen.blit(rtext, rtextRect)
+        refresh.append(rtextRect)
 
-        cur_score = int((1 - timer / 180000) * 1000)# + (20 * counter)
+        cur_score = int((1 - timer / 180000) * 1000)
+        if letter_read == True:
+            cur_score += 50
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
