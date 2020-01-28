@@ -754,7 +754,7 @@ def level(number, score=None):
             cycle = cycle + 1
             
         rtextRect = rtext.get_rect()
-        rtextRect.center = (40, 550)
+        rtextRect.center = (32, 555)
         screen.blit(rtext, rtextRect)
         refresh.append(rtextRect)
 
@@ -854,72 +854,77 @@ def endScreen(win, score, level):
         if win == True:
             label('You won!', 400, 200, white, fontBig)
             label('Your score was {} through level {}!'.format(score, level), 400, 275, white, fontSmall)
+            
+             # Enter button
+            text = fontBig.render('Enter', True, white, grey)
+            textRect = text.get_rect()
+            textRect.center = (600, 425)
+    
+            mouse = pygame.mouse.get_pos()
+        
+            if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
+                text = fontBig.render('Enter', True, white, light_grey)
+                roundCorners(textRect, light_grey)
+        
+                clicked = False
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN: 
+                        clicked = True
+
+                if clicked == True:
+                    if text_result == '':
+                        text_result = 'Anonymous'
+                    with open("Data/History.sdwp","a+") as f:
+                                f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
+                    highscores()
+            else:
+                text = fontBig.render('Enter', True, white, grey)
+                roundCorners(textRect, grey)
+
+            screen.blit(text, textRect)
+        
+            # Typing
+            label('Type name:', 200, 425, white, fontSmall)
+            
         else:
             label('Game Over', 400, 200, white, fontBig)
             label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 275, white, fontSmall)
+            button('Try Again', 400, 425, white, grey, light_grey, fontBig, newLevelNotifier, level, score)
+            
             
         if int(high_score) < score:
             label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 325, white, fontSmall)
         else:
             label('High Score: {}'.format(high_score), 400, 325, white, fontSmall)
 
-        # Enter button
-        text = fontBig.render('Enter', True, white, grey)
-        textRect = text.get_rect()
-        textRect.center = (600, 425)
-    
-        mouse = pygame.mouse.get_pos()
-        
-        if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
-            text = fontBig.render('Enter', True, white, light_grey)
-            roundCorners(textRect, light_grey)
-        
-            clicked = False
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN: 
-                    clicked = True
-
-            if clicked == True:
-                if text_result == '':
-                    text_result = 'Anonymous'
-                with open("Data/History.sdwp","a+") as f:
-                            f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
-                highscores()
-        else:
-            text = fontBig.render('Enter', True, white, grey)
-            roundCorners(textRect, grey)
-
-        screen.blit(text, textRect)
-        
-        # Typing
-        label('Type name:', 200, 425, white, fontSmall)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
+                if event.key == pygame.K_BACKSPACE and win == True:
                     text_result = text_result[:-1]
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN and win == True:
                     if text_result == '':
                         text_result = 'Anonymous'
                     with open("Data/History.sdwp","a+") as f:
                                 f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
                     highscores()
-                else:
+                elif win == True:
                     text_result += event.unicode
         
-        # text box background
-        gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
+        if win == True:
+            # text box background
+            gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
         
-        # render text
-        stext = fontSmall.render(text_result, True, white)
-        if stext.get_width() > 260: # truncate if too long
-            text_result = text_result[:-1]
+            # render text
             stext = fontSmall.render(text_result, True, white)
-        stextRect = stext.get_rect()
-        stextRect.center = (400, 425)
-        screen.blit(stext, stextRect)
+            if stext.get_width() > 260: # truncate if too long
+                text_result = text_result[:-1]
+                stext = fontSmall.render(text_result, True, white)
+            stextRect = stext.get_rect()
+            stextRect.center = (400, 425)
+            screen.blit(stext, stextRect)
           
         pygame.display.update()
                 

@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.lastTicks = 0
         self.walking = False
         self.load_images()
-        self.image = self.standing[0]
+        self.image = self.standingRight[0]
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
         self.lightRect = lightAlpha.get_rect()
@@ -39,6 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.isJump = False
         self.hasKey = False
         self.k = Key(-100, -100, 50)
+        self.isRight = True
         
     def get_images(self, a, b, wid, hei):
         sprite = pygame.image.load('Assets/Walking.png').convert()
@@ -48,9 +49,17 @@ class Player(pygame.sprite.Sprite):
         return getimage
 
     def load_images(self):
-        self.standing = [self.get_images(20, 20, 29, 50), self.get_images(20, 80, 29, 50)]
-        for pic in self.standing:
+        #self.standing = [self.get_images(20, 20, 29, 50), self.get_images(20, 80, 29, 50)]
+        
+        self.standingRight = [self.get_images(20, 20, 29, 50), self.get_images(20, 80, 29, 50)]
+        for pic in self.standingRight:
             pic.set_colorkey((0,0,0))
+            
+        self.standingLeft = []
+        for pic in self.standingRight:
+            self.standingLeft.append(pygame.transform.flip(pic, True, False))
+        
+        
         self.walkRight = [self.get_images(20,140,29,50), self.get_images(59, 20, 29, 50),self.get_images(59, 80, 29, 50),
                           self.get_images(59,140,29,50), self.get_images(98, 20, 29, 50),self.get_images(137, 20, 29, 50),
                           self.get_images(176,20,29,50), self.get_images(98, 80, 29, 50),self.get_images(98, 140, 29, 50),
@@ -203,21 +212,31 @@ class Player(pygame.sprite.Sprite):
                 self.lastTicks = nowTicks
                 if self.vel.x > 0:
                     self.currentSprite = (self.currentSprite+1)%len(self.walkRight)
-                    self.image = self.walkRight[self.currentSprite] 
+                    self.image = self.walkRight[self.currentSprite]
+                    self.isRight = True
                 if self.vel.x < 0:
                     self.currentSprite = (self.currentSprite+1)%len(self.walkLeft)
                     self.image = self.walkLeft[self.currentSprite]
+                    self.isRight = False
                 bottom = self.rect.bottom
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
         if not self.walking and not self.isJump:
             if nowTicks - self.lastTicks > 500:
-                self.lastTicks = nowTicks
-                self.currentSprite = (self.currentSprite+1)% len(self.standing)
-                bottom = self.rect.bottom
-                self.image = self.standing[self.currentSprite]
-                self.rect = self.image.get_rect()
-                self.rect.bottom = bottom
+                if self.isRight == True:
+                    self.lastTicks = nowTicks
+                    self.currentSprite = (self.currentSprite+1)% len(self.standingRight)
+                    bottom = self.rect.bottom
+                    self.image = self.standingRight[self.currentSprite]
+                    self.rect = self.image.get_rect()
+                    self.rect.bottom = bottom
+                else:
+                    self.lastTicks = nowTicks
+                    self.currentSprite = (self.currentSprite+1)% len(self.standingLeft)
+                    bottom = self.rect.bottom
+                    self.image = self.standingLeft[self.currentSprite]
+                    self.rect = self.image.get_rect()
+                    self.rect.bottom = bottom
 
 
 
