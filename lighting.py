@@ -88,7 +88,8 @@ class Lighting:
 				if letter != None:
 					if letter.rect.colliderect( lamp.lightRect ):
 						trect = lamp.lightRect.clip( letter.rect )
-						pygame.draw.rect( screen, (0,100,0), trect )
+						screen.blit( letter.icon, trect, trect.move(-letter.rect.left,-letter.rect.top) )
+						#pygame.draw.rect( screen, (0,100,0), trect )
 				
 				# Draw the spider enemy
 				if spider != None:
@@ -127,7 +128,8 @@ class Lighting:
 		if letter != None:
 			if letter.rect.colliderect( player.lightRect ):
 				trect = player.lightRect.clip( letter.rect )
-				pygame.draw.rect( screen, (0,100,0), trect )
+				screen.blit( letter.icon, trect, trect.move(-letter.rect.left,-letter.rect.top) )
+				#pygame.draw.rect( screen, (0,100,0), trect )
 		
 		# Draw the spider enemy
 		if spider != None:

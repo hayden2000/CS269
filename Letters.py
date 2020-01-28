@@ -6,9 +6,12 @@ import pygame
 
 class Letter:
 
-	def __init__( self, text, rect ):
-		self.image = pygame.transform.scale(text, (600, 400))
-		self.rect = rect
+	def __init__( self, text, midbottom ):
+		self.image = pygame.transform.scale(text, (700, 500))
+		self.rect = pygame.Rect((0,0), (50,50))
+		self.rect.midbottom = midbottom
+		self.icon = pygame.image.load("Assets/letter_icon.png")
+		self.icon = pygame.transform.scale( self.icon, (self.rect.width,self.rect.height) )
 	
 	def checkCollide(self, player):
 		return player.rect.colliderect( self.rect )
@@ -27,7 +30,8 @@ class Letter:
 		
 		if player.rect.colliderect( self.rect ):
 			running = True
-			screen.blit(self.image, (100,100))
+			screen.fill((50,0,0))
+			screen.blit(self.image, (50,50))
 			text = font.render("Press SPACE", True, color)
 			textRect = text.get_rect()
 			textRect.center = ( 400, 550 )
