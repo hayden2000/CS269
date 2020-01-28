@@ -435,7 +435,10 @@ def level(number, score=None):
         
         
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         if number == 1:
             frame += 1
             if not spider.isDead():
@@ -576,4 +579,3 @@ def endScreen(win, score, level):
 
 if __name__=="__main__":
     startScreen()
-    
