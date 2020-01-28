@@ -713,8 +713,9 @@ def level(number, score=None):
         lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors, letter, spider )
       
         # if player touching letter, draw instructions
-        if letter.checkCollide(player):
-        	letter.drawInstruction(screen, fontSmall, white)
+        if letter != None:
+            if letter.checkCollide(player):
+        	    letter.drawInstruction(screen, fontSmall, white)
         
         # Draw the timer after everything else
         screen.blit(text, textRect)
