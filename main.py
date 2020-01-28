@@ -325,7 +325,7 @@ def tutorial(page=None):
                 pygame.mouse.set_visible(True)
                 levelManager()
         
-        pygame.display.update()
+        pygame.display.update(refresh)
                 
     pygame.quit()
     quit()
@@ -435,7 +435,7 @@ def highscores():
     quit()
     
 def do():
-    levelManager(True, 0, 3)
+    levelManager(True, 0, 6)
     
 ##################################################    
 ##################################################
@@ -576,7 +576,7 @@ def level(number, score=None):
     cycle = 0
     if score == None:
         score = 0
-    max_levels = 4 # change when we add more levels
+    max_levels = 7 # change when we add more levels
     start_time = pygame.time.get_ticks()
     pauseTime = 0 # for recording time spent reading letters
     
@@ -587,13 +587,19 @@ def level(number, score=None):
     ##################################################
 
     if number == 1:
-        platforms, lampList, doors, letter = layout_level8(screen)
+        platforms, lampList, doors, letter = layout_level4(screen)
     elif number == 2:
-    	platforms, lampList, doors, letter = layout_level6(screen)
-    elif number == 3:
     	platforms, lampList, doors, letter = layout_level5(screen)
+    elif number == 3:
+    	platforms, lampList, doors, letter = layout_level6(screen)
+    elif number == 4:
+    	platforms, lampList, doors, letter = layout_level7(screen)
+    elif number == 5:
+    	platforms, lampList, doors, letter = layout_level8(screen)
+    elif number == 6:
+    	platforms, lampList, doors, letter = layout_level9(screen)
     else:
-    	platforms, lampList, doors, letter = layout_level4(screen)
+    	platforms, lampList, doors, letter = layout_level10(screen)
     
     player = Player(doors[0].center[0],doors[0].center[1], platforms)
     
