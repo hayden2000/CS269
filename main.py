@@ -325,7 +325,8 @@ def tutorial(page=None):
                 pygame.mouse.set_visible(True)
                 levelManager()
         
-        pygame.display.update(refresh)
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -542,14 +543,14 @@ def newLevelNotifier(number, score=None):
         
         if score != None:
             label('Current Score: {}'.format(score), 400, 345, white, fontSmall)
+            button('Continue', 400, 400, white, grey, light_grey, fontBig, level, number, score)
         else:
             # button control
             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
+            
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
         
-        # button control
-        button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
-    
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -689,8 +690,6 @@ def level(number, score=None):
         
         player.update(spider)
         
-        
-        
         ##################################################
         # Enemy AI Control
         ##################################################
@@ -813,8 +812,8 @@ def level(number, score=None):
                 score = score + cur_score # update score
                 endScreen(win, score, number)      
         
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
