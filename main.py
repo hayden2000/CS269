@@ -593,7 +593,7 @@ def level(number, score=None):
                     player.jumpCheck()
                     player.jump()
                 elif event.key == pygame.K_e:
-                	pauseTime += letter.display( screen, player )
+                	pauseTime += letter.display( screen, player, fontSmall, white )
             if event.type == pygame.QUIT:
                 running = False
         
@@ -627,6 +627,10 @@ def level(number, score=None):
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, lampList, platforms, letter, spider )
         lighting.renderPlayer( screen, refresh, player, lampList, platforms, letter, spider )
+        
+        # if player touching letter, draw instructions
+        if letter.checkCollide(player):
+        	letter.drawInstruction(screen, fontSmall, white)
         
         # Draw the timer after everything else
         screen.blit(text, textRect)
