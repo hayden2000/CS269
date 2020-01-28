@@ -575,22 +575,22 @@ def level(number, score=None):
         score = 0
     max_levels = 4 # change when we add more levels
     start_time = pygame.time.get_ticks()
+    pauseTime = 0 # for recording time spent reading letters
     
     rtext = fontSmall.render('', True, white) 
     
     ##################################################
     # Player init
     ##################################################
-    
 
     if number == 1:
-        platforms, lampList, doors = layout_level8(screen)
+        platforms, lampList, doors, letter = layout_level8(screen)
     elif number == 2:
-    	platforms, lampList, doors = layout_level6(screen)
+    	platforms, lampList, doors, letter = layout_level6(screen)
     elif number == 3:
-    	platforms, lampList, doors = layout_level5(screen)
+    	platforms, lampList, doors, letter = layout_level5(screen)
     else:
-    	platforms, lampList, doors = layout_level4(screen)
+    	platforms, lampList, doors, letter = layout_level4(screen)
     
     player = Player(doors[0].center[0],doors[0].center[1], platforms)
     
@@ -611,7 +611,8 @@ def level(number, score=None):
     refresh = []
     screen.fill(black)
 
-    lighting.renderLamps( screen, refresh, player, lampList, doors, platforms )
+    # Draw background illuminated by lights, then render light/darkness on top
+    lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, letter )
     
     ##################################################
     # Enemy AI init
@@ -641,7 +642,7 @@ def level(number, score=None):
         screen.fill(black)
         
         # Timer
-        timer = pygame.time.get_ticks() - start_time
+        timer = (pygame.time.get_ticks() - start_time) - pauseTime
         current_time = 180 - (timer) / 1000.0
         
         time_min = int(current_time / 60.0)
@@ -671,10 +672,14 @@ def level(number, score=None):
                 if event.key == pygame.K_SPACE:
                     player.jumpCheck()
                     player.jump()
+                elif event.key == pygame.K_e:
+                	pauseTime += letter.display( screen, player, fontSmall, white )
             if event.type == pygame.QUIT:
                 running = False
         
         player.update(spider)
+        
+        
         
         ##################################################
         # Enemy AI Control
@@ -701,8 +706,12 @@ def level(number, score=None):
             lamp.checkStatus( player.rect, win )
             
         # Render everything to the screen
-        lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, spider )
-        lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors, spider )
+        lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, letter, spider )
+        lighting.renderPlayer( screen, refresh, player, lampList, platforms, doors, letter, spider )
+      
+        # if player touching letter, draw instructions
+        if letter.checkCollide(player):
+        	letter.drawInstruction(screen, fontSmall, white)
         
         # Draw the timer after everything else
         screen.blit(text, textRect)

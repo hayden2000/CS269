@@ -8,6 +8,7 @@ import os
 import sys
 from pygame.locals import *
 from lighting import *
+from Letters import *
 from Door import *
 
 bg = pygame.image.load('Assets/CaveContrast.png')
@@ -50,6 +51,7 @@ class Block(pygame.sprite.Sprite):
         self.rect.inflate(0, -40)
         #print(self.rect)
         #block defaults to platform
+        self.collisionRect = pygame.Rect((self.rect.left, self.rect.top), (self.rect.width, self.rect.height/2))
         
     def getX(self):
         return self.rect.x
@@ -467,11 +469,12 @@ def layout_level7(screen):
     
     lampList = [ Lamp( ( 150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
     
+    letter = Letter( pygame.image.load('Assets/Letters/letter1.png'), (300,385) )
+    
     doorList = [Door( (50, 70), False), Door( (750, 490), True)]
     
     
-    
-    return platforms, lampList, doorList
+    return platforms, lampList, doorList, letter
 
 class Layout():
     #dimensions are 800x600
