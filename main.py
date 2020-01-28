@@ -5,7 +5,7 @@
 ##################################################
 
 # Project credits:
-# art by Alaleh Naderi, Changling Li, and Matthew Maring
+# art by Alaleh Naderi, Changling Li, Natalie Lunbeck, and Matthew Maring
 # collision by Natalie Lunbeck and Brendan Martin
 # doors/letters/tutorial by Brendan Martim, Sawyer Strong, and Matthew Maring
 # enemy-ai by Sawyer Strong
