@@ -584,11 +584,11 @@ def level(number, score=None):
     
 
     if number == 1:
-        platforms, lampList, doors = layout_level6(screen)
+        platforms, lampList, doors = layout_level8(screen)
     elif number == 2:
-    	platforms, lampList, doors = layout_level5(screen)
+    	platforms, lampList, doors = layout_level6(screen)
     elif number == 3:
-    	platforms, lampList, doors = layout_level4(screen)
+    	platforms, lampList, doors = layout_level5(screen)
     else:
     	platforms, lampList, doors = layout_level4(screen)
     
