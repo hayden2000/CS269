@@ -346,6 +346,7 @@ def level(number, score=None):
     # Enemy AI init
     ##################################################
     
+<<<<<<< Updated upstream
     #spider comes in during level 2
     if number == 2:
         pass
@@ -353,6 +354,13 @@ def level(number, score=None):
     ##################################################
     # Collision init
     ##################################################
+=======
+    spider = None
+    if number == 1:#max_levels
+        spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
+        spider = Enemy(screen, 300, 500, spider_img, lampList)
+        frame = 0
+>>>>>>> Stashed changes
     
     ##################################################
     # Sound init
@@ -426,6 +434,14 @@ def level(number, score=None):
         player.update()
         
         
+<<<<<<< Updated upstream
+=======
+        if number == 1:
+            frame += 1
+            if not spider.isDead():
+            	spider.move(player, frame)
+            #spider.draw(screen, spider_img)        
+>>>>>>> Stashed changes
         
         ##################################################
         # Lighting Control
