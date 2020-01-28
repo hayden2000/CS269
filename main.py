@@ -796,8 +796,8 @@ def level(number, score=None):
                 score = score + cur_score # update score
                 endScreen(win, score, number)      
         
-        #pygame.display.update(refresh)
-        pygame.display.update()
+        pygame.display.update(refresh)
+        #pygame.display.update()
                 
     pygame.quit()
     quit()
