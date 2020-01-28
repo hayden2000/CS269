@@ -105,25 +105,12 @@ class Enemy:
         	radius = abs(player.getY()-self.y)
         else:
         	radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
-<<<<<<< Updated upstream
-        if radius >= 150:
-            self.random_move(frame)
-=======
         if radius <= 120:
             self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
->>>>>>> Stashed changes
         else:
             lampLit =False
             for lamp in self.lampList:
                 lampLit = lamp.isLit
-<<<<<<< Updated upstream
-                if(lampLit == true):
-                    break
-            if(lampLit == true):
-                self.find_lamp()
-            else:
-                self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
-=======
                 if(lampLit == True):
                     break
             if(lampLit == True):
@@ -131,7 +118,6 @@ class Enemy:
             else:
                 self.random_move(frame)
             
->>>>>>> Stashed changes
             
     def move_x(self, speed):
         self.x += speed
@@ -169,18 +155,6 @@ class Enemy:
         #print(self.angle)    
 
     def find_lamp(self):
-<<<<<<< Updated upstream
-        closeLamp = lamplist[0]
-        closeDist = 10000
-        for lamp in self.lampList:
-            dist= sqrt(((self.center_x - lamp.coors[0])**2 + (self.center_y - lamp.coors[1])**2 ))
-            if(dist < closeDist):
-                dist = closeDist
-                closeLamp = lamp
-        
-            
-            
-=======
         print("finding lamp")
         ratio_x = numpy.cos(numpy.radians(self.angle))
         ratio_y = numpy.sin(numpy.radians(self.angle))
@@ -196,7 +170,6 @@ class Enemy:
                 closeLamp = lamp
         self.angle = numpy.degrees(numpy.arctan((self.center_y - closeLamp.coors[1]) / (closeLamp.coors[0] - self.center_x)))
                  
->>>>>>> Stashed changes
     
     def run_away(self, player_x, player_y):
         diff_x = player_x -self.center_x
