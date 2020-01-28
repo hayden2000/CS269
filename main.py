@@ -718,9 +718,8 @@ def level(number, score=None):
         if letter != None:
             if letter.checkCollide(player):
         	    letter.drawInstruction(screen, fontSmall, white)
-        	    
-        if letter.letter_closed == True:
-            letter_read = True
+            if letter.letter_closed == True:
+                letter_read = True
             
         # Draw the timer after everything else
         screen.blit(text, textRect)
