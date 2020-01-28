@@ -422,7 +422,7 @@ def highscores():
         
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button('Play', 400, 550, white, grey, light_grey, fontBig, levelManager)
+        button('Play', 400, 550, white, grey, light_grey, fontBig, do)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
@@ -433,6 +433,9 @@ def highscores():
                 
     pygame.quit()
     quit()
+    
+def do():
+    levelManager(True, 0, 3)
     
 ##################################################    
 ##################################################
