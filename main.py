@@ -763,6 +763,12 @@ def level(number, score=None):
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
         
+        ntext = fontSmall.render('{}'.format(number), True, white)
+        ntextRect = ntext.get_rect()
+        ntextRect.center = (780, 25)
+        screen.blit(ntext, ntextRect)
+        refresh.append(ntextRect)
+        
         keyStatus = ' '
         if player.hasKey:
             keyStatus = 'Key collected'
