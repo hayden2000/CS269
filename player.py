@@ -1,7 +1,8 @@
 import pygame 
 vec = pygame.math.Vector2
 from Block import *
-
+from Key import *
+from spiderTesting import *
 
 
 #vec = pygame.math.Vector2
@@ -24,9 +25,9 @@ class Player(pygame.sprite.Sprite):
 #        self.rect.right = x+15
 #        self.rect.bottom = y-25
 #        self.rect.top = y+25
-        print(self.rect)
-        print(self.rect.top)
-        print(self.rect.bottom)
+        #print(self.rect)
+        #print(self.rect.top)
+        #print(self.rect.bottom)
         self.width = width
         self.height = height
         self.platforms = platforms
@@ -36,6 +37,8 @@ class Player(pygame.sprite.Sprite):
         self.position = vec(x, y)
         self.platforming = True
         self.isJump = False
+        self.hasKey = False
+        self.k = Key(-100, -100, 50)
         
     def get_images(self, a, b, wid, hei):
         sprite = pygame.image.load('Assets/Walking.png').convert()
@@ -107,9 +110,22 @@ class Player(pygame.sprite.Sprite):
                 elif self.vel.y < 0:
                     self.position.y = platform.collisionRect.bottom + self.height
                     self.vel.y = 0
-
-
-    def update(self):
+                    
+    def checkSpiderCollide(self,spider):
+    	#print("testing")
+    	#print(spider.get_rect())
+    	if spider != None:
+    		if self.rect.colliderect(spider.get_rect()):
+    			return True
+    	return False
+    	
+    def getKey(self):
+    	return self.k	
+    	
+    def hasKey(self):
+    	return self.hasKey
+    	
+    def update(self, spider = None):
         self.motion()
         self.acc = vec(0,0.98)
         #self.hit()
@@ -155,7 +171,27 @@ class Player(pygame.sprite.Sprite):
         
         self.rect.midbottom = self.position
         self.lightRect.center = self.position
-
+        if spider != None and self.hasKey == False:
+        	keyAppear = self.checkSpiderCollide(spider)
+        	if keyAppear:
+        		self.k.appearKey(spider)
+        		for p in self.platforms:
+        			if self.k.rect.colliderect(p):
+        				self.k.getRect().bottom = p.rect.top + 20
+        		spider.collideSpider()
+        		spider.rect.x = -100
+        		spider.rect.y = -100
+        		#self.hasKey = True
+        if self.k.getVis():
+        	self.collideKey()
+        		
+        		
+    def collideKey(self):
+    	if self.rect.colliderect(self.k.rect):
+    		self.k.collidePlayer()
+    		self.hasKey = True
+    		
+		
     def motion(self):
         nowTicks = pygame.time.get_ticks()
         if self.vel.x != 0:

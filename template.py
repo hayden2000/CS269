@@ -117,7 +117,7 @@ drawBkg( screen, text, refresh )
 pygame.display.update()
 
 # respond to mouse motion events until someone clicks a mouse or hits a key
-print "Entering main loop"
+#print "Entering main loop"
 while 1:
 
     # handle events and erase things
@@ -201,4 +201,4 @@ while 1:
     gameClock.tick(30)
         
 # done
-print "Terminating"
+#print "Terminating"
