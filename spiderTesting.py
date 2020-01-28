@@ -55,7 +55,7 @@ class Enemy:
         getimage.set_colorkey((0,0,0))
         getimage.blit(sprite,(0,0),(x,y,75,55))
         getimage = pygame.transform.scale(getimage,(75, 55))
-        return getimage
+        return getimage.convert_alpha()
         
     # def load_images(self):
 #     	

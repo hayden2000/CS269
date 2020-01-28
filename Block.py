@@ -202,9 +202,11 @@ def layout_level8(screen):
     
     lampList = [ Lamp( (150, 490), lampImage, lightAlpha, isLit = True ), Lamp( (250,70), lampImage, lightAlpha, 10 ), Lamp( (650,385), lampImage, lightAlpha, 5 ) ]
     
+    letter = Letter( pygame.image.load('Assets/Letters/letter1.png'), (300,385) )
+    
     doorList = [Door( (750, 490), False), Door( (50, 490), True)]
     
-    return platforms, lampList, doorList
+    return platforms, lampList, doorList, letter
 
 def layout_level4(screen):
     p3_width = 50
@@ -270,7 +272,7 @@ def layout_level4(screen):
     
     doorList = [Door( (50, 70), False), Door( (750, 490), True)]
     
-    return platforms, lampList, doorList
+    return platforms, lampList, doorList, None
     
 
 def layout_level5(screen):
@@ -339,7 +341,7 @@ def layout_level5(screen):
     
     
     
-    return platforms, lampList, doorList
+    return platforms, lampList, doorList, None
     
     
 def layout_level6(screen):
@@ -404,7 +406,7 @@ def layout_level6(screen):
     
     
     
-    return platforms, lampList, doorList
+    return platforms, lampList, doorList, None
 
 def layout_level7(screen):
     p3_width = 50
