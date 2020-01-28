@@ -12,6 +12,7 @@ class Letter:
 		self.rect.midbottom = midbottom
 		self.icon = pygame.image.load("Assets/letter_icon.png")
 		self.icon = pygame.transform.scale( self.icon, (self.rect.width,self.rect.height) )
+		self.letter_closed = False
 	
 	def checkCollide(self, player):
 		return player.rect.colliderect( self.rect )
@@ -43,6 +44,7 @@ class Letter:
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
 						running = False
+						self.letter_closed = True
 				if event.type == pygame.QUIT:
 					pygame.quit()
 		return pygame.time.get_ticks() - startTime
