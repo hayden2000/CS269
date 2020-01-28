@@ -166,7 +166,7 @@ class Enemy:
         for lamp in self.lampList:
             dist = numpy.sqrt(((self.center_x - lamp.coors[0])**2 + (self.center_y - lamp.coors[1])**2 ))
             if(dist < closeDist):
-                dist = closeDist
+                closeDist = dist
                 closeLamp = lamp
         self.angle = numpy.degrees(numpy.arctan((self.center_y - closeLamp.coors[1]) / (closeLamp.coors[0] - self.center_x)))
                  
