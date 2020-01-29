@@ -269,7 +269,7 @@ def layout_level5(screen):
     
     lampHeight = lampImage.get_height()
     
-    lampList = [ Lamp( (150, 70), lampImage, lightAlpha, 10 ), Lamp( (650,70), lampImage, lightAlpha, 10 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 10 ) ]
+    lampList = [ Lamp( (150, 70), lampImage, lightAlpha, 15 ), Lamp( (650,70), lampImage, lightAlpha, 15 ), Lamp( (150,490), lampImage, lightAlpha, 10 ), Lamp( (650,490), lampImage, lightAlpha, 15 ) ]
     
     letter = Letter( pygame.image.load('Assets/Letters/letter1.png'), (450,385) )
     
