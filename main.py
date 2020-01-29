@@ -778,6 +778,9 @@ def level(number, score=None):
         keyStatus = ' '
         if player.hasKey:
             keyStatus = 'Key collected'
+        elif spider.dead:
+            keyStatus = 'Collect key'
+       
         ttext = fontSmall.render(keyStatus, True, white)
         ttextRect = ttext.get_rect()
         ttextRect.topleft = (10, 10)
