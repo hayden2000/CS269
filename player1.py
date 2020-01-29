@@ -38,9 +38,6 @@ class Player(pygame.sprite.Sprite):
         self.hasKey = False
         self.k = Key(-100, -100, 50)
         self.isRight = True
-        pygame.mixer.init()
-        self.move_sound=pygame.mixer.Sound('Audio/Slow_Walk.ogg')
-    
         
     def get_images(self, a, b, wid, hei):
         sprite = pygame.image.load('Assets/Walking.png').convert()
@@ -136,9 +133,6 @@ class Player(pygame.sprite.Sprite):
     	return self.hasKey
     	
     def update(self, spider = None):
-        #left=pygame.mixer.Sound('Audio/Left_Foot.ogg')
-        #right=pygame.mixer.Sound('Audio/Right_Foot.ogg')
-#        move_sound=pygame.mixer.Sound('Audio/WALKING_flt.ogg')
         self.motion()
         self.acc = vec(0,0.98)
         #self.hit()
@@ -153,30 +147,19 @@ class Player(pygame.sprite.Sprite):
             self.position.x = 795
         #print(self.rect.x)
         #print(self.rect.y)
-        pygame.mixer.Sound.play(self.move_sound, loops=-1)
-        self.move_sound.set_volume(.0)
         
         if keys[pygame.K_LEFT]:
-            self.move_sound.set_volume(.3)
-#            pygame.mixer.Sound.play(left)
-#            pygame.mixer.Sound.play(right)
             if self.position.x < 0+self.width+self.vel.x:
                 self.acc.x = 0
                 self.vel.x = 0
             else:
                 self.acc.x = -0.9
-
-
         if keys[pygame.K_RIGHT]:
-            self.move_sound.set_volume(.3)
-#            pygame.mixer.Sound.play(left)
-#            pygame.mixer.Sound.play(right)
             if self.position.x > 800-self.width/2-self.vel.x:
                 self.acc.x = 0
                 self.vel.x = 0
             else:
                 self.acc.x = 0.9
-            
 
         self.acc.x += self.vel.x*(-0.1)
         self.vel += self.acc
