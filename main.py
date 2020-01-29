@@ -862,12 +862,22 @@ def endScreen(win, score, level):
             f.write(str(score))       
 
     # Play losing animation
-    loseAnimate = pygame.image.load('Assets/LostEnd_Sprite.png').convert()
+    
     if win == False:
+        loseAnimate = pygame.image.load('Assets/LostEnd_Sprite.png').convert()
         for y in range(3):
             for x in range(9):
                 getimage = pygame.Surface((800,600))
                 getimage.blit(loseAnimate,(0,0),((20 * (x+1)) + (800 * x), (20 * (y+1))+(600*y), 800, 600))
+                screen.blit(getimage, (0,0))
+                gameClock.tick(10)
+                pygame.display.update()
+    elif win == True:
+        winAnimate = pygame.image.load('Assets/End_Win2.png').convert()
+        for y in range(6):
+            for x in range(4):
+                getimage = pygame.Surface((800,600))
+                getimage.blit(winAnimate,(0,0),((20 * (x+1)) + (800 * x), (20 * (y+1))+(600*y), 800, 600))
                 screen.blit(getimage, (0,0))
                 gameClock.tick(10)
                 pygame.display.update()
