@@ -26,6 +26,8 @@ class Enemy:
         self.dead = False
         self.whichImg = 0
         self.lampList = lampList
+        self.prevFunct = 0
+        self.currentFrame = 0
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -108,6 +110,7 @@ class Enemy:
         	radius = abs(player.getY()-self.y)
         else:
         	radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
+        
         if radius <= 120:
             self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
         else:
@@ -117,7 +120,14 @@ class Enemy:
                 if(lampLit == True):
                     break
             if(lampLit == True):
-                self.find_lamp()
+                if(self.prevFunct == 1):
+                    self.random_move(frame)
+                    self.currentFrame = frame
+                elif(self.currentFrame != 0 and frame < self.currentFrame+40 ):
+                    self.random_move(frame)
+                else:
+                    self.currentFrame = 0
+                    self.find_lamp()
             else:
                 self.random_move(frame)
             
@@ -133,6 +143,7 @@ class Enemy:
         self.center_y = self.y + (self.height/2)
         
     def random_move(self, frame):
+        self.prevFunct = 0
         #print("random move")
         if(self.angle >= 360 or self.angle <= -360):
             self.angle = self.angle%360
@@ -160,7 +171,7 @@ class Enemy:
 
     def find_lamp(self):
         #print("finding lamp")
-        
+        self.prevFunct = 2
         closeLamp = self.lampList[0]
         closeDist = 10000
         for lamp in self.lampList:
@@ -198,6 +209,7 @@ class Enemy:
     	
     	
     def run_away(self, player_x, player_y):
+        self.prevFunct = 1
         #print("run away")
         diff_x = player_x -self.center_x
         diff_y = player_y -self.center_y

@@ -634,7 +634,7 @@ def level(number, score=None):
     spider = None
     if number == max_levels:
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
-        spider = Enemy(screen, 300, 500, spider_img)
+        spider = Enemy(screen, 300, 500, spider_img, lampList)
         frame = 0
     
     ##################################################
