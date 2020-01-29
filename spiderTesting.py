@@ -15,7 +15,7 @@ class Enemy:
         self.win = win
         self.width = width
         self.height = height
-        self.maxVel = 10
+        self.maxVel = 6
         self.downForce = 5
         self.currentSpeed = 1
         self.angle = 30
@@ -28,6 +28,7 @@ class Enemy:
         self.lampList = lampList
         self.prevFunct = 0
         self.currentFrame = 0
+        
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -86,7 +87,7 @@ class Enemy:
         #pygame.draw.rect(self.win, (255, 0, 0), (int(self.x), int(self.y), int(self.width), int(self.height)))
         
     def move(self, player, frame):
-        pygame.mixer.init()
+        
         spyd=pygame.mixer.Sound('Audio/SpiderNew.ogg')
         norm_player= ((player.getX()-0)/(800-0))
         norm_spyd= ((self.getX()-0)/(800-0))
