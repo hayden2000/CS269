@@ -206,8 +206,9 @@ class Lamp:
 		self.counter = 0
 
 	def turnOff( self, spider ):
-		if spider.get_rect().collidepoint(self.coors):
-			self.isLit = False
+		if spider != None:
+			if spider.get_rect().collidepoint(self.coors):
+				self.isLit = False
 	
 	def checkStatus( self, collisionRect, win ):
 		if not win:
