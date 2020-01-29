@@ -15,7 +15,7 @@ class Enemy:
         self.win = win
         self.width = width
         self.height = height
-        self.maxVel = 6
+        self.maxVel = 7
         self.downForce = 5
         self.currentSpeed = 1
         self.angle = 30
