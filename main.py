@@ -713,6 +713,7 @@ def level(number, score=None):
         # Check if the player touches any of the lamps
         for lamp in lampList:
             lamp.checkStatus( player.rect, win )
+            lamp.turnOff( spider )
             
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, letter, spider )

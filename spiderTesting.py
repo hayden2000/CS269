@@ -3,11 +3,11 @@ import math
 import pygame
 import numpy
 from player import *
-
+from lighting import *
 # create a game clock   
 
 class Enemy:
-    def __init__(self, win, x, y, image, width=75, height=55):
+    def __init__(self, win, x, y, image, lampList, width=75, height=55):
         self.x = x
         self.y = y
         self.center_x = x + (width/2)
@@ -25,6 +25,7 @@ class Enemy:
         self.rect = image.get_rect()
         self.dead = False
         self.whichImg = 0
+        self.lampList = lampList
 #list of image for walking right
 #list of image for walking left
     def getX(self):
@@ -55,7 +56,7 @@ class Enemy:
         getimage.set_colorkey((0,0,0))
         getimage.blit(sprite,(0,0),(x,y,75,55))
         getimage = pygame.transform.scale(getimage,(75, 55))
-        return getimage.convert_alpha()
+        return getimage
         
     # def load_images(self):
 #     	
@@ -92,8 +93,11 @@ class Enemy:
         
         pygame.mixer.Sound.play(spyd)
         
+       
         num = frame % 5
         if num == 1:
+            print("x: " +str(int(self.x)))
+            print("y:" + str(int(self.y)))
             if(self.whichImg >= 5):
                  self.whichImg = 0
             self.originalImg = self.get_images(20, 20 + (self.whichImg * 75))
@@ -104,10 +108,19 @@ class Enemy:
         	radius = abs(player.getY()-self.y)
         else:
         	radius = math.sqrt((float(player.getX()) - float(self.getX()))**2 +(float( player.getY() )- float( self.getY() ))**2)
-        if radius >= 150:
-            self.random_move(frame)
-        else:
+        if radius <= 120:
             self.run_away(player.getX()+(player.width/2), (player.getY()+player.height/2))
+        else:
+            lampLit =False
+            for lamp in self.lampList:
+                lampLit = lamp.isLit
+                if(lampLit == True):
+                    break
+            if(lampLit == True):
+                self.find_lamp()
+            else:
+                self.random_move(frame)
+            
             
     def move_x(self, speed):
         self.x += speed
@@ -120,6 +133,7 @@ class Enemy:
         self.center_y = self.y + (self.height/2)
         
     def random_move(self, frame):
+        #print("random move")
         if(self.angle >= 360 or self.angle <= -360):
             self.angle = self.angle%360
         ratio_x = numpy.cos(numpy.radians(self.angle))
@@ -144,7 +158,47 @@ class Enemy:
         self.rotate()
         #print(self.angle)    
 
+    def find_lamp(self):
+        #print("finding lamp")
+        
+        closeLamp = self.lampList[0]
+        closeDist = 10000
+        for lamp in self.lampList:
+            if(lamp.isLit == True):
+                dist = numpy.sqrt(((self.center_x - lamp.coors[0])**2 + (self.center_y - lamp.coors[1])**2 ))
+                if(dist < closeDist):
+                    closeDist = dist
+                    closeLamp = lamp
+        temp_angle = numpy.degrees(numpy.arctan((self.center_y - closeLamp.coors[1]) / (closeLamp.coors[0] - self.center_x)))
+        if(self.center_x > closeLamp.coors[0] and self.center_y > closeLamp.coors[1]):
+            self.angle = 180 - (temp_angle)
+        elif(self.center_x > lamp.coors[0] and self.center_y < lamp.coors[1]):
+            self.angle = -(180 - (temp_angle))
+        else:
+            self.angle = temp_angle
+        
+        if(self.x + self.width >= self.win.get_width() or self.x < 0):
+            self.angle = -(90 -self.angle)
+            self.rotate()
+            self.x = 300
+        if(self.y + self.height >= self.win.get_height() or self.y < 0):
+            self.angle = -(90 -self.angle)
+            self.rotate()
+            self.y = 400
+        
+        ratio_x = numpy.cos(numpy.radians(self.angle))
+        ratio_y = numpy.sin(numpy.radians(self.angle))
+        #if collide move other way
+        
+        
+            
+        self.move_x(self.maxVel*ratio_x)
+        self.move_y(self.maxVel*ratio_y)         
+        self.rotate()
+    	
+    	
     def run_away(self, player_x, player_y):
+        #print("run away")
         diff_x = player_x -self.center_x
         diff_y = player_y -self.center_y
         if diff_x == 0:
@@ -156,6 +210,14 @@ class Enemy:
         #if collide move other way
         self.move_x(self.maxVel*ratio_x)
         self.move_y(self.maxVel*ratio_y)
+        
+        if(self.x + self.width >= self.win.get_width() or self.x < 0):
+            self.angle = -(90 -self.angle)
+            self.rotate()
+        if(self.y + self.height >= self.win.get_height() or self.y < 0):
+            self.angle = -(90 -self.angle)
+            self.rotate()
+        
         self.rotate()
         
     def rotate(self):
@@ -172,5 +234,4 @@ class Enemy:
     	self.originalImage = pygame.Surface((800, 600), pygame.SRCALPHA)
     	self.rotImage = pygame.Surface((100, 100), pygame.SRCALPHA)
     	self.dead = True
-    	
     	
