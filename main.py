@@ -45,6 +45,7 @@ red = (255, 0, 0)
 black = (0, 0, 0)
 grey = (127, 127, 127)
 light_grey = (200, 200, 200)
+clear = pygame.Color(0, 0, 0, 0)
 fontBig = pygame.font.Font('freesansbold.ttf', 32)
 fontSmall = pygame.font.Font('freesansbold.ttf', 20)
 
@@ -360,6 +361,7 @@ def credits():
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
+        button('Demo', 700, 50, white, grey, light_grey, fontBig, do)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -369,6 +371,9 @@ def credits():
                 
     pygame.quit()
     quit()
+    
+def do():
+    levelManager(True, 0, 6)
     
 ##################################################  
 ##################################################
@@ -423,7 +428,7 @@ def highscores():
         
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button('Play', 400, 550, white, grey, light_grey, fontBig, do)
+        button('Play', 400, 550, white, grey, light_grey, fontBig, levelManager)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
@@ -434,9 +439,6 @@ def highscores():
                 
     pygame.quit()
     quit()
-    
-def do():
-    levelManager(True, 0, 6)
     
 ##################################################    
 ##################################################
@@ -775,11 +777,15 @@ def level(number, score=None):
         screen.blit(ntext, ntextRect)
         refresh.append(ntextRect)
         
+        
         keyStatus = ' '
-        if player.hasKey:
-            keyStatus = 'Key collected'
-        elif spider.dead:
-            keyStatus = 'Collect key'
+        if number == max_levels:
+            if player.hasKey:
+                keyStatus = 'Key found, turn on the lamps'
+            elif spider.dead:
+                keyStatus = 'Spider dead, find the key'
+            else:
+                keyStatus = 'Kill the spider'
        
         ttext = fontSmall.render(keyStatus, True, white)
         ttextRect = ttext.get_rect()
