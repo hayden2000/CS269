@@ -861,6 +861,7 @@ def endScreen(win, score, level):
             f.truncate()
             f.write(str(score))       
 
+    # Play losing animation
     loseAnimate = pygame.image.load('Assets/LostEnd_Sprite.png').convert()
     if win == False:
         for y in range(3):
