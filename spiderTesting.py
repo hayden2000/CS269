@@ -56,7 +56,7 @@ class Enemy:
         getimage.set_colorkey((0,0,0))
         getimage.blit(sprite,(0,0),(x,y,75,55))
         getimage = pygame.transform.scale(getimage,(75, 55))
-        return getimage
+        return getimage.convert_alpha()
         
     # def load_images(self):
 #     	
@@ -96,8 +96,8 @@ class Enemy:
        
         num = frame % 5
         if num == 1:
-            print("x: " +str(int(self.x)))
-            print("y:" + str(int(self.y)))
+            #print("x: " +str(int(self.x)))
+            #print("y:" + str(int(self.y)))
             if(self.whichImg >= 5):
                  self.whichImg = 0
             self.originalImg = self.get_images(20, 20 + (self.whichImg * 75))
