@@ -142,15 +142,28 @@ def roundCorners(textRect, color):
 # START SCREEN
 ##################################################
 
+def runStartAnimation():
+    startAnimate = pygame.image.load('Assets/StartScreen_complete.png').convert()
+    for y in range(6):
+        for x in range(9):
+            getimage = pygame.Surface((800,600))
+            getimage.blit(startAnimate,(0,0),((20 * (x+1)) + (800 * x), (20 * (y+1))+(600*y), 800, 600))
+            screen.blit(getimage, (0,0))
+            gameClock.tick(10)
+            pygame.display.update()
+    startScreen()
+
 def startScreen():
 
     running = True
-     
+    bg = pygame.image.load("Assets/StartScreen_complete.png")
+    getimage = pygame.Surface((800,600))
+    getimage.blit(bg,(0,0),(5760, 3120, 800, 600))
+    
     while running:
         screen.fill(black) 
         
-        bg = pygame.image.load("Assets/StartScreen.png")
-        screen.blit(bg, (0, 0))
+        screen.blit(getimage, (0, 0))
         
         # button control
         button('Start', 104, 450, white, grey, light_grey, fontBig, tutorialManager)
@@ -985,5 +998,5 @@ def endScreen(win, score, level):
 ##################################################
 
 if __name__=="__main__":
-    startScreen()
+    runStartAnimation()
     
