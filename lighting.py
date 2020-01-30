@@ -204,11 +204,12 @@ class Lamp:
 		self.recentFlip = False
 		self.timeLimit = timer * 30    #Convert from seconds to frames
 		self.counter = 0
-
-	def turnOff( self, spider ):
-		if spider != None:
-			if spider.get_rect().collidepoint(self.coors):
-				self.isLit = False
+		
+# 	def turnOn( self ):
+# 		self.isLit = True
+# 	
+# 	def turnOff( self ):
+# 		self.isLit = False
 	
 	def checkStatus( self, collisionRect, win ):
 		if not win:
