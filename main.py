@@ -45,6 +45,7 @@ red = (255, 0, 0)
 black = (0, 0, 0)
 grey = (127, 127, 127)
 light_grey = (200, 200, 200)
+clear = pygame.Color(0, 0, 0, 0)
 fontBig = pygame.font.Font('freesansbold.ttf', 32)
 fontSmall = pygame.font.Font('freesansbold.ttf', 20)
 
@@ -325,6 +326,7 @@ def tutorial(page=None):
                 pygame.mouse.set_visible(True)
                 levelManager()
         
+        #pygame.display.update(refresh)
         pygame.display.update()
                 
     pygame.quit()
@@ -359,6 +361,7 @@ def credits():
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
+        button('Demo', 700, 50, white, grey, light_grey, fontBig, do)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -368,6 +371,9 @@ def credits():
                 
     pygame.quit()
     quit()
+    
+def do():
+    levelManager(True, 0, 6)
     
 ##################################################  
 ##################################################
@@ -398,7 +404,7 @@ def highscores():
         label('High Scores - Shadow Puppets', 400, 50, white, fontBig)
         
         if min_number == 0:
-            label('No Scores, Get Playing! :)', 400, 300, white, fontBig)
+            label('No Scores, Get Playing!', 400, 300, white, fontBig)
         else:
             for i in range(8):
                 if min_number > i:
@@ -422,7 +428,7 @@ def highscores():
         
         # button control
         button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
-        button('Play', 400, 550, white, grey, light_grey, fontBig, do)
+        button('Play', 400, 550, white, grey, light_grey, fontBig, levelManager)
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
     
         for event in pygame.event.get():
@@ -433,9 +439,6 @@ def highscores():
                 
     pygame.quit()
     quit()
-    
-def do():
-    levelManager(True, 0, 3)
     
 ##################################################    
 ##################################################
@@ -530,6 +533,20 @@ def newLevelNotifier(number, score=None):
         pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
      
+    # Display story slide before level 10
+    if number == 7:
+        tranImage = pygame.image.load("Assets/transitionToSpider.png")
+        tranImage2 = pygame.image.load("Assets/spiderbg.png")
+        screen.blit(tranImage, (0,0))
+        pygame.display.update()
+        for i in range(4):
+            gameClock.tick(1)
+            
+        screen.blit(tranImage2, (0,0))
+        pygame.display.update()
+        for i in range(4):
+            gameClock.tick(1)
+
     while running:
     
         screen.fill(black) 
@@ -542,14 +559,14 @@ def newLevelNotifier(number, score=None):
         
         if score != None:
             label('Current Score: {}'.format(score), 400, 345, white, fontSmall)
+            button('Continue', 400, 400, white, grey, light_grey, fontBig, level, number, score)
         else:
             # button control
             button('Back', 100, 550, white, grey, light_grey, fontBig, startScreen)
+            button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
+            
         button('Quit', 700, 550, white, grey, light_grey, fontBig, quit)
         
-        # button control
-        button('Begin', 400, 400, white, grey, light_grey, fontBig, level, number, score)
-    
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -577,7 +594,7 @@ def level(number, score=None):
     cycle = 0
     if score == None:
         score = 0
-    max_levels = 4 # change when we add more levels
+    max_levels = 7 # change when we add more levels
     start_time = pygame.time.get_ticks()
     pauseTime = 0 # for recording time spent reading letters
     
@@ -588,13 +605,19 @@ def level(number, score=None):
     ##################################################
 
     if number == 1:
-        platforms, lampList, doors, letter = layout_level8(screen)
+        platforms, lampList, doors, letter = layout_level4(screen)
     elif number == 2:
-    	platforms, lampList, doors, letter = layout_level6(screen)
-    elif number == 3:
     	platforms, lampList, doors, letter = layout_level5(screen)
+    elif number == 3:
+    	platforms, lampList, doors, letter = layout_level6(screen)
+    elif number == 4:
+    	platforms, lampList, doors, letter = layout_level7(screen)
+    elif number == 5:
+    	platforms, lampList, doors, letter = layout_level8(screen)
+    elif number == 6:
+    	platforms, lampList, doors, letter = layout_level9(screen)
     else:
-    	platforms, lampList, doors, letter = layout_level4(screen)
+    	platforms, lampList, doors, letter = layout_level10(screen)
     
     player = Player(doors[0].center[0],doors[0].center[1], platforms)
     
@@ -627,7 +650,7 @@ def level(number, score=None):
     spider = None
     if number == max_levels:
         spider_img = pygame.image.load("Assets/Spider.png").convert_alpha()
-        spider = Enemy(screen, 300, 500, spider_img)
+        spider = Enemy(screen, 300, 500, spider_img, lampList)
         frame = 0
     
     ##################################################
@@ -655,11 +678,11 @@ def level(number, score=None):
         if current_time > 0 and time_sec_int < 10:
             text = fontSmall.render('{}:0{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
-            textRect.center = (750, 575)
+            textRect.bottomright = (790, 590)
         elif current_time > 0:
             text = fontSmall.render('{}:{}'.format(time_min, time_sec_int), True, white)
             textRect = text.get_rect()
-            textRect.center = (750, 575)
+            textRect.bottomright = (790, 590)
         else:
             win = False
         
@@ -682,8 +705,6 @@ def level(number, score=None):
                 running = False
         
         player.update(spider)
-        
-        
         
         ##################################################
         # Enemy AI Control
@@ -708,6 +729,7 @@ def level(number, score=None):
         # Check if the player touches any of the lamps
         for lamp in lampList:
             lamp.checkStatus( player.rect, win )
+            lamp.turnOff( spider )
             
         # Render everything to the screen
         lighting.renderLamps( screen, refresh, player, lampList, platforms, doors, letter, spider )
@@ -749,7 +771,7 @@ def level(number, score=None):
             cycle = cycle + 1
             
         rtextRect = rtext.get_rect()
-        rtextRect.center = (40, 550)
+        rtextRect.center = (32, 555)
         screen.blit(rtext, rtextRect)
         refresh.append(rtextRect)
 
@@ -759,13 +781,26 @@ def level(number, score=None):
             
         stext = fontSmall.render('{}'.format(score + cur_score), True, white)
         stextRect = stext.get_rect()
-        stextRect.center = (40, 575)
+        stextRect.bottomleft = (10, 590)
         screen.blit(stext, stextRect)
         refresh.append(stextRect)
         
+        ntext = fontSmall.render('Level #{}'.format(number), True, white)
+        ntextRect = ntext.get_rect()
+        ntextRect.topright = (790, 10)
+        screen.blit(ntext, ntextRect)
+        refresh.append(ntextRect)
+        
+        
         keyStatus = ' '
-        if player.hasKey:
-            keyStatus = 'Key collected'
+        if number == max_levels:
+            if player.hasKey:
+                keyStatus = 'Key found, turn on the lamps'
+            elif spider.dead:
+                keyStatus = 'Spider dead, find the key'
+            else:
+                keyStatus = 'Kill the spider'
+       
         ttext = fontSmall.render(keyStatus, True, white)
         ttextRect = ttext.get_rect()
         ttextRect.topleft = (10, 10)
@@ -801,8 +836,8 @@ def level(number, score=None):
                 score = score + cur_score # update score
                 endScreen(win, score, number)      
         
-        pygame.display.update(refresh)
-        #pygame.display.update()
+        #pygame.display.update(refresh)
+        pygame.display.update()
                 
     pygame.quit()
     quit()
@@ -831,6 +866,28 @@ def endScreen(win, score, level):
             f.seek(0) 
             f.truncate()
             f.write(str(score))       
+
+    # Play losing animation
+    
+    if win == False:
+        loseAnimate = pygame.image.load('Assets/LostEnd_Sprite.png').convert()
+        for y in range(3):
+            for x in range(9):
+                getimage = pygame.Surface((800,600))
+                getimage.blit(loseAnimate,(0,0),((20 * (x+1)) + (800 * x), (20 * (y+1))+(600*y), 800, 600))
+                screen.blit(getimage, (0,0))
+                gameClock.tick(10)
+                pygame.display.update()
+    elif win == True:
+        winAnimate = pygame.image.load('Assets/End_Win2.png').convert()
+        for y in range(6):
+            for x in range(4):
+                getimage = pygame.Surface((800,600))
+                getimage.blit(winAnimate,(0,0),((20 * (x+1)) + (800 * x), (20 * (y+1))+(600*y), 800, 600))
+                screen.blit(getimage, (0,0))
+                gameClock.tick(10)
+                pygame.display.update()
+
       
     while running:
     
@@ -843,72 +900,77 @@ def endScreen(win, score, level):
         if win == True:
             label('You won!', 400, 200, white, fontBig)
             label('Your score was {} through level {}!'.format(score, level), 400, 275, white, fontSmall)
+            
+             # Enter button
+            text = fontBig.render('Enter', True, white, grey)
+            textRect = text.get_rect()
+            textRect.center = (600, 425)
+    
+            mouse = pygame.mouse.get_pos()
+        
+            if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
+                text = fontBig.render('Enter', True, white, light_grey)
+                roundCorners(textRect, light_grey)
+        
+                clicked = False
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN: 
+                        clicked = True
+
+                if clicked == True:
+                    if text_result == '':
+                        text_result = 'Anonymous'
+                    with open("Data/History.sdwp","a+") as f:
+                                f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
+                    highscores()
+            else:
+                text = fontBig.render('Enter', True, white, grey)
+                roundCorners(textRect, grey)
+
+            screen.blit(text, textRect)
+        
+            # Typing
+            label('Type name:', 200, 425, white, fontSmall)
+            
         else:
             label('Game Over', 400, 200, white, fontBig)
             label('You failed, try again! Your score was {} through level {}.'.format(score, level), 400, 275, white, fontSmall)
+            button('Try Again', 400, 425, white, grey, light_grey, fontBig, newLevelNotifier, level, score)
+            
             
         if int(high_score) < score:
             label('New High Score! Yours: {}, Previous: {}'.format(score, high_score), 400, 325, white, fontSmall)
         else:
             label('High Score: {}'.format(high_score), 400, 325, white, fontSmall)
 
-        # Enter button
-        text = fontBig.render('Enter', True, white, grey)
-        textRect = text.get_rect()
-        textRect.center = (600, 425)
-    
-        mouse = pygame.mouse.get_pos()
-        
-        if textRect.right + 7 > mouse[0] > textRect.left - 5 and textRect.bottom + 6 > mouse[1] > textRect.top - 5:
-            text = fontBig.render('Enter', True, white, light_grey)
-            roundCorners(textRect, light_grey)
-        
-            clicked = False
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN: 
-                    clicked = True
-
-            if clicked == True:
-                if text_result == '':
-                    text_result = 'Anonymous'
-                with open("Data/History.sdwp","a+") as f:
-                            f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
-                highscores()
-        else:
-            text = fontBig.render('Enter', True, white, grey)
-            roundCorners(textRect, grey)
-
-        screen.blit(text, textRect)
-        
-        # Typing
-        label('Type name:', 200, 425, white, fontSmall)
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
+                if event.key == pygame.K_BACKSPACE and win == True:
                     text_result = text_result[:-1]
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN and win == True:
                     if text_result == '':
                         text_result = 'Anonymous'
                     with open("Data/History.sdwp","a+") as f:
                                 f.write('{}, {}, {}, {}, {}, \n'.format(win, level, score, text_result, high_score))
                     highscores()
-                else:
+                elif win == True:
                     text_result += event.unicode
         
-        # text box background
-        gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
+        if win == True:
+            # text box background
+            gfxdraw.box(screen, pygame.Rect(270, 409, 260, 32), light_grey)
         
-        # render text
-        stext = fontSmall.render(text_result, True, white)
-        if stext.get_width() > 260: # truncate if too long
-            text_result = text_result[:-1]
+            # render text
             stext = fontSmall.render(text_result, True, white)
-        stextRect = stext.get_rect()
-        stextRect.center = (400, 425)
-        screen.blit(stext, stextRect)
+            if stext.get_width() > 260: # truncate if too long
+                text_result = text_result[:-1]
+                stext = fontSmall.render(text_result, True, white)
+            stextRect = stext.get_rect()
+            stextRect.center = (400, 425)
+            screen.blit(stext, stextRect)
           
         pygame.display.update()
                 
