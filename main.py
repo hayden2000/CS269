@@ -153,7 +153,7 @@ def startScreen():
         screen.blit(bg, (0, 0))
         
         # button control
-        button('Start', 104, 450, white, grey, light_grey, fontBig, storyManager)
+        button('Start', 104, 450, white, grey, light_grey, fontBig, tutorialManager)
         button('Credits', 283, 450, white, grey, light_grey, fontBig, credits)
         button('High Scores', 501, 450, white, grey, light_grey, fontBig, highscores)
         button('Quit', 696, 450, white, grey, light_grey, fontBig, quit)
@@ -701,6 +701,8 @@ def level(number, score=None):
                     player.jump()
                 elif event.key == pygame.K_e:
                 	pauseTime += letter.display( screen, player, fontSmall, white )
+                elif event.key == pygame.K_BACKQUOTE:
+                	win = True
             if event.type == pygame.QUIT:
                 running = False
         
