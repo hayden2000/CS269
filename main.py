@@ -536,10 +536,16 @@ def newLevelNotifier(number, score=None):
     # Display story slide before level 10
     if number == 7:
         tranImage = pygame.image.load("Assets/transitionToSpider.png")
+        tranImage2 = pygame.image.load("Assets/spiderbg.png")
         screen.blit(tranImage, (0,0))
         pygame.display.update()
-        for i in range(5):
-            gameClock.tick(1) 
+        for i in range(4):
+            gameClock.tick(1)
+            
+        screen.blit(tranImage2, (0,0))
+        pygame.display.update()
+        for i in range(4):
+            gameClock.tick(1)
 
     while running:
     
