@@ -530,6 +530,23 @@ def newLevelNotifier(number, score=None):
         pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play(-1)
      
+<<<<<<< HEAD
+=======
+    # Display story slide before level 10
+    if number == 7:
+        tranImage = pygame.image.load("Assets/transitionToSpider.png")
+        tranImage2 = pygame.image.load("Assets/spiderbg.png")
+        screen.blit(tranImage, (0,0))
+        pygame.display.update()
+        for i in range(4):
+            gameClock.tick(1)
+            
+        screen.blit(tranImage2, (0,0))
+        pygame.display.update()
+        for i in range(4):
+            gameClock.tick(1)
+
+>>>>>>> eb2b41e1ddf2819c6154c167902d13d4460105c3
     while running:
     
         screen.fill(black) 

@@ -177,7 +177,7 @@ class Player(pygame.sprite.Sprite):
         		self.k.appearKey(spider)
         		for p in self.platforms:
         			if self.k.rect.colliderect(p):
-        				self.k.getRect().bottom = p.rect.top + 20
+        				self.k.getRect().bottom = p.rect.top - 10
         		spider.collideSpider()
         		spider.rect.x = -100
         		spider.rect.y = -100
