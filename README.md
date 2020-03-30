@@ -2,7 +2,7 @@
 CS269 Game Design
 
 - Matthew Maring (Lead Programmer)
-- Portfolio: https://wiki.colby.edu/display/~mhmari22/Matt+Maring%27s+CS269+Page
+- Portfolio: mhmari22-portfolio.pdf
 
 Pygame 2.0.0+ required: pip install pygame==2.0.0dev6
 
